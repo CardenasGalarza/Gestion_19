@@ -241,7 +241,8 @@ try:
                 val = (add, nom, adwe)
                 cursor.execute(sql, val)
                 cnxn.commit()
-                #cursor.close()
+                cursor.close()
+                cnxn.close()
                 st.experimental_rerun()
                # st.experimental_rerun()
 
@@ -264,7 +265,8 @@ try:
         val = (add, nom, adwe)
         cursor.execute(sql, val)
         cnxn.commit()
-        #cursor.close()
+        cursor.close()
+        cnxn.close()
 
         st.write("DESVANSAR")
 
