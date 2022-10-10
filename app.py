@@ -11,7 +11,7 @@ st.title("GESTION bdtickets CUADRO PENDIENTES💻")
 
 #st.sidebar.image("logo2.png", width=290)
 drivers = [item for item in pyodbc.drivers()]
-driver = drivers[-1]
+#driver = drivers[-1]
 #print("driver:{}".format(driver))
 server = 'us-cdbr-east-06.cleardb.net'
 database = 'heroku_af31a2d889c5388'
