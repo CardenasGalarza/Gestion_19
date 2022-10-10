@@ -240,8 +240,12 @@ try:
                 val = (add, nom, adwe)
                 cursor.execute(sql, val)
                 cnxn.commit()
+                cursor.close()
+                cnxn.close()
                 #esto refresca la carga
                 st.experimental_rerun()
+
+
 
 
     if  genre == 'Cerrar y Descansar':
