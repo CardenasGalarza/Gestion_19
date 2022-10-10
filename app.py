@@ -24,9 +24,7 @@ cnxn = mysql.connector.connect( host="us-cdbr-east-06.cleardb.net",
                                 db="heroku_af31a2d889c5388"
                                 )
 cursor = cnxn.cursor()
-#cursor.execute("SELECT  * FROM bdtickets WHERE fec_regist = (SELECT MIN(fec_regist )  FROM bdtickets where ESTADO = 'PENDIENTE' )")
-#data = cursor.fetchall()
-#df = pd.DataFrame(data)
+#print("listo")
 
 print("listo")
 ### EXTARER DATOS
@@ -109,10 +107,11 @@ try:
         add  = str('CERRAR')
         nom = "GIANCARLOS"
         adwe = (str(options)[2:-2])
+        #cursor.execute("UPDATE bdtickets SET ESTADO = ?, GESTOR = ? WHERE codreq = ?", add, nom, adwe)
         sql = "UPDATE bdtickets SET ESTADO = %s, GESTOR = %s WHERE codreq = %s"
         val = (add, nom, adwe)
         cursor.execute(sql, val)
-        cnxn.commit()
+
 
         options = (df['codreq'].unique())
 
@@ -236,15 +235,15 @@ try:
             if(st.button("✔️Cerrar")):
                 #caching.clear_cache()
 
+                #cursor.execute("UPDATE bdtickets SET ESTADO = ?, GESTOR = ? WHERE codreq = ?", add, nom, adwe)
+                #st.info(dfu)
                 sql = "UPDATE bdtickets SET ESTADO = %s, GESTOR = %s WHERE codreq = %s"
                 val = (add, nom, adwe)
                 cursor.execute(sql, val)
                 cnxn.commit()
                 cursor.close()
-                cnxn.close()
-                #esto refresca la carga
                 st.experimental_rerun()
-
+               # st.experimental_rerun()
 
 
 
@@ -260,10 +259,12 @@ try:
         adwe = (str(options)[2:-2])
 
         st.markdown("Columns inside form")
+        #cursor.execute("UPDATE bdtickets SET ESTADO = ?, GESTOR = ? WHERE codreq = ?", add, nom, adwe)
         sql = "UPDATE bdtickets SET ESTADO = %s, GESTOR = %s WHERE codreq = %s"
         val = (add, nom, adwe)
         cursor.execute(sql, val)
         cnxn.commit()
+        cursor.close()
 
         st.write("DESVANSAR")
 
@@ -281,9 +282,6 @@ except Exception as e:
 
 # para los botones horizontal
 st.write('<style>div.row-widget.stRadio > div{flex-direction:row;}</style>', unsafe_allow_html=True)
-
-
-
 
 
 
