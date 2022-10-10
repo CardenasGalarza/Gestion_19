@@ -10,16 +10,28 @@ st.set_page_config(layout="wide")
 st.title("GESTION bdtickets CUADRO PENDIENTES💻")
 
 #st.sidebar.image("logo2.png", width=290)
+drivers = [item for item in pyodbc.drivers()]
+driver = drivers[-1]
+#print("driver:{}".format(driver))
+server = 'us-cdbr-east-06.cleardb.net'
+database = 'heroku_af31a2d889c5388'
+uid = 'b550dc65be0b71'
+pwd = 'a3fa9457'
+#con_string = f'DRIVER={driver};SERVER={server};DATABASE={database};UID={uid};PWD={pwd}'
+#print(con_string)
+cnxn = pyodbc.connect('DRIVER={MySQL ODBC 8.0 ANSI Driver};SERVER='+server+';DATABASE='+database+';UID='+uid+';PWD='+ pwd)
+cursor = cnxn.cursor()
+
 
 #######
 ## TODO CONECTION A LA BASE DE DATOS MYSQL
 #######
-server = 'us-cdbr-east-06.cleardb.net'
-database = 'heroku_af31a2d889c5388'
-username = 'b550dc65be0b71'
-password = 'a3fa9457'
-cnxn = pyodbc.connect('DRIVER={MySQL ODBC 8.0 ANSI Driver};SERVER='+server+';DATABASE='+database+';UID='+username+';PWD='+ password)
-cursor = cnxn.cursor()
+#server = 'us-cdbr-east-06.cleardb.net'
+#database = 'heroku_af31a2d889c5388'
+#uid = 'b550dc65be0b71'
+#pwd = 'a3fa9457'
+#cnxn = pyodbc.connect('DRIVER={MySQL ODBC 8.0 ANSI Driver};SERVER='+server+';DATABASE='+database+';UID='+username+';PWD='+ password)
+#cursor = cnxn.cursor()
 #print("listo")
 
 print("listo")
