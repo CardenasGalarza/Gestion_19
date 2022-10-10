@@ -241,7 +241,7 @@ try:
                 val = (add, nom, adwe)
                 cursor.execute(sql, val)
                 cnxn.commit()
-                cursor.close()
+                #cursor.close()
                 st.experimental_rerun()
                # st.experimental_rerun()
 
@@ -264,7 +264,7 @@ try:
         val = (add, nom, adwe)
         cursor.execute(sql, val)
         cnxn.commit()
-        cursor.close()
+        #cursor.close()
 
         st.write("DESVANSAR")
 
@@ -284,4 +284,5 @@ except Exception as e:
 st.write('<style>div.row-widget.stRadio > div{flex-direction:row;}</style>', unsafe_allow_html=True)
 
 
-
+cursor.close()
+cnxn.close()
