@@ -146,9 +146,7 @@ if authentication_status:
     ###########
     ### EXTARER DATOS
     sql2 = """
-    SELECT  *
-    FROM bdtickets
-    WHERE fec_regist = (SELECT MIN(fec_regist )  FROM bdtickets where ESTADO = 'PROGRAMADO' );
+    SELECT * FROM bdtickets WHERE ESTADO = 'PROGRAMADO' ;
     """
     df2 = pd.read_sql(sql2, cnxn)
     df2 = df2[df2['ESTADO'] == 'PROGRAMADO']
