@@ -151,7 +151,7 @@ if authentication_status:
     WHERE fec_regist = (SELECT MIN(fec_regist )  FROM bdtickets where ESTADO = 'PROGRAMADO' );
     """
     df2 = pd.read_sql(sql2, cnxn)
-    df2 = df2[df2['ESTADO'] == 'PROGRAMADO'].head(1)
+    df2 = df2[df2['ESTADO'] == 'PROGRAMADO']
     df2 = df2[df2['GESTOR'] == name].head(1)
     #df = df[df['codofcadm'] == 'GIANCARLOS']
     #df = df.head(1)
