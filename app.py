@@ -152,6 +152,7 @@ if authentication_status:
     """
     df2 = pd.read_sql(sql2, cnxn)
     df2 = df2[df2['ESTADO'] == 'PROGRAMADO'].head(1)
+    df2 = df2[df2['GESTOR'] == name].head(1)
     #df = df[df['codofcadm'] == 'GIANCARLOS']
     #df = df.head(1)
     #print(df)
@@ -203,7 +204,7 @@ if authentication_status:
             options = (df2['codreq'].unique())
 
             add  = str('CERRAR')
-            nom = "GIANCARLOS"
+            nom = str(name)
             adwe = (str(options)[2:-2])
             #cursor.execute("UPDATE bdtickets SET ESTADO = ?, GESTOR = ? WHERE codreq = ?", add, nom, adwe)
             sql = "UPDATE bdtickets SET ESTADO = %s, GESTOR = %s WHERE codreq = %s"
@@ -214,7 +215,7 @@ if authentication_status:
             options = (df['codreq'].unique())
 
             add  = str('PROGRAMADO')
-            nom = "GIANCARLOS"
+            nom = str(name)
             adwe = (str(options)[2:-2])
             #st.info(dfu2)
 
@@ -354,7 +355,7 @@ if authentication_status:
             options = (df2['codreq'].unique())
 
             add  = str('CERRAR')
-            nom = "GIANCARLOS"
+            nom = str(name)
             adwe = (str(options)[2:-2])
 
             st.markdown("Columns inside form")
