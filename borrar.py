@@ -105,7 +105,7 @@ if authentication_status:
 
     #################################33
     #########################################
-    st.title("GESTION bdtickets CUADRO PENDIENTES💻")
+    st.title("GESTION TICKETS PENDIENTES💻")
 
     st.sidebar.image("logo2.png", width=290)
 
@@ -146,18 +146,16 @@ if authentication_status:
     ###########
     ### EXTARER DATOS
     sql2 = """
-    SELECT  *
-    FROM bdtickets
-    WHERE fec_regist = (SELECT MIN(fec_regist )  FROM bdtickets where ESTADO = 'PROGRAMADO' );
+    SELECT * FROM bdtickets WHERE ESTADO = 'PROGRAMADO' ;
     """
     df2 = pd.read_sql(sql2, cnxn)
-    df2 = df2[df2['ESTADO'] == 'PROGRAMADO'].head(1)
+    df2 = df2[df2['ESTADO'] == 'PROGRAMADO']
     df2 = df2[df2['GESTOR'] == name].head(1)
     #df = df[df['codofcadm'] == 'GIANCARLOS']
     #df = df.head(1)
     #print(df)
 
-
+    dfunom =df2["nomcli"].head(1)
     dfu2 =df2["codreq"].head(1)
     codcli =df2["codcli"].head(1)
     fec_regist =df2["fec_regist"].head(1)
@@ -174,6 +172,7 @@ if authentication_status:
 
     ##TODO ESTO es para ver cada datos de la tabla filtrada
 
+    dfunom = (dfunom.to_string(index=False))
     dfu2 = (dfu2.to_string(index=False))
     codcli = (codcli.to_string(index=False))
     fec_regist = (fec_regist.to_string(index=False))
@@ -223,7 +222,7 @@ if authentication_status:
             #st.info(dfu2)
             ### un ejemplo para texto
             #st.info(desobsordtrab)
-            #st.markdown(f'<p class="big-font"; style="text-align:center;background-image: linear-gradient(to right,LAVENDER, LAVENDER);color:BLACK;font-size:24px;border-radius:2%;">{desobsordtrab}</p>', unsafe_allow_html=True)
+            st.markdown(f'<p class="big-font"; style="text-align:center;background-image: linear-gradient(to right,Cyan, Cyan);color:BLACK;font-size:16px;border-radius:12%;">{dfunom}</p>', unsafe_allow_html=True)
 
 
             
@@ -294,7 +293,7 @@ if authentication_status:
                 st.write("")
                 st.write("")
                 textogestion = "Realizar Actividades💻"
-                st.markdown(f'<p class="big-font"; style="text-align:center;background-image: linear-gradient(to right,BLACK, BLACK);color:white;font-size:24px;border-radius:2%;">{textogestion}</p>', unsafe_allow_html=True)
+                st.markdown(f'<p class="big-font"; style="text-align:center;background-image: linear-gradient(to right,Cyan, Cyan);color:Black;font-size:22px;border-radius:2%;">{textogestion}</p>', unsafe_allow_html=True)
             with col1:
                 filter_type3 = st.selectbox(
                     "Accion",
@@ -308,7 +307,7 @@ if authentication_status:
                     ),
                     key="filter_type3",
                     help="""
-                    Note that if you use Regex in your filter, you must follow the `RE2` syntax.
+                    Ten encuenta tu accion `Ticket` inf.
                     """,
                 )
 
