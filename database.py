@@ -39,3 +39,4 @@ def update_user(username, updates):
 def delete_user(username):
     """Always returns None, even if the key does not exist"""
     return db.delete(username)
+
