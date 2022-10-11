@@ -109,7 +109,8 @@ if authentication_status:
 
     st.sidebar.image("logo2.png", width=290)
 
-
+    page_names = ['GPON', 'HFC']
+    page = st.sidebar.radio('Selecciona inf. Tecnoligia💻',page_names, index=1)
     #######
     ## TODO CONECTION A LA BASE DE DATOS MYSQL
     #######
@@ -127,11 +128,10 @@ if authentication_status:
     print("listo")
     ### EXTARER DATOS
     sql = """
-    SELECT  *
-    FROM bdtickets
-    WHERE fec_regist = (SELECT MIN(fec_regist )  FROM bdtickets where ESTADO = 'PENDIENTE' );
+    SELECT * FROM bdtickets  WHERE ESTADO = 'PENDIENTE' ORDER BY fec_regist ;
     """
     df = pd.read_sql(sql, cnxn)
+    df = df[df['tiptecnologia_x'] == page]
     df = df[df['ESTADO'] == 'PENDIENTE'].head(1)
     #df = df[df['codofcadm'] == 'GIANCARLOS']
     #df = df.head(1)
@@ -195,7 +195,7 @@ if authentication_status:
     try:
 
         genre = st.radio(
-            "What's your favorite movie genre",
+            "Establece tu preferencia de actividad",
             ('Desnsar', 'Cerrar y Descansar', 'Programar'))
 
         if  genre == 'Programar':
