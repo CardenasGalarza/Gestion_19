@@ -222,7 +222,7 @@ if authentication_status:
             #st.info(dfu2)
             ### un ejemplo para texto
             #st.info(desobsordtrab)
-            st.markdown(f'<p class="big-font"; style="text-align:center;background-image: linear-gradient(to right,Cyan, Cyan);color:BLACK;font-size:16px;border-radius:12%;">{dfunom}</p>', unsafe_allow_html=True)
+            st.markdown(f'<p class="big-font"; style="text-align:center;background-image: linear-gradient(to right,Cyan, Cyan);color:BLACK;font-size:16px;border-radius:2%;">{dfunom}</p>', unsafe_allow_html=True)
 
 
             
@@ -312,8 +312,13 @@ if authentication_status:
                 )
 
             st.write("")
-            title = st.text_input("INGRESA TU GESTION")
-            print(title)
+            #title = st.text_input("INGRESA TU GESTION")
+            input = st.text_input("INGRESA TU GESTION", key="text")
+            #print(input)
+            def clear_text():
+                st.session_state["text"] = ""
+                
+            #st.button("clear text input", on_click=clear_text)
 
             #st.button("Inicio")
             col1, col2, col3 , col4, col5 = st.columns(5)
@@ -330,7 +335,7 @@ if authentication_status:
 
 
 
-                if(st.button("✔️Cerrar")):
+                if(st.button("✔️Cerrar", on_click=clear_text)):
                     #caching.clear_cache()
 
                     #cursor.execute("UPDATE bdtickets SET ESTADO = ?, GESTOR = ? WHERE codreq = ?", add, nom, adwe)
