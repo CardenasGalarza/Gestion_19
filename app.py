@@ -33,9 +33,10 @@ if authentication_status == False:
                 <style>
                 #MainMenu {visibility: hidden;}
                 footer {visibility: hidden;}
+                header {visibility: hidden;}
                 </style>
                 """
-    st.markdown(hide_streamlit_style, unsafe_allow_html=True)
+    st.markdown(hide_streamlit_style, unsafe_allow_html=True) 
 
 
     
@@ -48,9 +49,10 @@ if authentication_status == None:
                 <style>
                 #MainMenu {visibility: hidden;}
                 footer {visibility: hidden;}
+                header {visibility: hidden;}
                 </style>
                 """
-    st.markdown(hide_streamlit_style, unsafe_allow_html=True)
+    st.markdown(hide_streamlit_style, unsafe_allow_html=True) 
 
     st.markdown(
         """
@@ -398,19 +400,20 @@ if authentication_status:
                 <style>
                 #MainMenu {visibility: hidden;}
                 footer {visibility: hidden;}
+                header {visibility: hidden;}
                 </style>
                 """
-    st.markdown(hide_streamlit_style, unsafe_allow_html=True)
-
+    st.markdown(hide_streamlit_style, unsafe_allow_html=True) 
 
 ## borrar nombres de la pagina
     hide_streamlit_style = """
                 <style>
                 #MainMenu {visibility: hidden;}
                 footer {visibility: hidden;}
+                header {visibility: hidden;}
                 </style>
                 """
-    st.markdown(hide_streamlit_style, unsafe_allow_html=True)
+    st.markdown(hide_streamlit_style, unsafe_allow_html=True) 
 
     st.markdown(
         """
@@ -462,6 +465,7 @@ hide_streamlit_style = """
             <style>
             #MainMenu {visibility: hidden;}
             footer {visibility: hidden;}
+            header {visibility: hidden;}
             </style>
             """
-st.markdown(hide_streamlit_style, unsafe_allow_html=True)
+st.markdown(hide_streamlit_style, unsafe_allow_html=True) 
