@@ -354,12 +354,6 @@ if authentication_status:
                     st.experimental_rerun()
                 # st.experimental_rerun()
 
-
-                for percent_complete in range(100):
-                    time.sleep(0.1)
-                    my_bar.progress(percent_complete + 1)
-
-
         if  genre == 'Cerrar y Descansar':
 
             st.text("Welcome To GeeksForGeeks!!!") 
@@ -400,7 +394,9 @@ if authentication_status:
 
     cursor.close()
     cnxn.close()
-
+    for percent_complete in range(100):
+        time.sleep(0.1)
+        my_bar.progress(percent_complete + 1)
 
                 ## borrar nombres de la pagina
     hide_streamlit_style = """
