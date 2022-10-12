@@ -110,7 +110,7 @@ if authentication_status:
     st.sidebar.image("logo2.png", width=290)
 
     page_names = ['GPON', 'HFC']
-    page = st.sidebar.radio('Selecciona inf. Tecnoligia💻',page_names, index=1)
+    page = st.sidebar.radio('Selecciona inf. Tecnoligia💻',page_names, index=0)
     #######
     ## TODO CONECTION A LA BASE DE DATOS MYSQL
     #######
@@ -196,7 +196,7 @@ if authentication_status:
 
         genre = st.radio(
             "Establece tu preferencia de actividad",
-            ('Desnsar', 'Cerrar y Descansar', 'Programar'))
+            ('Programar', 'Break', 'Cerrar y Descansar'))
 
         if  genre == 'Programar':
 
