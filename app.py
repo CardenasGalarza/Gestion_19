@@ -8,6 +8,8 @@ warnings.filterwarnings('ignore')
 #########################################3333
 import streamlit_authenticator as stauth  # pip install streamlit-authenticator
 import database as db
+##########################
+import time
 
 st.set_page_config(page_title='Gpon-Averias', page_icon="🌀", layout='centered', initial_sidebar_state='auto')
 
@@ -95,7 +97,6 @@ if authentication_status == None:
     ####
     ######
     ######
-
 
 if authentication_status:
 
@@ -192,8 +193,8 @@ if authentication_status:
     desobsordtrab = (str(desobsordtrab)[2:-2])
     print(desobsordtrab)
     #df = df[df.year.isin([2008, 2009])]
-
-
+    # para los botones horizontal
+    st.write('<style>div.row-widget.stRadio > div{flex-direction:row;}</style>', unsafe_allow_html=True)
     try:
 
         genre = st.radio(
@@ -201,6 +202,8 @@ if authentication_status:
             ('Programar', 'Break', 'Cerrar y Descansar'))
 
         if  genre == 'Programar':
+            #TODO SIVERVPARA BARRA AZUL
+            my_bar = st.progress(0)
 
             options = (df2['codreq'].unique())
 
@@ -351,6 +354,10 @@ if authentication_status:
                     st.experimental_rerun()
                 # st.experimental_rerun()
 
+
+                for percent_complete in range(100):
+                    time.sleep(0.001)
+                    my_bar.progress(percent_complete + 1)
 
 
         if  genre == 'Cerrar y Descansar':
