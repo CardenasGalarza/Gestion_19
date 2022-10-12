@@ -356,7 +356,7 @@ if authentication_status:
 
 
                 for percent_complete in range(100):
-                    time.sleep(0.001)
+                    time.sleep(0.01)
                     my_bar.progress(percent_complete + 1)
 
 
