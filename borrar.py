@@ -99,7 +99,6 @@ if authentication_status == None:
     ######
 
 if authentication_status:
-
     # ---- SIDEBAR ----
     authenticator.logout("Cerrar sesión", "sidebar")
     st.sidebar.title(f"Bienvenido {name}")
@@ -354,12 +353,6 @@ if authentication_status:
                     st.experimental_rerun()
                 # st.experimental_rerun()
 
-
-                for percent_complete in range(100):
-                    time.sleep(0.001)
-                    my_bar.progress(percent_complete + 1)
-
-
         if  genre == 'Cerrar y Descansar':
 
             st.text("Welcome To GeeksForGeeks!!!") 
@@ -388,7 +381,6 @@ if authentication_status:
             
             st.warning("LLamar") 
             
-            st.error("Blnaco") 
 
     except Exception as e:
         pass
@@ -400,7 +392,21 @@ if authentication_status:
 
     cursor.close()
     cnxn.close()
-
+    
+    try:              ## borrar nombres de la pagina
+        hide_streamlit_style = """
+                    <style>
+                    #MainMenu {visibility: hidden;}
+                    footer {visibility: hidden;}
+                    header {visibility: hidden;}
+                    </style>
+                    """
+        st.markdown(hide_streamlit_style, unsafe_allow_html=True) 
+        for percent_complete in range(100):
+            time.sleep(0.1)
+            my_bar.progress(percent_complete + 1)
+    except Exception as e:
+        pass
 
                 ## borrar nombres de la pagina
     hide_streamlit_style = """
