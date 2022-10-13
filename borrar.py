@@ -118,16 +118,6 @@ if authentication_status:
     ## TODO CONECTION A LA BASE DE DATOS MYSQL
     #######
 
-                ## borrar nombres de la pagina
-    hide_streamlit_style = """
-                <style>
-                #MainMenu {visibility: hidden;}
-                footer {visibility: hidden;}
-                header {visibility: hidden;}
-                </style>
-                """
-    st.markdown(hide_streamlit_style, unsafe_allow_html=True) 
-
 
     cnxn = mysql.connector.connect( host="us-cdbr-east-06.cleardb.net",
                                     port="3306",
@@ -363,18 +353,10 @@ if authentication_status:
                     cnxn.close()
                     st.experimental_rerun()
                 # st.experimental_rerun()
-            ## borrar nombres de la pagina
-                hide_streamlit_style = """
-                            <style>
-                            #MainMenu {visibility: hidden;}
-                            footer {visibility: hidden;}
-                            header {visibility: hidden;}
-                            </style>
-                            """
-                st.markdown(hide_streamlit_style, unsafe_allow_html=True) 
+
 
                 for percent_complete in range(100):
-                    time.sleep(0.01)
+                    time.sleep(0.001)
                     my_bar.progress(percent_complete + 1)
 
 
@@ -430,6 +412,15 @@ if authentication_status:
                 """
     st.markdown(hide_streamlit_style, unsafe_allow_html=True) 
 
+## borrar nombres de la pagina
+    hide_streamlit_style = """
+                <style>
+                #MainMenu {visibility: hidden;}
+                footer {visibility: hidden;}
+                header {visibility: hidden;}
+                </style>
+                """
+    st.markdown(hide_streamlit_style, unsafe_allow_html=True) 
 
     st.markdown(
         """
