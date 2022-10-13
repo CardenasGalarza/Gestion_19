@@ -11,7 +11,7 @@ import database as db
 ##########################
 import time
 
-st.set_page_config(page_title='Gpon-Averias', page_icon="📊", layout='centered', initial_sidebar_state='auto')
+st.set_page_config(page_title='Gpon-Averias', page_icon="🌀", layout='centered', initial_sidebar_state='auto')
 
 # --- USER AUTHENTICATION ---
 users = db.fetch_all_users()
@@ -354,6 +354,10 @@ if authentication_status:
                     st.experimental_rerun()
                 # st.experimental_rerun()
 
+        for percent_complete in range(100):
+            time.sleep(0.1)
+            my_bar.progress(percent_complete + 1)
+
         if  genre == 'Cerrar y Descansar':
 
             st.text("Welcome To GeeksForGeeks!!!") 
@@ -395,14 +399,6 @@ if authentication_status:
     cursor.close()
     cnxn.close()
 
-try:
-    ## barra proceso
-    for percent_complete in range(100):
-        time.sleep(0.1)
-        my_bar.progress(percent_complete + 1)
-
-except NameError: 
-    print('')
                 ## borrar nombres de la pagina
     hide_streamlit_style = """
                 <style>
