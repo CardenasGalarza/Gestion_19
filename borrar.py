@@ -302,12 +302,13 @@ if authentication_status:
                 filter_type3 = st.selectbox(
                     "Accion",
                     (
-                        "contains",
-                        "equals",
-                        "notContains",
-                        "notEquals",
-                        "includingRegex",
-                        "excludingRegex",
+                        "71_REVERIFICA SIN DEFECTO",
+                        "7B_SOLUCION EN LINEA",
+                        "7C_TEMA COMERCIALES",
+                        "7D_GENERA NUEVO REQ",
+                        "7E_NO SE UBICA CLITE",
+                        "7F_REQ MAL GENERADO",
+                        "Requiere Visita Tecnica",
                     ),
                     key="filter_type3",
                     help="""
@@ -315,12 +316,17 @@ if authentication_status:
                     """,
                 )
 
+
+
             st.write("")
             #title = st.text_input("INGRESA TU GESTION")
-            input = st.text_input("INGRESA TU GESTION", key="text")
+            raw_text = st.text_area("Observación", key="text")
+            #form = st.form(key='text')
             #print(input)
             def clear_text():
                 st.session_state["text"] = ""
+                
+            st.button("borrar", on_click=clear_text)
                 
             #st.button("clear text input", on_click=clear_text)
 
@@ -339,9 +345,14 @@ if authentication_status:
 
 
 
-                if(st.button("✔️Cerrar", on_click=clear_text)):
-                    #caching.clear_cache()
+                if st.button("✔️Cerrar"):
+                    sql1 = "UPDATE bdtickets SET ACCION = %s, OBS = %s WHERE codreq = %s"
+                    #sql1 = "INSERT INTO gestionacc (codreq, ACCION) VALUES (%s, %s)"
+                    val1 = (filter_type3,raw_text ,dfu2)
+                    cursor.execute(sql1, val1)
+                    time.sleep(1)
 
+                    #caching.clear_cache()
                     #cursor.execute("UPDATE bdtickets SET ESTADO = ?, GESTOR = ? WHERE codreq = ?", add, nom, adwe)
                     #st.info(dfu)
                     sql = "UPDATE bdtickets SET ESTADO = %s, GESTOR = %s WHERE codreq = %s"
@@ -350,6 +361,7 @@ if authentication_status:
                     cnxn.commit()
                     cursor.close()
                     cnxn.close()
+                    ###TODO IMPORTANTE ES PARA REFRESCAR LA PAGINA
                     st.experimental_rerun()
                 # st.experimental_rerun()
 
@@ -394,6 +406,7 @@ if authentication_status:
     cnxn.close()
     
     try:
+
         ## botones en general
         primaryColor = st.get_option("theme.primaryColor")
         s = f"""
@@ -403,6 +416,7 @@ if authentication_status:
         <style>
         """
         st.markdown(s, unsafe_allow_html=True)
+
         ## borrar nombres de la pagina
         hide_streamlit_style = """
                     <style>
@@ -474,7 +488,6 @@ if authentication_status:
     ####
     ######
     ######
-## botones en general
 primaryColor = st.get_option("theme.primaryColor")
 s = f"""
 <style>

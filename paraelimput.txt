@@ -1,0 +1,23 @@
+
+weeb = st.text_input("INGRESA TU GESTION", key="text")
+sqlww = "UPDATE bdtickets SET ACCION = %s WHERE codreq = %s"
+val = (weeb, adwe)
+
+
+
+with st.form(key='emotion_clf_form'):
+    raw_text = st.text_area("Please enter your text")
+    submit_text = st.form_submit_button(label="Submit")
+
+    print(raw_text)
+
+# Alternative syntax, declare a form and use the returned object
+form = st.form(key='my_form')
+ass = form.text_input(label='Enter some text')
+print(ass)
+submit_button = form.form_submit_button(label='Submit')
+#weeb = st.text_input("INGRESA TU GESTION", key="text")
+sqlww = "UPDATE bdtickets SET ACCION = %s WHERE codreq = %s"
+val = (raw_text, adwe)
+cursor.execute(sqlww, val)
+cnxn.commit()
