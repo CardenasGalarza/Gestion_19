@@ -1,3 +1,4 @@
+from datetime import datetime
 import mysql.connector
 #import pyodbc
 import pandas as pd
@@ -187,7 +188,6 @@ if authentication_status:
     Area_CRM = (Area_CRM.to_string(index=False))
     desmotv = (desmotv.to_string(index=False))
     #desobsordtrab = (desobsordtrab.to_string(index=False))
-
     ## ejemplo de texto completo
     desobsordtrab = (str(desobsordtrab)[2:-2])
     print(desobsordtrab)
@@ -209,9 +209,14 @@ if authentication_status:
             add  = str('CERRAR')
             nom = str(name)
             adwe = (str(options)[2:-2])
+
+            date = datetime.now()
+            tiempo = (date.strftime("%d-%m-%Y %H:%M:%S"))
+            print(tiempo) # DD Month, YYYY HH:MM:SS
+
             #cursor.execute("UPDATE bdtickets SET ESTADO = ?, GESTOR = ? WHERE codreq = ?", add, nom, adwe)
             sql = "UPDATE bdtickets SET ESTADO = %s, GESTOR = %s WHERE codreq = %s"
-            val = (add, nom, adwe)
+            val = (add, nom,adwe)
             cursor.execute(sql, val)
 
 
@@ -220,8 +225,8 @@ if authentication_status:
             add  = str('PROGRAMADO')
             nom = str(name)
             adwe = (str(options)[2:-2])
-            #st.info(dfu2)
 
+                        #st.info(dfu2)
             #cursor.execute("UPDATE bdtickets SET ESTADO = ?, GESTOR = ? WHERE codreq = ?", add, nom, adwe)
             #st.info(dfu2)
             ### un ejemplo para texto
@@ -344,19 +349,18 @@ if authentication_status:
             with col3 :
 
 
-
                 if st.button("✔️Cerrar"):
-                    sql1 = "UPDATE bdtickets SET ACCION = %s, OBS = %s WHERE codreq = %s"
+                    sql1 = "UPDATE bdtickets SET ACCION = %s, OBS = %s, FEC_CERRAR = %s WHERE codreq = %s"
                     #sql1 = "INSERT INTO gestionacc (codreq, ACCION) VALUES (%s, %s)"
-                    val1 = (filter_type3,raw_text ,dfu2)
+                    val1 = (filter_type3,raw_text,tiempo ,dfu2)
                     cursor.execute(sql1, val1)
                     time.sleep(1)
 
                     #caching.clear_cache()
                     #cursor.execute("UPDATE bdtickets SET ESTADO = ?, GESTOR = ? WHERE codreq = ?", add, nom, adwe)
                     #st.info(dfu)
-                    sql = "UPDATE bdtickets SET ESTADO = %s, GESTOR = %s WHERE codreq = %s"
-                    val = (add, nom, adwe)
+                    sql = "UPDATE bdtickets SET ESTADO = %s, GESTOR = %s, FEC_PROG = %s WHERE codreq = %s"
+                    val = (add, nom, tiempo, adwe)
                     cursor.execute(sql, val)
                     cnxn.commit()
                     cursor.close()
@@ -400,7 +404,6 @@ if authentication_status:
 
     # para los botones horizontal
     st.write('<style>div.row-widget.stRadio > div{flex-direction:row;}</style>', unsafe_allow_html=True)
-
 
     cursor.close()
     cnxn.close()

@@ -10,6 +10,7 @@ import streamlit_authenticator as stauth  # pip install streamlit-authenticator
 import database as db
 ##########################
 import time
+from datetime import datetime
 
 st.set_page_config(page_title='Gpon-Averias', page_icon="🌀", layout='centered', initial_sidebar_state='auto')
 
@@ -203,6 +204,10 @@ if authentication_status:
         if  genre == 'Programar':
             #TODO SIVERVPARA BARRA AZUL
             my_bar = st.progress(0)
+            ## fecha para programar y cerrar
+            date = datetime.now()
+            tiempo = (date.strftime("%d-%m-%Y %H:%M:%S"))
+            print(tiempo) # DD Month, YYYY HH:MM:SS
 
             options = (df2['codreq'].unique())
 
@@ -346,17 +351,17 @@ if authentication_status:
 
 
                 if st.button("✔️Cerrar"):
-                    sql1 = "UPDATE bdtickets SET ACCION = %s, OBS = %s WHERE codreq = %s"
+                    sql1 = "UPDATE bdtickets SET ACCION = %s, OBS = %s, FEC_CERRAR = %s WHERE codreq = %s"
                     #sql1 = "INSERT INTO gestionacc (codreq, ACCION) VALUES (%s, %s)"
-                    val1 = (filter_type3,raw_text ,dfu2)
+                    val1 = (filter_type3,raw_text,tiempo ,dfu2)
                     cursor.execute(sql1, val1)
                     time.sleep(1)
 
                     #caching.clear_cache()
                     #cursor.execute("UPDATE bdtickets SET ESTADO = ?, GESTOR = ? WHERE codreq = ?", add, nom, adwe)
                     #st.info(dfu)
-                    sql = "UPDATE bdtickets SET ESTADO = %s, GESTOR = %s WHERE codreq = %s"
-                    val = (add, nom, adwe)
+                    sql = "UPDATE bdtickets SET ESTADO = %s, GESTOR = %s, FEC_PROG = %s WHERE codreq = %s"
+                    val = (add, nom, tiempo, adwe)
                     cursor.execute(sql, val)
                     cnxn.commit()
                     cursor.close()
