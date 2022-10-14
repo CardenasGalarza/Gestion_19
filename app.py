@@ -350,6 +350,7 @@ if authentication_status:
                     cnxn.commit()
                     cursor.close()
                     cnxn.close()
+                    ###TODO IMPORTANTE ES PARA REFRESCAR LA PAGINA
                     st.experimental_rerun()
                 # st.experimental_rerun()
 
@@ -394,7 +395,7 @@ if authentication_status:
     cnxn.close()
     
     try:
-        
+
         ## botones en general
         primaryColor = st.get_option("theme.primaryColor")
         s = f"""
