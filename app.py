@@ -13,7 +13,7 @@ import database as db
 import time
 from datetime import datetime
 
-st.set_page_config(page_title='Gpon-Averias', page_icon="🌀", layout='centered', initial_sidebar_state='auto')
+st.set_page_config(page_title='bdtickets-Averias', page_icon="🌀", layout='centered', initial_sidebar_state='auto')
 
 # --- USER AUTHENTICATION ---
 users = db.fetch_all_users()
@@ -165,40 +165,26 @@ if authentication_status:
 
 
 
-    page_names = ['GPON', 'HFC']
+    page_names = ['bdtickets', 'HFC']
     page = st.sidebar.radio('Selecciona inf. Tecnoligia💻',page_names, index=0)
     #######
     ## TODO CONECTION A LA BASE DE DATOS MYSQL
     #######
 
 
-    cnxn = mysql.connector.connect( host="127.0.0.1",
+    cnxn = mysql.connector.connect( host="us-cdbr-east-06.cleardb.net",
                                     port="3306",
-                                    user="root",
-                                    passwd="CARDENAS47465810",
-                                    db="bdtickets"
+                                    user="b550dc65be0b71",
+                                    passwd="a3fa9457",
+                                    db="heroku_af31a2d889c5388"
                                     )
     cursor = cnxn.cursor()
     print("listo")
 
-    sql = """
-    SELECT GESTOR, codreq, FEC_CERRAR FROM gpon WHERE  ESTADO="CERRAR" ;
-    """
-    df = pd.read_sql(sql, cnxn)
-    df = df[df['GESTOR'] == name]
-    date = datetime.now()
-    tcanti = (date.strftime("%Y-%m-%d"))
-
-    df['FEC_CERRAR'] = pd.to_datetime(df['FEC_CERRAR']).dt.date
-    df['FEC_CERRAR'] = pd.to_datetime(df['FEC_CERRAR'], format='%Y-%m-%d')
-    canti = len(df[df['FEC_CERRAR'] == tcanti])
-
-    print(canti)
-    st.markdown(f'<p class="big-font"; style="text-align:center;color:Cyan;font-size:24px"><b>👉🏻  {canti}</b></p>', unsafe_allow_html=True)
     #st.sidebar.header("catidad trabajada "+ str(canti))
     ### EXTARER DATOS
     sql = """
-    SELECT * FROM gpon  WHERE ESTADO = 'PENDIENTE' ORDER BY fec_regist ;
+    SELECT * FROM bdtickets  WHERE ESTADO = 'PENDIENTE' ORDER BY fec_regist ;
     """
     df = pd.read_sql(sql, cnxn)
     df = df[df['tiptecnologia_x'] == page]
@@ -216,7 +202,7 @@ if authentication_status:
     ###########
     ### EXTARER DATOS
     sql2 = """
-    SELECT * FROM gpon WHERE ESTADO = 'PROGRAMADO' ;
+    SELECT * FROM bdtickets WHERE ESTADO = 'PROGRAMADO' ;
     """
     df2 = pd.read_sql(sql2, cnxn)
     df2 = df2[df2['ESTADO'] == 'PROGRAMADO']
@@ -284,8 +270,8 @@ if authentication_status:
             add  = str('CERRAR')
             nom = str(name)
             adwe = (str(options)[2:-2])
-            #cursor.execute("UPDATE gpon SET ESTADO = ?, GESTOR = ? WHERE codreq = ?", add, nom, adwe)
-            sql = "UPDATE gpon SET ESTADO = %s, GESTOR = %s WHERE codreq = %s"
+            #cursor.execute("UPDATE bdtickets SET ESTADO = ?, GESTOR = ? WHERE codreq = ?", add, nom, adwe)
+            sql = "UPDATE bdtickets SET ESTADO = %s, GESTOR = %s WHERE codreq = %s"
             val = (add, nom, adwe)
             cursor.execute(sql, val)
 
@@ -297,7 +283,7 @@ if authentication_status:
             adwe = (str(options)[2:-2])
             #st.info(dfu2)
 
-            #cursor.execute("UPDATE gpon SET ESTADO = ?, GESTOR = ? WHERE codreq = ?", add, nom, adwe)
+            #cursor.execute("UPDATE bdtickets SET ESTADO = ?, GESTOR = ? WHERE codreq = ?", add, nom, adwe)
             #st.info(dfu2)
             ### un ejemplo para texto
             #st.info(desobsordtrab)
@@ -422,16 +408,16 @@ if authentication_status:
 
 
                 if st.button("✔️Cerrar"):
-                    sql1 = "UPDATE gpon SET ACCION = %s, OBS = %s, FEC_CERRAR = %s WHERE codreq = %s"
+                    sql1 = "UPDATE bdtickets SET ACCION = %s, OBS = %s, FEC_CERRAR = %s WHERE codreq = %s"
                     #sql1 = "INSERT INTO gestionacc (codreq, ACCION) VALUES (%s, %s)"
                     val1 = (filter_type3,raw_text,tiempo ,dfu2)
                     cursor.execute(sql1, val1)
                     time.sleep(1)
 
                     #caching.clear_cache()
-                    #cursor.execute("UPDATE gpon SET ESTADO = ?, GESTOR = ? WHERE codreq = ?", add, nom, adwe)
+                    #cursor.execute("UPDATE bdtickets SET ESTADO = ?, GESTOR = ? WHERE codreq = ?", add, nom, adwe)
                     #st.info(dfu)
-                    sql = "UPDATE gpon SET ESTADO = %s, GESTOR = %s, FEC_PROG = %s WHERE codreq = %s"
+                    sql = "UPDATE bdtickets SET ESTADO = %s, GESTOR = %s, FEC_PROG = %s WHERE codreq = %s"
                     val = (add, nom, tiempo, adwe)
                     cursor.execute(sql, val)
                     cnxn.commit()
@@ -453,8 +439,8 @@ if authentication_status:
             adwe = (str(options)[2:-2])
 
             st.markdown("Columns inside form")
-            #cursor.execute("UPDATE gpon SET ESTADO = ?, GESTOR = ? WHERE codreq = ?", add, nom, adwe)
-            sql = "UPDATE gpon SET ESTADO = %s, GESTOR = %s WHERE codreq = %s"
+            #cursor.execute("UPDATE bdtickets SET ESTADO = ?, GESTOR = ? WHERE codreq = ?", add, nom, adwe)
+            sql = "UPDATE bdtickets SET ESTADO = %s, GESTOR = %s WHERE codreq = %s"
             val = (add, nom, adwe)
             cursor.execute(sql, val)
             cnxn.commit()

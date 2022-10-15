@@ -181,20 +181,6 @@ if authentication_status:
     cursor = cnxn.cursor()
     print("listo")
 
-    sql = """
-    SELECT GESTOR, codreq, FEC_CERRAR FROM gpon WHERE  ESTADO="CERRAR" ;
-    """
-    df = pd.read_sql(sql, cnxn)
-    df = df[df['GESTOR'] == name]
-    date = datetime.now()
-    tcanti = (date.strftime("%Y-%m-%d"))
-
-    df['FEC_CERRAR'] = pd.to_datetime(df['FEC_CERRAR']).dt.date
-    df['FEC_CERRAR'] = pd.to_datetime(df['FEC_CERRAR'], format='%Y-%m-%d')
-    canti = len(df[df['FEC_CERRAR'] == tcanti])
-
-    print(canti)
-    st.markdown(f'<p class="big-font"; style="text-align:center;color:Cyan;font-size:24px"><b>👉🏻  {canti}</b></p>', unsafe_allow_html=True)
     #st.sidebar.header("catidad trabajada "+ str(canti))
     ### EXTARER DATOS
     sql = """
