@@ -172,7 +172,7 @@ if authentication_status:
     #######
 
 
-    cnxn = mysql.connector.connect( host="localhost",
+    cnxn = mysql.connector.connect( host="127.0.0.1",
                                     port="3306",
                                     user="root",
                                     passwd="CARDENAS47465810",
