@@ -1,4 +1,3 @@
-import base64
 import mysql.connector
 #import pyodbc
 import pandas as pd
@@ -24,36 +23,7 @@ hashed_passwords = [user["password"] for user in users]
 
 authenticator = stauth.Authenticate(names, usernames, hashed_passwords,"sales_dashboard", "abcdef", cookie_expiry_days=30)
 
-#### fondo al costado
-def sidebar_bg(side_bg):
-   side_bg_ext = 'jpg'
-   st.markdown(
-      f"""
-      <style>
-      [data-testid="stSidebar"] > div:first-child {{
-          background: url(data:image/{side_bg_ext};base64,{base64.b64encode(open(side_bg, "rb").read()).decode()});
-      }}
-      </style>
-      """,
-      unsafe_allow_html=True,
-      )
-side_bg = 'nooa.jpg'
-sidebar_bg(side_bg)
-#### fondo al costado
-def sidebar_bg(side_bg):
-    side_bg_ext = 'jpg'
-    st.markdown(
-        f"""
-        <style>
-        [data-testid="stSidebar"] > div:first-child {{
-            background: url(data:image/{side_bg_ext};base64,{base64.b64encode(open(side_bg, "rb").read()).decode()});
-        }}
-        </style>
-        """,
-        unsafe_allow_html=True,
-        )
-    side_bg = 'nooa.jpg'
-    sidebar_bg(side_bg)
+
 
 
 name, authentication_status, username = authenticator.login("Login", "main")
@@ -108,26 +78,6 @@ if authentication_status == None:
         """,
         unsafe_allow_html=True
     )
-    #### fondo al costado
-    def sidebar_bg(side_bg):
-        side_bg_ext = 'jpg'
-        st.markdown(
-            f"""
-            <style>
-            [data-testid="stSidebar"] > div:first-child {{
-                background: url(data:image/{side_bg_ext};base64,{base64.b64encode(open(side_bg, "rb").read()).decode()});
-            }}
-            </style>
-            """,
-            unsafe_allow_html=True,
-            )
-        side_bg = 'nooa.jpg'
-        sidebar_bg(side_bg)
-
-    # para los botones horizontal
-    st.write('<style>div.row-widget.stRadio > div{flex-direction:row;}</style>', unsafe_allow_html=True)
-
-
 
     st.markdown(
         f"""
@@ -137,7 +87,6 @@ if authentication_status == None:
         """,
         unsafe_allow_html=True
     )
-
     texto  = ('🔒Estamos mejorando la privacidad de la información, si aún no cuentas con tus credenciales, comunicarte con:')
     st.caption( f'<h6 style="color:#FFFFFF;">{texto}</h6>', unsafe_allow_html=True )
 
@@ -162,8 +111,6 @@ if authentication_status:
     st.title("GESTION TICKETS PENDIENTES💻")
 
     st.sidebar.image("logo2.png", width=290)
-
-
 
     page_names = ['GPON', 'HFC']
     page = st.sidebar.radio('Selecciona inf. Tecnoligia💻',page_names, index=0)
@@ -248,10 +195,7 @@ if authentication_status:
     #df = df[df.year.isin([2008, 2009])]
     # para los botones horizontal
     st.write('<style>div.row-widget.stRadio > div{flex-direction:row;}</style>', unsafe_allow_html=True)
-
-
     try:
-
 
         genre = st.radio(
             "Establece tu preferencia de actividad",
@@ -486,32 +430,14 @@ if authentication_status:
                     header {visibility: hidden;}
                     </style>
                     """
-        st.markdown(hide_streamlit_style, unsafe_allow_html=True)
-
-        ## fondo total
-        def add_bg_from_url():
-            st.markdown(
-                f"""
-                <style>
-                .stApp {{
-                    background-image: url("https://cdn.pixabay.com/photo/2015/04/23/21/59/hot-air-balloon-736879_960_720.jpg 1x, https://cdn.pixabay.com/photo/2015/04/23/21/59/hot-air-balloon-736879_1280.jpg");
-                    background-attachment: fixed;
-                    background-size: cover
-                }}
-                </style>
-                """,
-                unsafe_allow_html=True
-            )
-        add_bg_from_url() 
-
-        ### para la barra
+        st.markdown(hide_streamlit_style, unsafe_allow_html=True) 
         for percent_complete in range(100):
             time.sleep(0.1)
             my_bar.progress(percent_complete + 1)
     except Exception as e:
         pass
 
-    ## borrar nombres de la pagina
+                ## borrar nombres de la pagina
     hide_streamlit_style = """
                 <style>
                 #MainMenu {visibility: hidden;}
@@ -584,36 +510,4 @@ hide_streamlit_style = """
             header {visibility: hidden;}
             </style>
             """
-st.markdown(hide_streamlit_style, unsafe_allow_html=True)
-
-## fondo total
-def add_bg_from_url():
-    st.markdown(
-         f"""
-         <style>
-         .stApp {{
-             background-image: url("https://cdn.pixabay.com/photo/2015/04/23/21/59/hot-air-balloon-736879_960_720.jpg 1x, https://cdn.pixabay.com/photo/2015/04/23/21/59/hot-air-balloon-736879_1280.jpg");
-             background-attachment: fixed;
-             background-size: cover
-         }}
-         </style>
-         """,
-         unsafe_allow_html=True
-     )
-add_bg_from_url()
-
-#### fondo al costado
-def sidebar_bg(side_bg):
-    side_bg_ext = 'jpg'
-    st.markdown(
-        f"""
-        <style>
-        [data-testid="stSidebar"] > div:first-child {{
-            background: url(data:image/{side_bg_ext};base64,{base64.b64encode(open(side_bg, "rb").read()).decode()});
-        }}
-        </style>
-        """,
-        unsafe_allow_html=True,
-        )
-    side_bg = 'nooa.jpg'
-    sidebar_bg(side_bg)
+st.markdown(hide_streamlit_style, unsafe_allow_html=True) 
