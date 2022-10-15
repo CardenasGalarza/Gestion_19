@@ -180,21 +180,8 @@ if authentication_status:
                                     )
     cursor = cnxn.cursor()
     #print("listo")
-    sql = """
-    SELECT GESTOR, codreq, FEC_CERRAR FROM bdtickets WHERE  ESTADO="CERRAR" ;
-    """
-    df = pd.read_sql(sql, cnxn)
-    df = df[df['GESTOR'] == name]
-    date = datetime.now()
-    tcanti = (date.strftime("%Y-%m-%d"))
 
-    df['FEC_CERRAR'] = pd.to_datetime(df['FEC_CERRAR']).dt.date
-    df['FEC_CERRAR'] = pd.to_datetime(df['FEC_CERRAR'], format='%Y-%m-%d')
-    canti = len(df[df['FEC_CERRAR'] == tcanti])
-
-    print(canti)
-    st.markdown(f'<p class="big-font"; style="text-align:center;color:Cyan;font-size:24px"><b>👉🏻  {canti}</b></p>', unsafe_allow_html=True)
-    #st.sidebar.header("catidad trabajada "+ str(canti))
+    print("listo")
     ### EXTARER DATOS
     sql = """
     SELECT * FROM bdtickets  WHERE ESTADO = 'PENDIENTE' ORDER BY fec_regist ;
@@ -300,7 +287,6 @@ if authentication_status:
             #st.info(dfu2)
             ### un ejemplo para texto
             #st.info(desobsordtrab)
-            #st.markdown(f'<p class="big-font"; style="text-align:center;background-image: linear-gradient(to right,Cyan, Cyan);color:BLACK;font-size:16px;border-radius:2%;">{canti}</p>', unsafe_allow_html=True)
             st.markdown(f'<p class="big-font"; style="text-align:center;background-image: linear-gradient(to right,Cyan, Cyan);color:BLACK;font-size:16px;border-radius:2%;">{dfunom}</p>', unsafe_allow_html=True)
 
 
