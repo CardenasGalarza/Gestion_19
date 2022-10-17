@@ -13,7 +13,7 @@ import database as db
 import time
 from datetime import datetime
 
-st.set_page_config(page_title='bdtickets-Averias', page_icon="🌀", layout='centered', initial_sidebar_state='auto')
+st.set_page_config(page_title='Gestion-Tickets', page_icon="🌀", layout='centered', initial_sidebar_state='auto')
 
 # --- USER AUTHENTICATION ---
 users = db.fetch_all_users()
@@ -165,7 +165,7 @@ if authentication_status:
 
 
 
-    page_names = ['bdtickets', 'HFC']
+    page_names = ['GPON', 'HFC']
     page = st.sidebar.radio('Selecciona inf. Tecnoligia💻',page_names, index=0)
     #######
     ## TODO CONECTION A LA BASE DE DATOS MYSQL
