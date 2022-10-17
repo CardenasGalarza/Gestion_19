@@ -412,7 +412,7 @@ if authentication_status:
                     #sql1 = "INSERT INTO gestionacc (codreq, ACCION) VALUES (%s, %s)"
                     val1 = (filter_type3,raw_text,tiempo ,dfu2)
                     cursor.execute(sql1, val1)
-                    time.sleep(1)
+                    #time.sleep(1)
 
                     #caching.clear_cache()
                     #cursor.execute("UPDATE gpon SET ESTADO = ?, GESTOR = ? WHERE codreq = ?", add, nom, adwe)
