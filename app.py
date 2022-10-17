@@ -172,11 +172,11 @@ if authentication_status:
     #######
 
 
-    cnxn = mysql.connector.connect( host="localhost",
+    cnxn = mysql.connector.connect( host="us-cdbr-east-06.cleardb.net",
                                     port="3306",
-                                    user="root",
-                                    passwd="CARDENAS47465810",
-                                    db="bdtickets"
+                                    user="b550dc65be0b71",
+                                    passwd="a3fa9457",
+                                    db="heroku_af31a2d889c5388"
                                     )
     cursor = cnxn.cursor()
     print("listo")
