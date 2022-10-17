@@ -13,7 +13,7 @@ import database as db
 import time
 from datetime import datetime
 
-st.set_page_config(page_title='Gestion-Tickets', page_icon="🌀", layout='centered', initial_sidebar_state='auto')
+st.set_page_config(page_title='Gpon-Averias', page_icon="🌀", layout='centered', initial_sidebar_state='auto')
 
 # --- USER AUTHENTICATION ---
 users = db.fetch_all_users()
@@ -179,8 +179,21 @@ if authentication_status:
                                     db="heroku_af31a2d889c5388"
                                     )
     cursor = cnxn.cursor()
-    print("listo")
+    #print("listo")
+    sql = """
+    SELECT GESTOR, codreq, FEC_CERRAR FROM bdtickets WHERE  ESTADO="CERRAR" ;
+    """
+    df = pd.read_sql(sql, cnxn)
+    df = df[df['GESTOR'] == name]
+    date = datetime.now()
+    tcanti = (date.strftime("%Y-%m-%d"))
 
+    df['FEC_CERRAR'] = pd.to_datetime(df['FEC_CERRAR']).dt.date
+    df['FEC_CERRAR'] = pd.to_datetime(df['FEC_CERRAR'], format='%Y-%m-%d')
+    canti = len(df[df['FEC_CERRAR'] == tcanti])
+
+    #print(canti)
+    st.markdown(f'<p class="big-font"; style="text-align:center;color:Cyan;font-size:24px"><b>👉🏻  {canti}</b></p>', unsafe_allow_html=True)
     #st.sidebar.header("catidad trabajada "+ str(canti))
     ### EXTARER DATOS
     sql = """
@@ -244,7 +257,7 @@ if authentication_status:
 
     ## ejemplo de texto completo
     desobsordtrab = (str(desobsordtrab)[2:-2])
-    print(desobsordtrab)
+    #print(desobsordtrab)
     #df = df[df.year.isin([2008, 2009])]
     # para los botones horizontal
     st.write('<style>div.row-widget.stRadio > div{flex-direction:row;}</style>', unsafe_allow_html=True)
@@ -263,7 +276,7 @@ if authentication_status:
             ## fecha para programar y cerrar
             date = datetime.now()
             tiempo = (date.strftime("%d-%m-%Y %H:%M:%S"))
-            print(tiempo) # DD Month, YYYY HH:MM:SS
+            #print(tiempo) # DD Month, YYYY HH:MM:SS
 
             options = (df2['codreq'].unique())
 
@@ -388,7 +401,7 @@ if authentication_status:
             def clear_text():
                 st.session_state["text"] = ""
                 
-            st.button("borrar", on_click=clear_text)
+            st.button("🗑️Limpiar ", on_click=clear_text)
                 
             #st.button("clear text input", on_click=clear_text)
 

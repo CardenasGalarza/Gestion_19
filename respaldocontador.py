@@ -401,7 +401,7 @@ if authentication_status:
             def clear_text():
                 st.session_state["text"] = ""
                 
-            st.button("borrar", on_click=clear_text)
+            st.button("🗑️Limpiar ", on_click=clear_text)
                 
             #st.button("clear text input", on_click=clear_text)
 
@@ -425,7 +425,7 @@ if authentication_status:
                     #sql1 = "INSERT INTO gestionacc (codreq, ACCION) VALUES (%s, %s)"
                     val1 = (filter_type3,raw_text,tiempo ,dfu2)
                     cursor.execute(sql1, val1)
-                    time.sleep(1)
+                    #time.sleep(1)
 
                     #caching.clear_cache()
                     #cursor.execute("UPDATE bdtickets SET ESTADO = ?, GESTOR = ? WHERE codreq = ?", add, nom, adwe)
