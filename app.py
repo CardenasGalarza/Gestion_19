@@ -86,6 +86,10 @@ elif st.session_state["authentication_status"] == None:
 ########################################################################
 ########################################################################
 
+def __init__(self):
+    st.experimental_rerun()
+
+
 #### fondo al costado
 def sidebar_bg(side_bg):
    side_bg_ext = 'jpg'
@@ -491,8 +495,8 @@ if authentication_status:
                     #import pyautogui
                     #pyautogui.hotkey("ctrl","F5")
                     st.experimental_singleton.clear()
-                    time.sleep(0.01)
                     st.experimental_rerun()
+
                     #
 
                 # st.experimental_rerun()
@@ -602,7 +606,6 @@ if authentication_status:
                 unsafe_allow_html=True
             )
         add_bg_from_url() 
-
         ### para la barra
         for percent_complete in range(100):
             time.sleep(0.1)
