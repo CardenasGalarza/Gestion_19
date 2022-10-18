@@ -1,5 +1,6 @@
 import base64
 import mysql.connector
+from mysql.connector import Error
 #import pyodbc
 import pandas as pd
 import streamlit as st
@@ -439,7 +440,21 @@ if authentication_status:
                     ###TODO IMPORTANTE ES PARA REFRESCAR LA PAGINA
                     st.experimental_rerun()
                 # st.experimental_rerun()
-
+                ## fondo total
+                def add_bg_from_url():
+                    st.markdown(
+                        f"""
+                        <style>
+                        .stApp {{
+                            background-image: url("https://cdn.pixabay.com/photo/2015/04/23/21/59/hot-air-balloon-736879_960_720.jpg 1x, https://cdn.pixabay.com/photo/2015/04/23/21/59/hot-air-balloon-736879_1280.jpg");
+                            background-attachment: fixed;
+                            background-size: cover
+                        }}
+                        </style>
+                        """,
+                        unsafe_allow_html=True
+                    )
+                add_bg_from_url() 
         if  genre == 'Cerrar y Descansar':
 
             st.text("Welcome To GeeksForGeeks!!!") 
@@ -457,8 +472,6 @@ if authentication_status:
             val = (add, nom, adwe)
             cursor.execute(sql, val)
             cnxn.commit()
-            cursor.close()
-            cnxn.close()
 
             st.write("DESVANSAR")
 
@@ -469,17 +482,33 @@ if authentication_status:
             st.warning("LLamar") 
             
 
-    except Exception as e:
-        pass
-
+    except Error as e:
+        print('디비 관련 에러 발생', e)
+    
+    finally : 
+        # 5. 모든 데이터베이스 실행 명령을 전부 끝냈으면,
+        #    커서와 커넥션을 모두 닫아준다.
+        cursor.close()
+        cnxn.close()
+        #print('MYSQL 커넥션 종료')
 
     # para los botones horizontal
     st.write('<style>div.row-widget.stRadio > div{flex-direction:row;}</style>', unsafe_allow_html=True)
-
-
-    cursor.close()
-    cnxn.close()
-    
+    ## fondo total
+    def add_bg_from_url():
+        st.markdown(
+            f"""
+            <style>
+            .stApp {{
+                background-image: url("https://cdn.pixabay.com/photo/2015/04/23/21/59/hot-air-balloon-736879_960_720.jpg 1x, https://cdn.pixabay.com/photo/2015/04/23/21/59/hot-air-balloon-736879_1280.jpg");
+                background-attachment: fixed;
+                background-size: cover
+            }}
+            </style>
+            """,
+            unsafe_allow_html=True
+        )
+    add_bg_from_url() 
     try:
 
         ## botones en general
