@@ -450,6 +450,7 @@ if authentication_status:
             #print(input)
             def clear_text():
                 st.session_state["text"] = ""
+                st.experimental_rerun()
                 
             st.button("🗑️Limpiar ", on_click=clear_text)
                 
@@ -467,6 +468,7 @@ if authentication_status:
             with col5:
                 pass
             with col3 :
+                
 
 
 
@@ -489,12 +491,9 @@ if authentication_status:
                     ###TODO IMPORTANTE ES PARA REFRESCAR LA PAGINA
                     #st.experimental_rerun()
                     #st.legacy_caching.clear_cache()
-                    contador = 0
-                    while contador < 2:
-                    # Ejecuta el bloque de código aquí
-                    # Siempre que el contador sea inferior a 10
-                        st.experimental_singleton.clear()
-                        st.experimental_rerun()
+                    #st.legacy_caching.clear_cache()
+                    st.experimental_singleton.clear()
+                    st.experimental_rerun()
 
                 # st.experimental_rerun()
                 ## fondo total
