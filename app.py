@@ -1,5 +1,6 @@
 import base64
 import mysql.connector
+from mysql.connector import Error
 #import pyodbc
 import pandas as pd
 import streamlit as st
@@ -13,16 +14,76 @@ import database as db
 import time
 from datetime import datetime
 
-st.set_page_config(page_title='Gpon-Averias', page_icon="🌀", layout='centered', initial_sidebar_state='auto')
+cnxn = mysql.connector.connect( host="us-cdbr-east-06.cleardb.net",
+                                port="3306",
+                                user="b550dc65be0b71",
+                                passwd="a3fa9457",
+                                db="heroku_af31a2d889c5388"
+                                )
+cursor = cnxn.cursor()
 
-# --- USER AUTHENTICATION ---
-users = db.fetch_all_users()
+#print("listo")
+sql = """
+SELECT * FROM bduser
+"""
+dfuser = pd.read_sql(sql, cnxn)
 
-usernames = [user["key"] for user in users]
-names = [user["name"] for user in users]
-hashed_passwords = [user["password"] for user in users]
+namesbd = dfuser['names'].tolist()
+usernamesbd = dfuser['usernames'].tolist()
+passwordsbd = dfuser['passwords'].tolist()
 
-authenticator = stauth.Authenticate(names, usernames, hashed_passwords,"sales_dashboard", "abcdef", cookie_expiry_days=30)
+st.set_page_config(page_title='bdtickets-Averias', page_icon="🌀", layout='centered', initial_sidebar_state='auto')
+
+###TODO LOGIN
+
+names = namesbd
+usernames = usernamesbd
+passwords = passwordsbd
+hashed_passwords = stauth.Hasher(passwords).generate()
+authenticator = stauth.Authenticate(names,usernames,hashed_passwords,'some_cookie_name','some_signature_key',cookie_expiry_days=30)
+#### fondo al costado
+def sidebar_bg(side_bg):
+   side_bg_ext = 'jpg'
+   st.markdown(
+      f"""
+      <style>
+      [data-testid="stSidebar"] > div:first-child {{
+          background: url(data:image/{side_bg_ext};base64,{base64.b64encode(open(side_bg, "rb").read()).decode()});
+      }}
+      </style>
+      """,
+      unsafe_allow_html=True,
+      )
+side_bg = 'nooa.jpg'
+sidebar_bg(side_bg)
+#### fondo al costado
+def sidebar_bg(side_bg):
+    side_bg_ext = 'jpg'
+    st.markdown(
+        f"""
+        <style>
+        [data-testid="stSidebar"] > div:first-child {{
+            background: url(data:image/{side_bg_ext};base64,{base64.b64encode(open(side_bg, "rb").read()).decode()});
+        }}
+        </style>
+        """,
+        unsafe_allow_html=True,
+        )
+    side_bg = 'nooa.jpg'
+    sidebar_bg(side_bg)
+name, authentication_status, username = authenticator.login('Login', 'main')
+
+#print(name)
+    
+if st.session_state["authentication_status"]:
+    authenticator.logout("Cerrar sesión", "sidebar")
+    st.sidebar.title(f"Bienvenido {name}")
+elif st.session_state["authentication_status"] == False:
+    st.error('Username/password is incorrect')
+elif st.session_state["authentication_status"] == None:
+    st.warning('Please enter your username and password')
+########################################################################
+########################################################################
 
 #### fondo al costado
 def sidebar_bg(side_bg):
@@ -56,10 +117,10 @@ def sidebar_bg(side_bg):
     sidebar_bg(side_bg)
 
 
-name, authentication_status, username = authenticator.login("Login", "main")
+
 
 if authentication_status == False:
-    st.error("Username/password is incorrect")
+#    st.error("Username/password is incorrect")
 
         ## borrar nombres de la pagina
     hide_streamlit_style = """
@@ -71,13 +132,8 @@ if authentication_status == False:
                 """
     st.markdown(hide_streamlit_style, unsafe_allow_html=True) 
 
-
-    
-
 if authentication_status == None:
-    st.warning("Please enter your username and password")
-
-    ## borrar nombres de la pagina
+        ## borrar nombres de la pagina
     hide_streamlit_style = """
                 <style>
                 #MainMenu {visibility: hidden;}
@@ -86,6 +142,7 @@ if authentication_status == None:
                 </style>
                 """
     st.markdown(hide_streamlit_style, unsafe_allow_html=True) 
+
 
     st.markdown(
         """
@@ -150,15 +207,9 @@ if authentication_status == None:
     ######
     ######
 
+
 if authentication_status:
     # ---- SIDEBAR ----
-    authenticator.logout("Cerrar sesión", "sidebar")
-    st.sidebar.title(f"Bienvenido {name}")
-    #st.sidebar.header("Please Filter Here:")
-
-
-    #################################33
-    #########################################
     st.title("GESTION TICKETS PENDIENTES💻")
 
     st.sidebar.image("logo2.png", width=290)
@@ -169,19 +220,30 @@ if authentication_status:
     page = st.sidebar.radio('Selecciona inf. Tecnoligia💻',page_names, index=0)
     #######
     ## TODO CONECTION A LA BASE DE DATOS MYSQL
-    #######
-
-
-    cnxn = mysql.connector.connect( host="us-cdbr-east-06.cleardb.net",
-                                    port="3306",
-                                    user="b550dc65be0b71",
-                                    passwd="a3fa9457",
-                                    db="heroku_af31a2d889c5388"
-                                    )
-    cursor = cnxn.cursor()
+    ######
+    #cnxn = mysql.connector.connect( host="us-cdbr-east-06.cleardb.net",
+    #                                port="3306",
+    #                                user="b550dc65be0b71",
+    #                                passwd="a3fa9457",
+    #                                db="heroku_af31a2d889c5388"
+    #                                )
+    #cursor = cnxn.cursor()
     #print("listo")
+    sql = """
+    SELECT GESTOR, codreq, FEC_CERRAR FROM bdtickets WHERE  ESTADO="CERRAR" ;
+    """
+    df = pd.read_sql(sql, cnxn)
+    df = df[df['GESTOR'] == name]
+    date = datetime.now()
+    tcanti = (date.strftime("%Y-%m-%d"))
 
-    print("listo")
+    df['FEC_CERRAR'] = pd.to_datetime(df['FEC_CERRAR']).dt.date
+    df['FEC_CERRAR'] = pd.to_datetime(df['FEC_CERRAR'], format='%Y-%m-%d')
+    canti = len(df[df['FEC_CERRAR'] == tcanti])
+
+    #print(canti)
+    st.markdown(f'<p class="big-font"; style="text-align:center;color:Cyan;font-size:24px"><b>👉🏻  {canti}</b></p>', unsafe_allow_html=True)
+    #st.sidebar.header("catidad trabajada "+ str(canti))
     ### EXTARER DATOS
     sql = """
     SELECT * FROM bdtickets  WHERE ESTADO = 'PENDIENTE' ORDER BY fec_regist ;
@@ -244,7 +306,7 @@ if authentication_status:
 
     ## ejemplo de texto completo
     desobsordtrab = (str(desobsordtrab)[2:-2])
-    print(desobsordtrab)
+    #print(desobsordtrab)
     #df = df[df.year.isin([2008, 2009])]
     # para los botones horizontal
     st.write('<style>div.row-widget.stRadio > div{flex-direction:row;}</style>', unsafe_allow_html=True)
@@ -263,7 +325,7 @@ if authentication_status:
             ## fecha para programar y cerrar
             date = datetime.now()
             tiempo = (date.strftime("%d-%m-%Y %H:%M:%S"))
-            print(tiempo) # DD Month, YYYY HH:MM:SS
+            #print(tiempo) # DD Month, YYYY HH:MM:SS
 
             options = (df2['codreq'].unique())
 
@@ -287,6 +349,7 @@ if authentication_status:
             #st.info(dfu2)
             ### un ejemplo para texto
             #st.info(desobsordtrab)
+            #st.markdown(f'<p class="big-font"; style="text-align:center;background-image: linear-gradient(to right,Cyan, Cyan);color:BLACK;font-size:16px;border-radius:2%;">{canti}</p>', unsafe_allow_html=True)
             st.markdown(f'<p class="big-font"; style="text-align:center;background-image: linear-gradient(to right,Cyan, Cyan);color:BLACK;font-size:16px;border-radius:2%;">{dfunom}</p>', unsafe_allow_html=True)
 
 
@@ -387,7 +450,7 @@ if authentication_status:
             def clear_text():
                 st.session_state["text"] = ""
                 
-            st.button("borrar", on_click=clear_text)
+            st.button("🗑️Limpiar ", on_click=clear_text)
                 
             #st.button("clear text input", on_click=clear_text)
 
@@ -411,7 +474,7 @@ if authentication_status:
                     #sql1 = "INSERT INTO gestionacc (codreq, ACCION) VALUES (%s, %s)"
                     val1 = (filter_type3,raw_text,tiempo ,dfu2)
                     cursor.execute(sql1, val1)
-                    time.sleep(1)
+                    #time.sleep(1)
 
                     #caching.clear_cache()
                     #cursor.execute("UPDATE bdtickets SET ESTADO = ?, GESTOR = ? WHERE codreq = ?", add, nom, adwe)
@@ -425,7 +488,21 @@ if authentication_status:
                     ###TODO IMPORTANTE ES PARA REFRESCAR LA PAGINA
                     st.experimental_rerun()
                 # st.experimental_rerun()
-
+                ## fondo total
+                def add_bg_from_url():
+                    st.markdown(
+                        f"""
+                        <style>
+                        .stApp {{
+                            background-image: url("https://cdn.pixabay.com/photo/2015/04/23/21/59/hot-air-balloon-736879_960_720.jpg 1x, https://cdn.pixabay.com/photo/2015/04/23/21/59/hot-air-balloon-736879_1280.jpg");
+                            background-attachment: fixed;
+                            background-size: cover
+                        }}
+                        </style>
+                        """,
+                        unsafe_allow_html=True
+                    )
+                add_bg_from_url() 
         if  genre == 'Cerrar y Descansar':
 
             st.text("Welcome To GeeksForGeeks!!!") 
@@ -443,8 +520,6 @@ if authentication_status:
             val = (add, nom, adwe)
             cursor.execute(sql, val)
             cnxn.commit()
-            cursor.close()
-            cnxn.close()
 
             st.write("DESVANSAR")
 
@@ -455,17 +530,33 @@ if authentication_status:
             st.warning("LLamar") 
             
 
-    except Exception as e:
-        pass
-
+    except Error as e:
+        print('디비 관련 에러 발생', e)
+    
+    finally : 
+        # 5. 모든 데이터베이스 실행 명령을 전부 끝냈으면,
+        #    커서와 커넥션을 모두 닫아준다.
+        cursor.close()
+        cnxn.close()
+        #print('MYSQL 커넥션 종료')
 
     # para los botones horizontal
     st.write('<style>div.row-widget.stRadio > div{flex-direction:row;}</style>', unsafe_allow_html=True)
-
-
-    cursor.close()
-    cnxn.close()
-    
+    ## fondo total
+    def add_bg_from_url():
+        st.markdown(
+            f"""
+            <style>
+            .stApp {{
+                background-image: url("https://cdn.pixabay.com/photo/2015/04/23/21/59/hot-air-balloon-736879_960_720.jpg 1x, https://cdn.pixabay.com/photo/2015/04/23/21/59/hot-air-balloon-736879_1280.jpg");
+                background-attachment: fixed;
+                background-size: cover
+            }}
+            </style>
+            """,
+            unsafe_allow_html=True
+        )
+    add_bg_from_url() 
     try:
 
         ## botones en general
