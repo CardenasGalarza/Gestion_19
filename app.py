@@ -715,4 +715,12 @@ def sidebar_bg(side_bg):
 
 
 
+import streamlit as st
+import pyautogui
+try:
+    st.success("welcome to streamlit community!")
+except:
+   pyautogui.hotkey("ctrl","F5")
+# update every 5 mins
+
 #st.text_input("input2", on_change=on_change)
