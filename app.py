@@ -1,6 +1,5 @@
 import base64
 import mysql.connector
-from mysql.connector import Error
 #import pyodbc
 import pandas as pd
 import streamlit as st
@@ -14,16 +13,28 @@ import database as db
 import time
 from datetime import datetime
 
-st.set_page_config(page_title='Gpon-Averias', page_icon="🌀", layout='centered', initial_sidebar_state='auto')
+st.set_page_config(page_title='bdtickets-Averias', page_icon="🌀", layout='centered', initial_sidebar_state='auto')
 
-# --- USER AUTHENTICATION ---
-users = db.fetch_all_users()
 
-usernames = [user["key"] for user in users]
-names = [user["name"] for user in users]
-hashed_passwords = [user["password"] for user in users]
+###TODO LOGIN
+names = ['Join Prime','Join Walmart plus']
+usernames = ['amazon','walmart']
+passwords = ['amazonpay','phonepe']
+hashed_passwords = stauth.Hasher(passwords).generate()
+authenticator = stauth.Authenticate(names,usernames,hashed_passwords,'some_cookie_name','some_signature_key',cookie_expiry_days=30)
+name, authentication_status, username = authenticator.login('Login', 'main')
 
-authenticator = stauth.Authenticate(names, usernames, hashed_passwords,"sales_dashboard", "abcdef", cookie_expiry_days=30)
+#print(name)
+    
+if st.session_state["authentication_status"]:
+    authenticator.logout("Cerrar sesión", "sidebar")
+    st.sidebar.title(f"Bienvenido {name}")
+elif st.session_state["authentication_status"] == False:
+    st.error('Username/password is incorrect')
+elif st.session_state["authentication_status"] == None:
+    st.warning('Please enter your username and password')
+########################################################################
+########################################################################
 
 #### fondo al costado
 def sidebar_bg(side_bg):
@@ -57,7 +68,7 @@ def sidebar_bg(side_bg):
     sidebar_bg(side_bg)
 
 
-name, authentication_status, username = authenticator.login("Login", "main")
+
 
 if authentication_status == False:
     st.error("Username/password is incorrect")
@@ -72,13 +83,8 @@ if authentication_status == False:
                 """
     st.markdown(hide_streamlit_style, unsafe_allow_html=True) 
 
-
-    
-
 if authentication_status == None:
-    st.warning("Please enter your username and password")
-
-    ## borrar nombres de la pagina
+        ## borrar nombres de la pagina
     hide_streamlit_style = """
                 <style>
                 #MainMenu {visibility: hidden;}
@@ -87,6 +93,7 @@ if authentication_status == None:
                 </style>
                 """
     st.markdown(hide_streamlit_style, unsafe_allow_html=True) 
+
 
     st.markdown(
         """
@@ -151,15 +158,9 @@ if authentication_status == None:
     ######
     ######
 
+
 if authentication_status:
     # ---- SIDEBAR ----
-    authenticator.logout("Cerrar sesión", "sidebar")
-    st.sidebar.title(f"Bienvenido {name}")
-    #st.sidebar.header("Please Filter Here:")
-
-
-    #################################33
-    #########################################
     st.title("GESTION TICKETS PENDIENTES💻")
 
     st.sidebar.image("logo2.png", width=290)
