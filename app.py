@@ -421,7 +421,6 @@ if authentication_status:
 
 
                 if st.button("✔️Cerrar"):
-
                     sql1 = "UPDATE bdtickets SET ACCION = %s, OBS = %s, FEC_CERRAR = %s WHERE codreq = %s"
                     #sql1 = "INSERT INTO gestionacc (codreq, ACCION) VALUES (%s, %s)"
                     val1 = (filter_type3,raw_text,tiempo ,dfu2)
@@ -480,10 +479,7 @@ if authentication_status:
 
     cursor.close()
     cnxn.close()
-    import random
-    for x in range(int(1)):
-        num = random.randint(1,4)
-    time.sleep(int(num))   # 3 segundos.
+    
     try:
 
         ## botones en general
