@@ -710,3 +710,6 @@ def sidebar_bg(side_bg):
         )
     side_bg = 'nooa.jpg'
     sidebar_bg(side_bg)
+
+cursor.close()
+cnxn.close()
