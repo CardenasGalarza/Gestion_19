@@ -493,7 +493,7 @@ if authentication_status:
                         #st.legacy_caching.clear_cache()
                     #import pyautogui
                     #pyautogui.hotkey("ctrl","F5")
-                    st.experimental_singleton.clear()
+                    #st.experimental_singleton.clear()
                     st.experimental_rerun()
 
                     #
