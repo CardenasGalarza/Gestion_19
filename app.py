@@ -493,6 +493,7 @@ if authentication_status:
                     st.experimental_singleton.clear()
                     time.sleep(0.01)
                     st.experimental_rerun()
+                    #
 
                 # st.experimental_rerun()
                 ## fondo total
