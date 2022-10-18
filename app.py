@@ -1,5 +1,6 @@
 import base64
 import mysql.connector
+from mysql.connector import Error
 #import pyodbc
 import pandas as pd
 import streamlit as st
@@ -71,7 +72,7 @@ def sidebar_bg(side_bg):
 
 
 if authentication_status == False:
-    st.error("Username/password is incorrect")
+#    st.error("Username/password is incorrect")
 
         ## borrar nombres de la pagina
     hide_streamlit_style = """
