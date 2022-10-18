@@ -469,8 +469,8 @@ if authentication_status:
             with col3 :
                 
                 if st.button("✔️Cerrar"):
-                    def __init__(self):
-                        st.experimental_rerun()
+                    #def __init__(self):
+                    #    st.experimental_rerun()
 
                     sql1 = "UPDATE bdtickets SET ACCION = %s, OBS = %s, FEC_CERRAR = %s WHERE codreq = %s"
                     #sql1 = "INSERT INTO gestionacc (codreq, ACCION) VALUES (%s, %s)"
@@ -481,7 +481,7 @@ if authentication_status:
                     #caching.clear_cache()
                     #cursor.execute("UPDATE bdtickets SET ESTADO = ?, GESTOR = ? WHERE codreq = ?", add, nom, adwe)
                     #st.info(dfu)
-                    sql = "UPDATE bdtickets SET ESTADO = %s, GESTOR = %s, FEC_PROG = %s WHERE codreq = %s"
+                    sql = "UPDATE bdtickets SET ESTADO = %s, GESTOR = %s, FEC_PROG = %s WHERE codreq = %s AND ESTADO = 'PENDIENTE' "
                     val = (add, nom, tiempo, adwe)
                     cursor.execute(sql, val)
                     cnxn.commit()
