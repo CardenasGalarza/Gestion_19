@@ -14,11 +14,12 @@ import database as db
 import time
 from datetime import datetime
 
-cnxn = mysql.connector.connect( host="localhost",
+
+cnxn = mysql.connector.connect( host="us-cdbr-east-06.cleardb.net",
                                 port="3306",
-                                user="root",
-                                passwd="CARDENAS47465810",
-                                db="bdtickets"
+                                user="b550dc65be0b71",
+                                passwd="a3fa9457",
+                                db="heroku_af31a2d889c5388"
                                 )
 cursor = cnxn.cursor()
 
@@ -32,15 +33,45 @@ namesbd = dfuser['names'].tolist()
 usernamesbd = dfuser['usernames'].tolist()
 passwordsbd = dfuser['passwords'].tolist()
 
-st.set_page_config(page_title='gpon-Averias', page_icon="🌀", layout='centered', initial_sidebar_state='auto')
-
+st.set_page_config(page_title='bdtickets-Averias', page_icon="🌀", layout='centered', initial_sidebar_state='auto')
 
 ###TODO LOGIN
+
 names = namesbd
 usernames = usernamesbd
 passwords = passwordsbd
 hashed_passwords = stauth.Hasher(passwords).generate()
 authenticator = stauth.Authenticate(names,usernames,hashed_passwords,'some_cookie_name','some_signature_key',cookie_expiry_days=30)
+#### fondo al costado
+def sidebar_bg(side_bg):
+   side_bg_ext = 'jpg'
+   st.markdown(
+      f"""
+      <style>
+      [data-testid="stSidebar"] > div:first-child {{
+          background: url(data:image/{side_bg_ext};base64,{base64.b64encode(open(side_bg, "rb").read()).decode()});
+      }}
+      </style>
+      """,
+      unsafe_allow_html=True,
+      )
+side_bg = 'nooa.jpg'
+sidebar_bg(side_bg)
+#### fondo al costado
+def sidebar_bg(side_bg):
+    side_bg_ext = 'jpg'
+    st.markdown(
+        f"""
+        <style>
+        [data-testid="stSidebar"] > div:first-child {{
+            background: url(data:image/{side_bg_ext};base64,{base64.b64encode(open(side_bg, "rb").read()).decode()});
+        }}
+        </style>
+        """,
+        unsafe_allow_html=True,
+        )
+    side_bg = 'nooa.jpg'
+    sidebar_bg(side_bg)
 name, authentication_status, username = authenticator.login('Login', 'main')
 
 #print(name)
@@ -178,6 +209,7 @@ if authentication_status == None:
     ######
 
 
+
 if authentication_status:
     # ---- SIDEBAR ----
     st.title("GESTION TICKETS PENDIENTES💻")
@@ -190,11 +222,17 @@ if authentication_status:
     page = st.sidebar.radio('Selecciona inf. Tecnoligia💻',page_names, index=0)
     #######
     ## TODO CONECTION A LA BASE DE DATOS MYSQL
-    #######
-
+    ######
+    #cnxn = mysql.connector.connect( host="us-cdbr-east-06.cleardb.net",
+    #                                port="3306",
+    #                                user="b550dc65be0b71",
+    #                                passwd="a3fa9457",
+    #                                db="heroku_af31a2d889c5388"
+    #                                )
+    #cursor = cnxn.cursor()
     #print("listo")
     sql = """
-    SELECT GESTOR, codreq, FEC_CERRAR FROM gpon WHERE  ESTADO="CERRAR" ;
+    SELECT GESTOR, codreq, FEC_CERRAR FROM bdtickets WHERE  ESTADO="CERRAR" ;
     """
     df = pd.read_sql(sql, cnxn)
     df = df[df['GESTOR'] == name]
@@ -210,7 +248,7 @@ if authentication_status:
     #st.sidebar.header("catidad trabajada "+ str(canti))
     ### EXTARER DATOS
     sql = """
-    SELECT * FROM gpon  WHERE ESTADO = 'PENDIENTE' ORDER BY fec_regist ;
+    SELECT * FROM bdtickets  WHERE ESTADO = 'PENDIENTE' ORDER BY fec_regist ;
     """
     df = pd.read_sql(sql, cnxn)
     df = df[df['tiptecnologia_x'] == page]
@@ -228,7 +266,7 @@ if authentication_status:
     ###########
     ### EXTARER DATOS
     sql2 = """
-    SELECT * FROM gpon WHERE ESTADO = 'PROGRAMADO' ;
+    SELECT * FROM bdtickets WHERE ESTADO = 'PROGRAMADO' ;
     """
     df2 = pd.read_sql(sql2, cnxn)
     df2 = df2[df2['ESTADO'] == 'PROGRAMADO']
@@ -296,8 +334,8 @@ if authentication_status:
             add  = str('CERRAR')
             nom = str(name)
             adwe = (str(options)[2:-2])
-            #cursor.execute("UPDATE gpon SET ESTADO = ?, GESTOR = ? WHERE codreq = ?", add, nom, adwe)
-            sql = "UPDATE gpon SET ESTADO = %s, GESTOR = %s WHERE codreq = %s"
+            #cursor.execute("UPDATE bdtickets SET ESTADO = ?, GESTOR = ? WHERE codreq = ?", add, nom, adwe)
+            sql = "UPDATE bdtickets SET ESTADO = %s, GESTOR = %s WHERE codreq = %s"
             val = (add, nom, adwe)
             cursor.execute(sql, val)
 
@@ -309,7 +347,7 @@ if authentication_status:
             adwe = (str(options)[2:-2])
             #st.info(dfu2)
 
-            #cursor.execute("UPDATE gpon SET ESTADO = ?, GESTOR = ? WHERE codreq = ?", add, nom, adwe)
+            #cursor.execute("UPDATE bdtickets SET ESTADO = ?, GESTOR = ? WHERE codreq = ?", add, nom, adwe)
             #st.info(dfu2)
             ### un ejemplo para texto
             #st.info(desobsordtrab)
@@ -405,7 +443,6 @@ if authentication_status:
                 )
 
 
-
             st.write("")
             #title = st.text_input("INGRESA TU GESTION")
             raw_text = st.text_area("Observación", key="text")
@@ -430,27 +467,37 @@ if authentication_status:
             with col5:
                 pass
             with col3 :
-
-
-
+                
                 if st.button("✔️Cerrar"):
-                    sql1 = "UPDATE gpon SET ACCION = %s, OBS = %s, FEC_CERRAR = %s WHERE codreq = %s"
+                    #def __init__(self):
+                    #    st.experimental_rerun()
+
+                    sql1 = "UPDATE bdtickets SET ACCION = %s, OBS = %s, FEC_CERRAR = %s WHERE codreq = %s"
                     #sql1 = "INSERT INTO gestionacc (codreq, ACCION) VALUES (%s, %s)"
                     val1 = (filter_type3,raw_text,tiempo ,dfu2)
                     cursor.execute(sql1, val1)
                     #time.sleep(1)
 
                     #caching.clear_cache()
-                    #cursor.execute("UPDATE gpon SET ESTADO = ?, GESTOR = ? WHERE codreq = ?", add, nom, adwe)
+                    #cursor.execute("UPDATE bdtickets SET ESTADO = ?, GESTOR = ? WHERE codreq = ?", add, nom, adwe)
                     #st.info(dfu)
-                    sql = "UPDATE gpon SET ESTADO = %s, GESTOR = %s, FEC_PROG = %s WHERE codreq = %s"
+                    sql = "UPDATE bdtickets SET ESTADO = %s, GESTOR = %s, FEC_PROG = %s, ACTIVO = '1' WHERE codreq = %s AND ACTIVO = '0' "
                     val = (add, nom, tiempo, adwe)
                     cursor.execute(sql, val)
                     cnxn.commit()
-                    cursor.close()
-                    cnxn.close()
-                    ###TODO IMPORTANTE ES PARA REFRESCAR LA PAGINA
+                    #cursor.close()
+                    #cnxn.close()
+                        ###TODO IMPORTANTE ES PARA REFRESCAR LA PAGINA
+                        #st.experimental_rerun()
+                        #st.legacy_caching.clear_cache()
+                        #st.legacy_caching.clear_cache()
+                    #import pyautogui
+                    #pyautogui.hotkey("ctrl","F5")
+                    st.experimental_singleton.clear()
                     st.experimental_rerun()
+
+                    #
+
                 # st.experimental_rerun()
                 ## fondo total
                 def add_bg_from_url():
@@ -468,7 +515,8 @@ if authentication_status:
                     )
                 add_bg_from_url() 
         if  genre == 'Cerrar y Descansar':
-
+            date = datetime.now()
+            tiempo = (date.strftime("%d-%m-%Y %H:%M:%S"))
             st.text("Welcome To GeeksForGeeks!!!") 
 
             "Select The Region",
@@ -479,9 +527,9 @@ if authentication_status:
             adwe = (str(options)[2:-2])
 
             st.markdown("Columns inside form")
-            #cursor.execute("UPDATE gpon SET ESTADO = ?, GESTOR = ? WHERE codreq = ?", add, nom, adwe)
-            sql = "UPDATE gpon SET ESTADO = %s, GESTOR = %s WHERE codreq = %s"
-            val = (add, nom, adwe)
+            #cursor.execute("UPDATE bdtickets SET ESTADO = ?, GESTOR = ? WHERE codreq = ?", add, nom, adwe)
+            sql = "UPDATE bdtickets SET ESTADO = %s, GESTOR = %s, FEC_CERRAR = %s WHERE codreq = %s"
+            val = (add, nom,tiempo, adwe)
             cursor.execute(sql, val)
             cnxn.commit()
 
@@ -558,7 +606,6 @@ if authentication_status:
                 unsafe_allow_html=True
             )
         add_bg_from_url() 
-
         ### para la barra
         for percent_complete in range(100):
             time.sleep(0.1)
@@ -672,3 +719,10 @@ def sidebar_bg(side_bg):
         )
     side_bg = 'nooa.jpg'
     sidebar_bg(side_bg)
+
+
+
+
+# update every 5 mins
+
+#st.text_input("input2", on_change=on_change)
