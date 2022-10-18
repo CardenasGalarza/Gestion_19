@@ -14,13 +14,31 @@ import database as db
 import time
 from datetime import datetime
 
+cnxn = mysql.connector.connect( host="us-cdbr-east-06.cleardb.net",
+                                port="3306",
+                                user="b550dc65be0b71",
+                                passwd="a3fa9457",
+                                db="heroku_af31a2d889c5388"
+                                )
+cursor = cnxn.cursor()
+
+#print("listo")
+sql = """
+SELECT * FROM bduser
+"""
+dfuser = pd.read_sql(sql, cnxn)
+
+namesbd = dfuser['names'].tolist()
+usernamesbd = dfuser['usernames'].tolist()
+passwordsbd = dfuser['passwords'].tolist()
+
 st.set_page_config(page_title='bdtickets-Averias', page_icon="🌀", layout='centered', initial_sidebar_state='auto')
 
-
 ###TODO LOGIN
-names = ["Luis Llerena Lagunes", "Rebecca Miller", 'Giancarlos Cardenas', "Mauro Arturo Garcia", "John Jairo Bravo", "Alfredo", "Eber Efrain Hinostroza", "Jose Ricardo", "Genesis Medrano"]
-usernames = ["LLLERENAL", "rmiller","Cardenas", "mgarciab", "jbravob", "amedinav", "ehinostrozam", "jargomedos", "Genesis"]
-passwords = ["Smnz$1304$La", "def456", "cardenas10", "Gaddiel$14", "48557917", "Gaddiel$14", "capricornio28", "S3gunda_L", "medrano10"]
+
+names = namesbd
+usernames = usernamesbd
+passwords = passwordsbd
 hashed_passwords = stauth.Hasher(passwords).generate()
 authenticator = stauth.Authenticate(names,usernames,hashed_passwords,'some_cookie_name','some_signature_key',cookie_expiry_days=30)
 #### fondo al costado

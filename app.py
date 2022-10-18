@@ -34,13 +34,43 @@ passwordsbd = dfuser['passwords'].tolist()
 
 st.set_page_config(page_title='bdtickets-Averias', page_icon="🌀", layout='centered', initial_sidebar_state='auto')
 
-
 ###TODO LOGIN
+
 names = namesbd
 usernames = usernamesbd
 passwords = passwordsbd
 hashed_passwords = stauth.Hasher(passwords).generate()
 authenticator = stauth.Authenticate(names,usernames,hashed_passwords,'some_cookie_name','some_signature_key',cookie_expiry_days=30)
+#### fondo al costado
+def sidebar_bg(side_bg):
+   side_bg_ext = 'jpg'
+   st.markdown(
+      f"""
+      <style>
+      [data-testid="stSidebar"] > div:first-child {{
+          background: url(data:image/{side_bg_ext};base64,{base64.b64encode(open(side_bg, "rb").read()).decode()});
+      }}
+      </style>
+      """,
+      unsafe_allow_html=True,
+      )
+side_bg = 'nooa.jpg'
+sidebar_bg(side_bg)
+#### fondo al costado
+def sidebar_bg(side_bg):
+    side_bg_ext = 'jpg'
+    st.markdown(
+        f"""
+        <style>
+        [data-testid="stSidebar"] > div:first-child {{
+            background: url(data:image/{side_bg_ext};base64,{base64.b64encode(open(side_bg, "rb").read()).decode()});
+        }}
+        </style>
+        """,
+        unsafe_allow_html=True,
+        )
+    side_bg = 'nooa.jpg'
+    sidebar_bg(side_bg)
 name, authentication_status, username = authenticator.login('Login', 'main')
 
 #print(name)
@@ -192,6 +222,14 @@ if authentication_status:
     ## TODO CONECTION A LA BASE DE DATOS MYSQL
     #######
 
+
+    cnxn = mysql.connector.connect( host="us-cdbr-east-06.cleardb.net",
+                                    port="3306",
+                                    user="b550dc65be0b71",
+                                    passwd="a3fa9457",
+                                    db="heroku_af31a2d889c5388"
+                                    )
+    cursor = cnxn.cursor()
     #print("listo")
     sql = """
     SELECT GESTOR, codreq, FEC_CERRAR FROM bdtickets WHERE  ESTADO="CERRAR" ;
