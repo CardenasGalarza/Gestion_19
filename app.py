@@ -486,8 +486,9 @@ if authentication_status:
                     cursor.close()
                     cnxn.close()
                     ###TODO IMPORTANTE ES PARA REFRESCAR LA PAGINA
+                    #st.experimental_rerun()
+                    st.legacy_caching.clear_cache()
                     st.experimental_rerun()
-
                 # st.experimental_rerun()
                 ## fondo total
                 def add_bg_from_url():
@@ -709,6 +710,3 @@ def sidebar_bg(side_bg):
         )
     side_bg = 'nooa.jpg'
     sidebar_bg(side_bg)
-
-###TODO IMPORTANTE ES PARA REFRESCAR LA PAGINA
-st.experimental_rerun()
