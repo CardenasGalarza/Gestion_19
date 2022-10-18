@@ -469,8 +469,7 @@ if authentication_status:
             with col3 :
                 
                 if st.button("✔️Cerrar"):
-                    #def __init__(self):
-                    #    st.experimental_rerun()
+
 
                     sql1 = "UPDATE bdtickets SET ACCION = %s, OBS = %s, FEC_CERRAR = %s WHERE codreq = %s"
                     #sql1 = "INSERT INTO gestionacc (codreq, ACCION) VALUES (%s, %s)"
@@ -478,6 +477,17 @@ if authentication_status:
                     cursor.execute(sql1, val1)
                     #time.sleep(1)
 
+                    sql = """
+                    SELECT * FROM bdtickets  WHERE ESTADO = 'PENDIENTE' ORDER BY fec_regist ;
+                    """
+                    df = pd.read_sql(sql, cnxn)
+                    df = df[df['tiptecnologia_x'] == page]
+                    df = df[df['ESTADO'] == 'PENDIENTE'].head(1)
+                    options = (df['codreq'].unique())
+
+                    add  = str('PROGRAMADO')
+                    nom = str(name)
+                    adwe = (str(options)[2:-2])
                     #caching.clear_cache()
                     #cursor.execute("UPDATE bdtickets SET ESTADO = ?, GESTOR = ? WHERE codreq = ?", add, nom, adwe)
                     #st.info(dfu)
