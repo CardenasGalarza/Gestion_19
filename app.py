@@ -714,4 +714,6 @@ def sidebar_bg(side_bg):
         unsafe_allow_html=True,
         )
     side_bg = 'nooa.jpg'
-    sidebar_bg(side_bg)
+    sidebar_bg(side_bg, on_change=on_change)
+
+#st.text_input("input2", on_change=on_change)
