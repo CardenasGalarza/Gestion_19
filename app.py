@@ -207,6 +207,7 @@ if authentication_status == None:
     ####
     ######
     ######
+    st.experimental_rerun()
 
 
 if authentication_status:
