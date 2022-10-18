@@ -207,7 +207,7 @@ if authentication_status == None:
     ####
     ######
     ######
-    st.experimental_rerun()
+
 
 
 if authentication_status:
@@ -489,9 +489,12 @@ if authentication_status:
                     ###TODO IMPORTANTE ES PARA REFRESCAR LA PAGINA
                     #st.experimental_rerun()
                     #st.legacy_caching.clear_cache()
-                    #st.legacy_caching.clear_cache()
-                    st.experimental_singleton.clear()
-                    st.experimental_rerun()
+                    contador = 0
+                    while contador < 2:
+                    # Ejecuta el bloque de código aquí
+                    # Siempre que el contador sea inferior a 10
+                        st.experimental_singleton.clear()
+                        st.experimental_rerun()
 
                 # st.experimental_rerun()
                 ## fondo total
@@ -714,5 +717,6 @@ def sidebar_bg(side_bg):
         )
     side_bg = 'nooa.jpg'
     sidebar_bg(side_bg)
+
 
 #st.text_input("input2", on_change=on_change)
