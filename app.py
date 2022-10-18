@@ -18,41 +18,11 @@ st.set_page_config(page_title='bdtickets-Averias', page_icon="🌀", layout='cen
 
 
 ###TODO LOGIN
-names = ["Luis Llerena Lagunes", "Rebecca Miller", 'Giancarlos Cardenas', "Mauro Arturo Garcia", "John Jairo Bravo", "Alfredo", "Eber Efrain Hinostroza", "Jose Ricardo", "Genesis Medrano"]
-usernames = ["LLLERENAL", "rmiller","Cardenas", "mgarciab", "jbravob", "amedinav", "ehinostrozam", "jargomedos", "Genesis"]
-passwords = ["Smnz$1304$La", "def456", "cardenas10", "Gaddiel$14", "48557917", "Gaddiel$14", "capricornio28", "S3gunda_L", "medrano10"]
+names = ['Join Prime','Join Walmart plus']
+usernames = ['amazon','walmart']
+passwords = ['amazonpay','phonepe']
 hashed_passwords = stauth.Hasher(passwords).generate()
 authenticator = stauth.Authenticate(names,usernames,hashed_passwords,'some_cookie_name','some_signature_key',cookie_expiry_days=30)
-#### fondo al costado
-def sidebar_bg(side_bg):
-   side_bg_ext = 'jpg'
-   st.markdown(
-      f"""
-      <style>
-      [data-testid="stSidebar"] > div:first-child {{
-          background: url(data:image/{side_bg_ext};base64,{base64.b64encode(open(side_bg, "rb").read()).decode()});
-      }}
-      </style>
-      """,
-      unsafe_allow_html=True,
-      )
-side_bg = 'nooa.jpg'
-sidebar_bg(side_bg)
-#### fondo al costado
-def sidebar_bg(side_bg):
-    side_bg_ext = 'jpg'
-    st.markdown(
-        f"""
-        <style>
-        [data-testid="stSidebar"] > div:first-child {{
-            background: url(data:image/{side_bg_ext};base64,{base64.b64encode(open(side_bg, "rb").read()).decode()});
-        }}
-        </style>
-        """,
-        unsafe_allow_html=True,
-        )
-    side_bg = 'nooa.jpg'
-    sidebar_bg(side_bg)
 name, authentication_status, username = authenticator.login('Login', 'main')
 
 #print(name)
