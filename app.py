@@ -86,10 +86,6 @@ elif st.session_state["authentication_status"] == None:
 ########################################################################
 ########################################################################
 
-def __init__(self):
-    st.experimental_rerun()
-
-
 #### fondo al costado
 def sidebar_bg(side_bg):
    side_bg_ext = 'jpg'
@@ -473,6 +469,9 @@ if authentication_status:
             with col3 :
                 
                 if st.button("✔️Cerrar"):
+                    def __init__(self):
+                        st.experimental_rerun()
+
                     sql1 = "UPDATE bdtickets SET ACCION = %s, OBS = %s, FEC_CERRAR = %s WHERE codreq = %s"
                     #sql1 = "INSERT INTO gestionacc (codreq, ACCION) VALUES (%s, %s)"
                     val1 = (filter_type3,raw_text,tiempo ,dfu2)
