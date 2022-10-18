@@ -450,7 +450,6 @@ if authentication_status:
             #print(input)
             def clear_text():
                 st.session_state["text"] = ""
-                st.experimental_rerun()
                 
             st.button("🗑️Limpiar ", on_click=clear_text)
                 
@@ -469,9 +468,6 @@ if authentication_status:
                 pass
             with col3 :
                 
-
-
-
                 if st.button("✔️Cerrar"):
                     sql1 = "UPDATE bdtickets SET ACCION = %s, OBS = %s, FEC_CERRAR = %s WHERE codreq = %s"
                     #sql1 = "INSERT INTO gestionacc (codreq, ACCION) VALUES (%s, %s)"
@@ -486,12 +482,12 @@ if authentication_status:
                     val = (add, nom, tiempo, adwe)
                     cursor.execute(sql, val)
                     cnxn.commit()
-                    cursor.close()
-                    cnxn.close()
-                    ###TODO IMPORTANTE ES PARA REFRESCAR LA PAGINA
-                    #st.experimental_rerun()
-                    #st.legacy_caching.clear_cache()
-                    #st.legacy_caching.clear_cache()
+                    #cursor.close()
+                    #cnxn.close()
+                        ###TODO IMPORTANTE ES PARA REFRESCAR LA PAGINA
+                        #st.experimental_rerun()
+                        #st.legacy_caching.clear_cache()
+                        #st.legacy_caching.clear_cache()
                     st.experimental_singleton.clear()
                     st.experimental_rerun()
 
@@ -716,6 +712,7 @@ def sidebar_bg(side_bg):
         )
     side_bg = 'nooa.jpg'
     sidebar_bg(side_bg)
+
 
 
 #st.text_input("input2", on_change=on_change)
