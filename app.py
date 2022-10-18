@@ -14,8 +14,6 @@ import database as db
 import time
 from datetime import datetime
 
-def on_change():
-    st.experimental_rerun()
 
 cnxn = mysql.connector.connect( host="us-cdbr-east-06.cleardb.net",
                                 port="3306",
@@ -444,7 +442,6 @@ if authentication_status:
                 )
 
 
-
             st.write("")
             #title = st.text_input("INGRESA TU GESTION")
             raw_text = st.text_area("Observación", key="text")
@@ -492,6 +489,7 @@ if authentication_status:
                     #st.experimental_rerun()
                     #st.legacy_caching.clear_cache()
                     #st.legacy_caching.clear_cache()
+                    st.experimental_singleton.clear()
                     st.experimental_rerun()
 
                 # st.experimental_rerun()
@@ -714,6 +712,6 @@ def sidebar_bg(side_bg):
         unsafe_allow_html=True,
         )
     side_bg = 'nooa.jpg'
-    sidebar_bg(side_bg, on_change=on_change)
+    sidebar_bg(side_bg)
 
 #st.text_input("input2", on_change=on_change)
