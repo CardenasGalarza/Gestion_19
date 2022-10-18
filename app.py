@@ -481,7 +481,7 @@ if authentication_status:
                     #caching.clear_cache()
                     #cursor.execute("UPDATE bdtickets SET ESTADO = ?, GESTOR = ? WHERE codreq = ?", add, nom, adwe)
                     #st.info(dfu)
-                    sql = "UPDATE bdtickets SET ESTADO = %s, GESTOR = %s, FEC_PROG = %s WHERE codreq = %s AND ESTADO = 'PENDIENTE' "
+                    sql = "UPDATE bdtickets SET ESTADO = %s, GESTOR = %s, FEC_PROG = %s, ACTIVO = '1' WHERE codreq = %s AND ESTADO = 'PENDIENTE' AND ACTIVO = '0' "
                     val = (add, nom, tiempo, adwe)
                     cursor.execute(sql, val)
                     cnxn.commit()
