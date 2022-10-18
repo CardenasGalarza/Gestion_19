@@ -422,8 +422,8 @@ if authentication_status:
 
                 if st.button("✔️Cerrar"):
                     import random
-                    for x in range(int(0)):
-                        num = random.randint(0,4)
+                    for x in range(int(1)):
+                        num = random.randint(1,4)
                     time.sleep(int(num))   # 3 segundos.
                     sql1 = "UPDATE bdtickets SET ACCION = %s, OBS = %s, FEC_CERRAR = %s WHERE codreq = %s"
                     #sql1 = "INSERT INTO gestionacc (codreq, ACCION) VALUES (%s, %s)"
