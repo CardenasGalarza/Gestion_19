@@ -319,7 +319,7 @@ if authentication_status:
 
         genre = st.radio(
             "Establece tu preferencia de actividad",
-            ('Programar', 'Como voy', 'Finalizar'))
+            ('Programar', 'Finalizar', 'Analisis'))
 
         if  genre == 'Programar':
             #TODO SIVERVPARA BARRA AZUL
@@ -532,7 +532,7 @@ if authentication_status:
             nom = str(name)
             adwe = (str(options)[2:-2])
             #cursor.execute("UPDATE bdtickets SET ESTADO = ?, GESTOR = ? WHERE codreq = ?", add, nom, adwe)
-            sql = "UPDATE bdtickets SET ESTADO = %s, GESTOR = %s WHERE codreq = %s"
+            sql = "UPDATE bdtickets SET ESTADO = %s, GESTOR = %s WHERE codreq = %s AND ESTADO='PROGRAMADO'"
             val = (add, nom, adwe)
             cursor.execute(sql, val)
 
@@ -669,13 +669,20 @@ if authentication_status:
                     #def __init__(self):
                     #    st.experimental_rerun()
 
-                    sql1 = "UPDATE bdtickets SET ACCION = %s, OBS = %s, FEC_CERRAR = %s WHERE codreq = %s"
+                    sql1 = "UPDATE bdtickets SET ACCION = %s, OBS = %s, FEC_CERRAR = %s WHERE codreq = %s AND ACTIVO = '1' "
                     #sql1 = "INSERT INTO gestionacc (codreq, ACCION) VALUES (%s, %s)"
                     val1 = (filter_type3,raw_text,tiempo ,dfu2)
                     cursor.execute(sql1, val1)
-
                     cnxn.commit()
-                    st.experimental_singleton.clear()
+                    #cursor.close()
+                    #cnxn.close()
+                        ###TODO IMPORTANTE ES PARA REFRESCAR LA PAGINA
+                        #st.experimental_rerun()
+                        #st.legacy_caching.clear_cache()
+                        #st.legacy_caching.clear_cache()
+                    #import pyautogui
+                    #pyautogui.hotkey("ctrl","F5")
+                    #st.experimental_singleton.clear()
                     st.experimental_rerun()
 
                     #
@@ -697,7 +704,7 @@ if authentication_status:
                     )
                 add_bg_from_url() 
             
-        if  genre == 'Como voy':
+        if  genre == 'Analisis':
             st.text("Cuadro de gestion individual!!!") 
 
             st.success("CERRADO") 
@@ -772,7 +779,7 @@ if authentication_status:
         add_bg_from_url() 
         ### para la barra
         for percent_complete in range(100):
-            time.sleep(0.1)
+            time.sleep(0.01)
             my_bar.progress(percent_complete + 1)
     except Exception as e:
         pass
