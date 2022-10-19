@@ -452,19 +452,22 @@ if authentication_status:
                     """,
                 )
             with col1:
-                if st.button("📞No se ubica cliente"):
-                #if filter_type3 == "7E_NO SE UBICA CLITE":
-                    date = datetime.now()
-                    tiempohr = (date.strftime("%Y-%m-%d %H:%M:%S"))
-                    ahora = datetime.strptime(tiempohr, '%Y-%m-%d %H:%M:%S')
-                    dentro_de_1_hora = ahora + timedelta(hours=1)
-                    tiempohr = str(dentro_de_1_hora.strftime("%d-%m-%Y %H:%M:%S"))
-                    #print(tiempohr)
-                    sql1 = "UPDATE bdtickets SET ESTADO = %s, FEC_PROG = %s WHERE codreq = %s"
-                    #sql1 = "INSERT INTO gestionacc (codreq, ACCION) VALUES (%s, %s)"
-                    val1 = (add, tiempohr, dfu2)
-                    cursor.execute(sql1, val1)
-                    cnxn.commit()
+                try:
+                    if st.button("📞No se ubica cliente"):
+                    #if filter_type3 == "7E_NO SE UBICA CLITE":
+                        date = datetime.now()
+                        tiempohr = (date.strftime("%Y-%m-%d %H:%M:%S"))
+                        ahora = datetime.strptime(tiempohr, '%Y-%m-%d %H:%M:%S')
+                        dentro_de_1_hora = ahora + timedelta(hours=1)
+                        tiempohr = str(dentro_de_1_hora.strftime("%d-%m-%Y %H:%M:%S"))
+                        #print(tiempohr)
+                        sql1 = "UPDATE bdtickets SET ESTADO = %s, FEC_PROG = %s WHERE codreq = %s"
+                        #sql1 = "INSERT INTO gestionacc (codreq, ACCION) VALUES (%s, %s)"
+                        val1 = (add, tiempohr, dfu2)
+                        cursor.execute(sql1, val1)
+                        cnxn.commit()
+                except :
+                    print('hhhhhhh')
 
             st.write("")
             #title = st.text_input("INGRESA TU GESTION")
