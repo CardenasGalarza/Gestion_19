@@ -460,9 +460,9 @@ if authentication_status:
                     dentro_de_1_hora = ahora + timedelta(hours=1)
                     tiempohr = str(dentro_de_1_hora.strftime("%d-%m-%Y %H:%M:%S"))
                     #print(tiempohr)
-                    sql1 = "UPDATE bdtickets SET FEC_PROG = %s WHERE codreq = %s"
+                    sql1 = "UPDATE bdtickets SET ESTADO = %s, FEC_PROG = %s WHERE codreq = %s"
                     #sql1 = "INSERT INTO gestionacc (codreq, ACCION) VALUES (%s, %s)"
-                    val1 = (tiempohr, dfu2)
+                    val1 = (add, tiempohr, dfu2)
                     cursor.execute(sql1, val1)
                     cnxn.commit()
 
