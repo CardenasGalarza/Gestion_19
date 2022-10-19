@@ -13,6 +13,7 @@ import database as db
 ##########################
 import time
 from datetime import datetime
+from datetime import timedelta
 
 
 cnxn = mysql.connector.connect( host="us-cdbr-east-06.cleardb.net",
@@ -266,14 +267,23 @@ if authentication_status:
     ###########
     ### EXTARER DATOS
     sql2 = """
-    SELECT * FROM bdtickets WHERE ESTADO = 'PROGRAMADO' ;
+        SELECT *
+        FROM bdtickets
+        WHERE
+        ESTADO = 'PROGRAMADO' ORDER BY FEC_PROG ;
     """
+
+    date = datetime.now()
+    tiempo = (date.strftime("%d-%m-%Y %H:%M:%S"))
+
     df2 = pd.read_sql(sql2, cnxn)
-    df2 = df2[df2['ESTADO'] == 'PROGRAMADO']
-    df2 = df2[df2['GESTOR'] == name].head(1)
+    df2 = df2[df2['GESTOR'] == name]
+    df2 = df2[df2['FEC_PROG'] < tiempo].head(1)
+    #df2 = df2[df2['ESTADO'] == 'PROGRAMADO']
     #df = df[df['codofcadm'] == 'GIANCARLOS']
     #df = df.head(1)
-    #print(df)
+    print(df2)
+
 
     dfunom =df2["nomcli"].head(1)
     dfu2 =df2["codreq"].head(1)
@@ -432,7 +442,7 @@ if authentication_status:
                         "7B_SOLUCION EN LINEA",
                         "7C_TEMA COMERCIALES",
                         "7D_GENERA NUEVO REQ",
-                        "7E_NO SE UBICA CLITE",
+                        #"7E_NO SE UBICA CLITE",
                         "7F_REQ MAL GENERADO",
                         "Requiere Visita Tecnica",
                     ),
@@ -441,7 +451,20 @@ if authentication_status:
                     Ten encuenta tu accion `Ticket` inf.
                     """,
                 )
-
+            with col1:
+                if st.button("📞No se ubica cliente"):
+                #if filter_type3 == "7E_NO SE UBICA CLITE":
+                    date = datetime.now()
+                    tiempohr = (date.strftime("%Y-%m-%d %H:%M:%S"))
+                    ahora = datetime.strptime(tiempohr, '%Y-%m-%d %H:%M:%S')
+                    dentro_de_1_hora = ahora + timedelta(hours=1)
+                    tiempohr = str(dentro_de_1_hora.strftime("%d-%m-%Y %H:%M:%S"))
+                    #print(tiempohr)
+                    sql1 = "UPDATE bdtickets SET FEC_PROG = %s WHERE codreq = %s"
+                    #sql1 = "INSERT INTO gestionacc (codreq, ACCION) VALUES (%s, %s)"
+                    val1 = (tiempohr, dfu2)
+                    cursor.execute(sql1, val1)
+                    cnxn.commit()
 
             st.write("")
             #title = st.text_input("INGRESA TU GESTION")
