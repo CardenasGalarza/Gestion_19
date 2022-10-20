@@ -480,6 +480,11 @@ if authentication_status:
                             cnxn.commit()
                         if sumu == 3:
                         #if filter_type3 == "7E_NO SE UBICA CLITE":
+                            date = datetime.now()
+                            tiempohr = (date.strftime("%Y-%m-%d %H:%M:%S"))
+                            ahora = datetime.strptime(tiempohr, '%Y-%m-%d %H:%M:%S')
+                            dentro_de_1_hora = ahora + timedelta(hours=1)
+                            tiempohr = str(dentro_de_1_hora.strftime("%d-%m-%Y %H:%M:%S"))
                             #print(tiempohr)
                             sql1 = "UPDATE bdtickets SET ESTADO = %s,GESTOR = '', FEC_PROG = %s,ACTIVO = '0',ACCION = '', LLAMADA = '0' WHERE codreq = %s"
                             #sql1 = "INSERT INTO gestionacc (codreq, ACCION) VALUES (%s, %s)"
