@@ -721,6 +721,13 @@ if authentication_status:
                     val1 = (filter_type3,raw_text,tiempo ,dfu2)
                     cursor.execute(sql1, val1)
                     cnxn.commit()
+
+                    sql1 = "UPDATE bdtickets SET ESTADO = %s,GESTOR = '', FEC_PROG = '',ACTIVO = '0', LLAMADA = '0',ACCION ='' WHERE GESTOR = %s AND ACCION = '7E_NO SE UBICA CLITE'"
+                    #sql1 = "INSERT INTO gestionacc (codreq, ACCION) VALUES (%s, %s)"
+                    val1 = ('PENDIENTE', name)
+                    cursor.execute(sql1, val1)
+                    cnxn.commit()
+
                     #cursor.close()
                     #cnxn.close()
                         ###TODO IMPORTANTE ES PARA REFRESCAR LA PAGINA
