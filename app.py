@@ -481,7 +481,7 @@ if authentication_status:
                         if sumu == 3:
                         #if filter_type3 == "7E_NO SE UBICA CLITE":
                             #print(tiempohr)
-                            sql1 = "UPDATE bdtickets SET ESTADO = %s,GESTOR = '', FEC_PROG = '',ACTIVO = '0',ACCION = '7E_NO SE UBICA CLITE', LLAMADA = '0' WHERE codreq = %s"
+                            sql1 = "UPDATE bdtickets SET ESTADO = %s,GESTOR = '', FEC_PROG = '',ACTIVO = '0',ACCION = '', LLAMADA = '0' WHERE codreq = %s"
                             #sql1 = "INSERT INTO gestionacc (codreq, ACCION) VALUES (%s, %s)"
                             val1 = ('PENDIENTE', dfu2)
                             cursor.execute(sql1, val1)
