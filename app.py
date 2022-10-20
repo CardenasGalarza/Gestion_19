@@ -251,15 +251,20 @@ if authentication_status:
     sql = """
     SELECT * FROM bdtickets  WHERE ESTADO = 'PENDIENTE' ORDER BY fec_regist ;
     """
+    date = datetime.now()
+    tiempo = (date.strftime("%d-%m-%Y %H:%M:%S"))
+
     df = pd.read_sql(sql, cnxn)
     df = df[df['tiptecnologia_x'] == page]
-    df = df[df['ESTADO'] == 'PENDIENTE'].head(1)
+    df = df[df['FEC_PROG'] < tiempo].head(1)
+    df = df[(df["GESTOR"]==name) | (df["GESTOR"]=="")]
+
     #df = df[df['codofcadm'] == 'GIANCARLOS']
     #df = df.head(1)
-    #print(df)
+    print(df)
 
-    dfu =df["codreq"].head(1)
-    dfu = (dfu.to_string(index=False))
+    #dfu =df["codreq"].head(1)
+    #dfu = (dfu.to_string(index=False))
     #print(df)
     #df = df[df.year.isin([2008, 2009])]
 
@@ -282,7 +287,7 @@ if authentication_status:
     #df2 = df2[df2['ESTADO'] == 'PROGRAMADO']
     #df = df[df['codofcadm'] == 'GIANCARLOS']
     #df = df.head(1)
-    print(df2)
+    #print(df2)
 
 
     dfunom =df2["nomcli"].head(1)
@@ -461,9 +466,9 @@ if authentication_status:
                         dentro_de_1_hora = ahora + timedelta(hours=1)
                         tiempohr = str(dentro_de_1_hora.strftime("%d-%m-%Y %H:%M:%S"))
                         #print(tiempohr)
-                        sql1 = "UPDATE bdtickets SET ESTADO = %s, FEC_PROG = %s WHERE codreq = %s"
+                        sql1 = "UPDATE bdtickets SET ESTADO = %s, FEC_PROG = %s,ACTIVO = '0',ACCION = '7E_NO SE UBICA CLITE' WHERE codreq = %s"
                         #sql1 = "INSERT INTO gestionacc (codreq, ACCION) VALUES (%s, %s)"
-                        val1 = (add, tiempohr, dfu2)
+                        val1 = ('PENDIENTE', tiempohr, dfu2)
                         cursor.execute(sql1, val1)
                         cnxn.commit()
                 except :
