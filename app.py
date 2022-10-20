@@ -14,7 +14,7 @@ import database as db
 import time
 from datetime import datetime
 from datetime import timedelta
-
+import streamlit_authenticator as stauth  # pip install streamlit-authenticator
 
 cnxn = mysql.connector.connect( host="us-cdbr-east-06.cleardb.net",
                                 port="3306",
@@ -334,7 +334,7 @@ if authentication_status:
 
         genre = st.radio(
             "Establece tu preferencia de actividad",
-            ('Programar', 'Finalizar', 'Analisis'))
+            ('Programar', 'Finalizar', 'Analisis', 'Dashboard'))
 
         if  genre == 'Programar':
             #TODO SIVERVPARA BARRA AZUL
@@ -744,7 +744,11 @@ if authentication_status:
                     #st.experimental_singleton.clear()
                     st.experimental_rerun()
 
-                    #
+        if  genre == 'Dashboard':        #
+                st.markdown("""
+                    <iframe width="1400" height="800" src="https://app.powerbi.com/reportEmbed?reportId=36896be5-3f14-4e4a-9034-ee7bbb9fc33b&autoAuth=true&ctid=9744600e-3e04-492e-baa1-25ec245c6f10" frameborder="0" style="border:0" allowfullscreen></iframe>
+
+                """, unsafe_allow_html=True)
 
                 # st.experimental_rerun()
                 ## fondo total
