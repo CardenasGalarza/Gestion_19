@@ -459,20 +459,36 @@ if authentication_status:
             with col1:
                 try:
                     if st.button("📞No se ubica cliente"):
-                    #if filter_type3 == "7E_NO SE UBICA CLITE":
-                        date = datetime.now()
-                        tiempohr = (date.strftime("%Y-%m-%d %H:%M:%S"))
-                        ahora = datetime.strptime(tiempohr, '%Y-%m-%d %H:%M:%S')
-                        dentro_de_1_hora = ahora + timedelta(hours=1)
-                        tiempohr = str(dentro_de_1_hora.strftime("%d-%m-%Y %H:%M:%S"))
-                        #print(tiempohr)
-                        sql1 = "UPDATE bdtickets SET ESTADO = %s, FEC_PROG = %s,ACTIVO = '0',ACCION = '7E_NO SE UBICA CLITE' WHERE codreq = %s"
-                        #sql1 = "INSERT INTO gestionacc (codreq, ACCION) VALUES (%s, %s)"
-                        val1 = ('PENDIENTE', tiempohr, dfu2)
-                        cursor.execute(sql1, val1)
-                        cnxn.commit()
-                except :
-                    print('hhhhhhh')
+                        numllamada = (df2['LLAMADA'].unique())
+                        numllamada = (str(numllamada)[2:-2])
+                        #print(numllamada)
+                        sumu = int(numllamada) + 1
+                        #print(sumu)
+                        if sumu <= 2:
+                            sumu = int(numllamada) + 1
+                        #if filter_type3 == "7E_NO SE UBICA CLITE":
+                            date = datetime.now()
+                            tiempohr = (date.strftime("%Y-%m-%d %H:%M:%S"))
+                            ahora = datetime.strptime(tiempohr, '%Y-%m-%d %H:%M:%S')
+                            dentro_de_1_hora = ahora + timedelta(hours=1)
+                            tiempohr = str(dentro_de_1_hora.strftime("%d-%m-%Y %H:%M:%S"))
+                            #print(tiempohr)
+                            sql1 = "UPDATE bdtickets SET ESTADO = %s, FEC_PROG = %s,ACTIVO = '0',ACCION = '7E_NO SE UBICA CLITE', LLAMADA = %s WHERE codreq = %s"
+                            #sql1 = "INSERT INTO gestionacc (codreq, ACCION) VALUES (%s, %s)"
+                            val1 = ('PENDIENTE', tiempohr, sumu ,dfu2)
+                            cursor.execute(sql1, val1)
+                            cnxn.commit()
+                        if sumu == 3:
+                        #if filter_type3 == "7E_NO SE UBICA CLITE":
+                            #print(tiempohr)
+                            sql1 = "UPDATE bdtickets SET ESTADO = %s,GESTOR = '', FEC_PROG = '',ACTIVO = '0',ACCION = '7E_NO SE UBICA CLITE', LLAMADA = '0' WHERE codreq = %s"
+                            #sql1 = "INSERT INTO gestionacc (codreq, ACCION) VALUES (%s, %s)"
+                            val1 = ('PENDIENTE', dfu2)
+                            cursor.execute(sql1, val1)
+                            cnxn.commit()
+                except Error as e:
+                    print('Gian', e)
+    
 
             st.write("")
             #title = st.text_input("INGRESA TU GESTION")
