@@ -16,11 +16,11 @@ from datetime import datetime
 from datetime import timedelta
 
 
-cnxn = mysql.connector.connect( host="10.226.120.172",
+cnxn = mysql.connector.connect( host="us-cdbr-east-06.cleardb.net",
                                 port="3306",
-                                user="slinea",
-                                passwd="OP81^K@u",
-                                db="segunda_linea"
+                                user="b550dc65be0b71",
+                                passwd="a3fa9457",
+                                db="heroku_af31a2d889c5388"
                                 )
 cursor = cnxn.cursor()
 
