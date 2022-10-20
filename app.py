@@ -256,8 +256,8 @@ if authentication_status:
 
     df = pd.read_sql(sql, cnxn)
     df = df[df['tiptecnologia_x'] == page]
-    df = df[df['FEC_PROG'] < tiempo].head(1)
-    df = df[(df["GESTOR"]==name) | (df["GESTOR"]=="")]
+    df = df[df['FEC_PROG'] < tiempo]
+    df = df[(df["GESTOR"]==name) | (df["GESTOR"]=="")].head(1)
 
     #df = df[df['codofcadm'] == 'GIANCARLOS']
     #df = df.head(1)
