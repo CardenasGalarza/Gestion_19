@@ -744,7 +744,8 @@ if authentication_status:
                     #st.experimental_singleton.clear()
                     st.experimental_rerun()
 
-        if  genre == 'Dashboard':        #
+        if  genre == 'Dashboard':
+            if  'Cardenas' == username:      #
                 st.markdown("""
                     <iframe width="1400" height="800" src="https://app.powerbi.com/reportEmbed?reportId=36896be5-3f14-4e4a-9034-ee7bbb9fc33b&autoAuth=true&ctid=9744600e-3e04-492e-baa1-25ec245c6f10" frameborder="0" style="border:0" allowfullscreen></iframe>
 
@@ -766,7 +767,7 @@ if authentication_status:
                         unsafe_allow_html=True
                     )
                 add_bg_from_url() 
-            
+                
         if  genre == 'Analisis':
             st.text("Cuadro de gestion individual!!!") 
 
