@@ -26,21 +26,13 @@ cursor = cnxn.cursor()
 
 #print("listo")
 sql = """
-SELECT names FROM bduser
+SELECT * FROM bduser
 """
 dfuser = pd.read_sql(sql, cnxn)
+cnxn.commit()
+
 namesbd = dfuser['names'].tolist()
-#print("listo")
-sql = """
-SELECT usernames FROM bduser
-"""
-dfuser = pd.read_sql(sql, cnxn)
 usernamesbd = dfuser['usernames'].tolist()
-#print("listo")
-sql = """
-SELECT passwords FROM bduser
-"""
-dfuser = pd.read_sql(sql, cnxn)
 passwordsbd = dfuser['passwords'].tolist()
 
 st.set_page_config(page_title='bdtickets-Averias', page_icon="🌀", layout='centered', initial_sidebar_state='auto')
