@@ -999,5 +999,5 @@ st.sidebar.markdown('')
 st.sidebar.markdown('')
 
 st.sidebar.markdown(
-'<p class="big-font"; style="text-align:center;color:Lime;font-size:16px;border-radius:2%;">©℗® 👨🏻‍💻Giancarlos .C</p>', unsafe_allow_html=True
+'<p class="big-font"; style="text-align:center;color:Lime;font-size:16px;border-radius:2%;">©👨🏻‍💻Giancarlos .C</p>', unsafe_allow_html=True
 )
