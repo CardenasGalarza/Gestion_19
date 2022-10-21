@@ -236,14 +236,14 @@ if authentication_status:
     SELECT GESTOR, codreq, FEC_CERRAR FROM bdtickets WHERE  ESTADO="CERRAR" ;
     """
     df = pd.read_sql(sql, cnxn)
-    df = df[df['GESTOR'] == name]
+    dfg = df[df['GESTOR'] == name]
     date = datetime.now()
     tcanti = (date.strftime("%Y-%m-%d"))
-
+##### cantidad de cerradas
+    df = dfg
     df['FEC_CERRAR'] = pd.to_datetime(df['FEC_CERRAR']).dt.date
     df['FEC_CERRAR'] = pd.to_datetime(df['FEC_CERRAR'], format='%Y-%m-%d')
-    canti = len(df[df['FEC_CERRAR'] == tcanti])
-
+    canti = str(len(df[df['FEC_CERRAR'] == tcanti]))
     #print(canti)
     st.markdown(f'<p class="big-font"; style="text-align:center;color:Cyan;font-size:24px"><b>👉🏻  {canti}</b></p>', unsafe_allow_html=True)
     #st.sidebar.header("catidad trabajada "+ str(canti))
@@ -261,7 +261,7 @@ if authentication_status:
 
     #df = df[df['codofcadm'] == 'GIANCARLOS']
     #df = df.head(1)
-    print(df)
+    #print(df)
 
     #dfu =df["codreq"].head(1)
     #dfu = (dfu.to_string(index=False))
@@ -771,11 +771,36 @@ if authentication_status:
         if  genre == 'Analisis':
             st.text("Cuadro de gestion individual!!!") 
 
-            st.success("CERRADO") 
-            
-            st.info("Programado") 
-            
-            st.warning("LLamar") 
+            st.success("Total tickets cerradas: " + " " + canti) 
+            ### programado
+            sql = """
+            SELECT GESTOR, codreq, FEC_PROG FROM bdtickets WHERE  ESTADO="PROGRAMADO" ;
+            """
+            df = pd.read_sql(sql, cnxn)
+            dfg = df[df['GESTOR'] == name]
+            date = datetime.now()
+            tcanti = (date.strftime("%Y-%m-%d"))
+        ##### cantidad de programadas
+            dfp = dfg
+            dfp['FEC_PROG'] = pd.to_datetime(dfp['FEC_PROG']).dt.date
+            dfp['FEC_PROG'] = pd.to_datetime(dfp['FEC_PROG'], format='%Y-%m-%d')
+            cantipro = str(len(dfp[dfp['FEC_PROG'] == tcanti]))
+            st.info("Toltal tickets Programado: " + " " + cantipro) 
+           ##3 tranferir
+            sql = """
+            SELECT GESTOR, codreq, FEC_PROG FROM bdtickets WHERE  ACCION="Requiere Visita Tecn" ;
+            """
+            df = pd.read_sql(sql, cnxn)
+            dfg = df[df['GESTOR'] == name]
+            date = datetime.now()
+            tcanti = (date.strftime("%Y-%m-%d"))
+        ##### cantidad de tranferir
+            dfp = dfg
+            dfp['FEC_PROG'] = pd.to_datetime(dfp['FEC_PROG']).dt.date
+            dfp['FEC_PROG'] = pd.to_datetime(dfp['FEC_PROG'], format='%Y-%m-%d')
+            cantipro = str(len(dfp[dfp['FEC_PROG'] == tcanti]))
+            #print("Tranferir" + " " + cantipro)
+            st.warning("Total tickest tranferidos: " + " " + cantipro)
 
     except Error as e:
         print('디비 관련 에러 발생', e)
