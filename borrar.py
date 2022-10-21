@@ -979,10 +979,25 @@ def sidebar_bg(side_bg):
         )
     side_bg = 'nooa.jpg'
     sidebar_bg(side_bg)
-
-
-
-
 # update every 5 mins
-
 #st.text_input("input2", on_change=on_change)
+st.sidebar.markdown('')
+st.sidebar.markdown('')
+st.sidebar.markdown('')
+st.sidebar.markdown('')
+st.sidebar.markdown('')
+st.sidebar.markdown('')
+st.sidebar.markdown('')
+st.sidebar.markdown('')
+st.sidebar.markdown('')
+st.sidebar.markdown('')
+st.sidebar.markdown('')
+st.sidebar.markdown('')
+st.sidebar.markdown('')
+st.sidebar.markdown('')
+st.sidebar.markdown('')
+st.sidebar.markdown('')
+
+st.sidebar.markdown(
+'<p class="big-font"; style="text-align:center;color:Lime;font-size:16px;border-radius:2%;">©👨🏻‍💻Giancarlos .C</p>', unsafe_allow_html=True
+)

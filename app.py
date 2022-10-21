@@ -230,7 +230,11 @@ if authentication_status:
     #                                passwd="a3fa9457",
     #                                db="heroku_af31a2d889c5388"
     #                                )
-    #cursor = cnxn.cursor()
+    sql = """
+    SELECT GESTOR, codreq, FEC_CERRAR FROM bdtickets WHERE  ESTADO="PENDIENTE" ;
+    """
+    pend = pd.read_sql(sql, cnxn)
+    pendca = str(len(pend))
     #print("listo")
     sql = """
     SELECT GESTOR, codreq, FEC_CERRAR FROM bdtickets WHERE  ESTADO="CERRAR" ;
@@ -245,7 +249,7 @@ if authentication_status:
     df['FEC_CERRAR'] = pd.to_datetime(df['FEC_CERRAR'], format='%Y-%m-%d')
     canti = str(len(df[df['FEC_CERRAR'] == tcanti]))
     #print(canti)
-    st.markdown(f'<p class="big-font"; style="text-align:center;color:Cyan;font-size:24px"><b>👉🏻  {canti}</b></p>', unsafe_allow_html=True)
+    st.markdown(f'<p class="big-font"; style="text-align:center;color:Cyan;font-size:24px"><b>👉🏻  {canti} ✔️{pendca}</b></p>', unsafe_allow_html=True)
     #st.sidebar.header("catidad trabajada "+ str(canti))
     ### EXTARER DATOS
     sql = """
