@@ -26,19 +26,19 @@ cursor = cnxn.cursor()
 
 #print("listo")
 sql = """
-SELECT * FROM bduser WHERE names
+SELECT names FROM bduser
 """
 dfuser = pd.read_sql(sql, cnxn)
 namesbd = dfuser['names'].tolist()
 #print("listo")
 sql = """
-SELECT * FROM bduser WHERE usernames
+SELECT usernames FROM bduser
 """
 dfuser = pd.read_sql(sql, cnxn)
 usernamesbd = dfuser['usernames'].tolist()
 #print("listo")
 sql = """
-SELECT * FROM bduser WHERE passwords
+SELECT passwords FROM bduser
 """
 dfuser = pd.read_sql(sql, cnxn)
 passwordsbd = dfuser['passwords'].tolist()
