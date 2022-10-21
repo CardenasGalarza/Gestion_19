@@ -14,7 +14,7 @@ import database as db
 import time
 from datetime import datetime
 from datetime import timedelta
-
+import streamlit_authenticator as stauth  # pip install streamlit-authenticator
 
 cnxn = mysql.connector.connect( host="us-cdbr-east-06.cleardb.net",
                                 port="3306",
@@ -236,14 +236,14 @@ if authentication_status:
     SELECT GESTOR, codreq, FEC_CERRAR FROM bdtickets WHERE  ESTADO="CERRAR" ;
     """
     df = pd.read_sql(sql, cnxn)
-    df = df[df['GESTOR'] == name]
+    dfg = df[df['GESTOR'] == name]
     date = datetime.now()
     tcanti = (date.strftime("%Y-%m-%d"))
-
+##### cantidad de cerradas
+    df = dfg
     df['FEC_CERRAR'] = pd.to_datetime(df['FEC_CERRAR']).dt.date
     df['FEC_CERRAR'] = pd.to_datetime(df['FEC_CERRAR'], format='%Y-%m-%d')
-    canti = len(df[df['FEC_CERRAR'] == tcanti])
-
+    canti = str(len(df[df['FEC_CERRAR'] == tcanti]))
     #print(canti)
     st.markdown(f'<p class="big-font"; style="text-align:center;color:Cyan;font-size:24px"><b>👉🏻  {canti}</b></p>', unsafe_allow_html=True)
     #st.sidebar.header("catidad trabajada "+ str(canti))
@@ -261,7 +261,7 @@ if authentication_status:
 
     #df = df[df['codofcadm'] == 'GIANCARLOS']
     #df = df.head(1)
-    print(df)
+    #print(df)
 
     #dfu =df["codreq"].head(1)
     #dfu = (dfu.to_string(index=False))
@@ -334,7 +334,7 @@ if authentication_status:
 
         genre = st.radio(
             "Establece tu preferencia de actividad",
-            ('Programar', 'Finalizar', 'Analisis'))
+            ('Programar', 'Finalizar', 'Analisis', 'Dashboard'))
 
         if  genre == 'Programar':
             #TODO SIVERVPARA BARRA AZUL
@@ -744,7 +744,12 @@ if authentication_status:
                     #st.experimental_singleton.clear()
                     st.experimental_rerun()
 
-                    #
+        if  genre == 'Dashboard':
+            if  'Cardenas' == username:      #
+                st.markdown("""
+                    <iframe width="1400" height="800" src="https://app.powerbi.com/reportEmbed?reportId=36896be5-3f14-4e4a-9034-ee7bbb9fc33b&autoAuth=true&ctid=9744600e-3e04-492e-baa1-25ec245c6f10" frameborder="0" style="border:0" allowfullscreen></iframe>
+
+                """, unsafe_allow_html=True)
 
                 # st.experimental_rerun()
                 ## fondo total
@@ -762,15 +767,40 @@ if authentication_status:
                         unsafe_allow_html=True
                     )
                 add_bg_from_url() 
-            
+                
         if  genre == 'Analisis':
             st.text("Cuadro de gestion individual!!!") 
 
-            st.success("CERRADO") 
-            
-            st.info("Programado") 
-            
-            st.warning("LLamar") 
+            st.success("Total tickets cerradas: " + " " + canti) 
+            ### programado
+            sql = """
+            SELECT GESTOR, codreq, FEC_PROG FROM bdtickets WHERE  ESTADO="PROGRAMADO" ;
+            """
+            df = pd.read_sql(sql, cnxn)
+            dfg = df[df['GESTOR'] == name]
+            date = datetime.now()
+            tcanti = (date.strftime("%Y-%m-%d"))
+        ##### cantidad de programadas
+            dfp = dfg
+            dfp['FEC_PROG'] = pd.to_datetime(dfp['FEC_PROG']).dt.date
+            dfp['FEC_PROG'] = pd.to_datetime(dfp['FEC_PROG'], format='%Y-%m-%d')
+            cantipro = str(len(dfp[dfp['FEC_PROG'] == tcanti]))
+            st.info("Toltal tickets Programado: " + " " + cantipro) 
+           ##3 tranferir
+            sql = """
+            SELECT GESTOR, codreq, FEC_PROG FROM bdtickets WHERE  ACCION="Requiere Visita Tecn" ;
+            """
+            df = pd.read_sql(sql, cnxn)
+            dfg = df[df['GESTOR'] == name]
+            date = datetime.now()
+            tcanti = (date.strftime("%Y-%m-%d"))
+        ##### cantidad de tranferir
+            dfp = dfg
+            dfp['FEC_PROG'] = pd.to_datetime(dfp['FEC_PROG']).dt.date
+            dfp['FEC_PROG'] = pd.to_datetime(dfp['FEC_PROG'], format='%Y-%m-%d')
+            cantipro = str(len(dfp[dfp['FEC_PROG'] == tcanti]))
+            #print("Tranferir" + " " + cantipro)
+            st.warning("Total tickest tranferidos: " + " " + cantipro)
 
     except Error as e:
         print('디비 관련 에러 발생', e)
