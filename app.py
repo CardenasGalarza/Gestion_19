@@ -23,7 +23,7 @@ cnxn = mysql.connector.connect( host="us-cdbr-east-06.cleardb.net",
                                 db="heroku_af31a2d889c5388"
                                 )
 cursor = cnxn.cursor()
-cnxn.commit()
+#cnxn.commit()
 
 #print("listo")
 sql = """
