@@ -24,23 +24,24 @@ cnxn = mysql.connector.connect( host="us-cdbr-east-06.cleardb.net",
                                 )
 cursor = cnxn.cursor()
 
-##print("listo")
-#sql = """
-#SELECT * FROM bduser
-#"""
-#dfuser = pd.read_sql(sql, cnxn)
-#
-#namesbd = dfuser['names'].tolist()
-#usernamesbd = dfuser['usernames'].tolist()
-#passwordsbd = dfuser['passwords'].tolist()
+#print("listo")
+sql = """
+SELECT * FROM bduser
+"""
+dfuser = pd.read_sql(sql, cnxn)
+
+
+namesbd = dfuser['names'].tolist()
+usernamesbd = dfuser['usernames'].tolist()
+passwordsbd = dfuser['passwords'].tolist()
 
 st.set_page_config(page_title='bdtickets-Averias', page_icon="🌀", layout='centered', initial_sidebar_state='auto')
 
 ###TODO LOGIN
 
-names = ["Luis Llerena Lagunes", "Rebecca Miller", 'Giancarlos Cardenas', "Mauro Arturo Garcia", "John Jairo Bravo", "Alfredo", "Eber Efrain Hinostroza", "Jose Ricardo", "Genesis Medrano"]
-usernames = ["LLLERENAL", "rmiller","Cardenas", "mgarciab", "jbravob", "amedinav", "ehinostrozam", "jargomedos", "Genesis"]
-passwords = ["Smnz$1304$La", "def456", "cardenas10", "Gaddiel$14", "48557917", "Gaddiel$14", "capricornio28", "S3gunda_L", "medrano10"]
+names = namesbd
+usernames = usernamesbd
+passwords = passwordsbd
 hashed_passwords = stauth.Hasher(passwords).generate()
 authenticator = stauth.Authenticate(names,usernames,hashed_passwords,'some_cookie_name','some_signature_key',cookie_expiry_days=30)
 #### fondo al costado
@@ -211,20 +212,12 @@ if authentication_status == None:
 
 
 
-
 if authentication_status:
     # ---- SIDEBAR ----
     st.title("GESTION TICKETS PENDIENTES💻")
 
     st.sidebar.image("logo2.png", width=290)
 
-    cnxn = mysql.connector.connect( host="us-cdbr-east-06.cleardb.net",
-                                    port="3306",
-                                    user="b550dc65be0b71",
-                                    passwd="a3fa9457",
-                                    db="heroku_af31a2d889c5388"
-                                    )
-    cursor = cnxn.cursor()
 
 
     page_names = ['GPON', 'HFC']
@@ -238,7 +231,11 @@ if authentication_status:
     #                                passwd="a3fa9457",
     #                                db="heroku_af31a2d889c5388"
     #                                )
-    #cursor = cnxn.cursor()
+    sql = """
+    SELECT GESTOR, codreq, FEC_CERRAR FROM bdtickets WHERE  ESTADO="PENDIENTE" ;
+    """
+    pend = pd.read_sql(sql, cnxn)
+    pendca = str(len(pend))
     #print("listo")
     sql = """
     SELECT GESTOR, codreq, FEC_CERRAR FROM bdtickets WHERE  ESTADO="CERRAR" ;
@@ -253,7 +250,7 @@ if authentication_status:
     df['FEC_CERRAR'] = pd.to_datetime(df['FEC_CERRAR'], format='%Y-%m-%d')
     canti = str(len(df[df['FEC_CERRAR'] == tcanti]))
     #print(canti)
-    st.markdown(f'<p class="big-font"; style="text-align:center;color:Cyan;font-size:24px"><b>👉🏻  {canti}</b></p>', unsafe_allow_html=True)
+    st.markdown(f'<p class="big-font"; style="text-align:center;color:Cyan;font-size:24px"><b>👉🏻  {canti} ✔️{pendca}</b></p>', unsafe_allow_html=True)
     #st.sidebar.header("catidad trabajada "+ str(canti))
     ### EXTARER DATOS
     sql = """
@@ -987,25 +984,25 @@ def sidebar_bg(side_bg):
         )
     side_bg = 'nooa.jpg'
     sidebar_bg(side_bg)
-# update every 5 mins
-#st.text_input("input2", on_change=on_change)
-st.sidebar.markdown('')
-st.sidebar.markdown('')
-st.sidebar.markdown('')
-st.sidebar.markdown('')
-st.sidebar.markdown('')
-st.sidebar.markdown('')
-st.sidebar.markdown('')
-st.sidebar.markdown('')
-st.sidebar.markdown('')
-st.sidebar.markdown('')
-st.sidebar.markdown('')
-st.sidebar.markdown('')
-st.sidebar.markdown('')
-st.sidebar.markdown('')
-st.sidebar.markdown('')
-st.sidebar.markdown('')
+    # update every 5 mins
+    #st.text_input("input2", on_change=on_change)
+    st.sidebar.markdown('')
+    st.sidebar.markdown('')
+    st.sidebar.markdown('')
+    st.sidebar.markdown('')
+    st.sidebar.markdown('')
+    st.sidebar.markdown('')
+    st.sidebar.markdown('')
+    st.sidebar.markdown('')
+    st.sidebar.markdown('')
+    st.sidebar.markdown('')
+    st.sidebar.markdown('')
+    st.sidebar.markdown('')
+    st.sidebar.markdown('')
+    st.sidebar.markdown('')
+    st.sidebar.markdown('')
+    st.sidebar.markdown('')
 
-st.sidebar.markdown(
-'<p class="big-font"; style="text-align:center;color:Lime;font-size:16px;border-radius:2%;">©👨🏻‍💻Giancarlos .C</p>', unsafe_allow_html=True
-)
+    st.sidebar.markdown(
+    '<p class="big-font"; style="text-align:center;color:Lime;font-size:16px;border-radius:2%;">©👨🏻‍💻Giancarlos .C</p>', unsafe_allow_html=True
+    )
