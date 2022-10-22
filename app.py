@@ -1,7 +1,7 @@
 import pickle
 from pathlib import Path
 import pandas as pd
-from soupsieve import select  # pip install pandas openpyxl
+#from soupsieve import select  # pip install pandas openpyxl
 import streamlit_authenticator as stauth  # pip install streamlit-authenticator
 ############################################ OCULTAR INFROMACION NO IMPORTANTE
 import warnings
