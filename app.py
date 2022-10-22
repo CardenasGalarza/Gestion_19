@@ -4,9 +4,6 @@ import pandas as pd
 #from soupsieve import select  # pip install pandas openpyxl
 import streamlit_authenticator as stauth  # pip install streamlit-authenticator
 ############################################ OCULTAR INFROMACION NO IMPORTANTE
-import warnings
-warnings.filterwarnings('ignore')
-#######
 import base64
 import mysql.connector
 from mysql.connector import Error
