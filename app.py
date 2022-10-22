@@ -558,7 +558,7 @@ if authentication_status:
                     #import pyautogui
                     #pyautogui.hotkey("ctrl","F5")
                     #st.experimental_singleton.clear()
-                    time.sleep(0.1)
+                    time.sleep(3)
                     st.experimental_rerun()
 
                     #
