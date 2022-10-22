@@ -18,11 +18,11 @@ import time
 from datetime import datetime
 from datetime import timedelta
 
-cnxn = mysql.connector.connect( host="bdgpon.mysql.database.azure.com",
+cnxn = mysql.connector.connect( host="us-cdbr-east-06.cleardb.net",
                                 port="3306",
-                                user="cardenas19",
-                                passwd="GIAg$1011$cga$",
-                                db="dtgpon"
+                                user="b550dc65be0b71",
+                                passwd="a3fa9457",
+                                db="heroku_af31a2d889c5388"
                                 )
 cursor = cnxn.cursor()
 
