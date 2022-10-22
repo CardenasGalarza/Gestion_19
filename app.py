@@ -19,6 +19,15 @@ warnings.filterwarnings('ignore')
 import time
 from datetime import datetime
 from datetime import timedelta
+
+cnxn = mysql.connector.connect( host="us-cdbr-east-06.cleardb.net",
+                                port="3306",
+                                user="b550dc65be0b71",
+                                passwd="a3fa9457",
+                                db="heroku_af31a2d889c5388"
+                                )
+cursor = cnxn.cursor()
+
 st.set_page_config(page_title='bdtickets-Averias', page_icon="🌀", layout='centered', initial_sidebar_state='auto')
 ## borrar nombres de la pagina
 hide_streamlit_style = """
@@ -188,19 +197,10 @@ if authentication_status == None:
     ####
     ####
     ######
-    ######
+
 
 
 if authentication_status:
-
-
-    cnxn = mysql.connector.connect( host="us-cdbr-east-06.cleardb.net",
-                                    port="3306",
-                                    user="b550dc65be0b71",
-                                    passwd="a3fa9457",
-                                    db="heroku_af31a2d889c5388"
-                                    )
-    cursor = cnxn.cursor()
     # ---- SIDEBAR ----
     authenticator.logout("Logout", "sidebar")
     st.sidebar.title(f"Welcome {name}")
