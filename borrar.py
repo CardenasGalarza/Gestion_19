@@ -10,8 +10,8 @@ from mysql.connector import Error
 #import pyodbc
 import streamlit as st
 ############################################ OCULTAR INFROMACION NO IMPORTANTE
-#import warnings
-#warnings.filterwarnings('ignore')
+import warnings
+warnings.filterwarnings('ignore')
 #########################################3333
 ##########################
 import time
