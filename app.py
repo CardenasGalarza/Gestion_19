@@ -236,9 +236,10 @@ if authentication_status:
     )
 
     sql = """
-    SELECT GESTOR, codreq, FEC_CERRAR FROM bdtickets WHERE  ESTADO="PENDIENTE" ;
+    SELECT GESTOR, codreq,tiptecnologia_x, FEC_CERRAR FROM bdtickets WHERE  ESTADO="PENDIENTE" ;
     """
     pend = pd.read_sql(sql, cnxn)
+    pend = pend[pend['tiptecnologia_x'] == page]
     pendca = str(len(pend))
     #print("listo")
     sql = """
