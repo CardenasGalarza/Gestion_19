@@ -18,11 +18,11 @@ import time
 from datetime import datetime
 from datetime import timedelta
 
-cnxn = mysql.connector.connect( host="mysql-92787-0.cloudclusters.net",
-                                port="17378",
-                                user="admin",
-                                passwd="6P8ndcrW",
-                                db="bd_gestion"
+cnxn = mysql.connector.connect( host="us-cdbr-east-06.cleardb.net",
+                                port="3306",
+                                user="b70d451b4ff985",
+                                passwd="68b102d9",
+                                db="heroku_9ca78643f8fb80d"
                                 )
 cursor = cnxn.cursor()
 
@@ -450,8 +450,21 @@ if authentication_status:
                 st.markdown(f'<p class="big-font"; style="text-align:center;background-image: linear-gradient(to right,Cyan, Cyan);color:Black;font-size:22px;border-radius:2%;">{textogestion}</p>', unsafe_allow_html=True)
             with col1:
                 filter_type3 = st.selectbox(
-                    'Accion',
-                    ('Email', 'Home phone', 'Mobile phone'))
+                    "Accion",
+                    (
+                        "71_REVERIFICA SIN DEFECTO",
+                        "7B_SOLUCION EN LINEA",
+                        "7C_TEMA COMERCIALES",
+                        "7D_GENERA NUEVO REQ",
+                        #"7E_NO SE UBICA CLITE",
+                        "7F_REQ MAL GENERADO",
+                        "Requiere Visita Tecnica",
+                    ),
+                    key="filter_type3",
+                    help="""
+                    Ten encuenta tu accion `Ticket` inf.
+                    """,
+                )
             with col1:
                 try:
                     if st.button("📞No se ubica cliente"):
