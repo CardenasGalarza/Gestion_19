@@ -449,16 +449,11 @@ if authentication_status:
                 textogestion = "Realizar Actividades💻"
                 st.markdown(f'<p class="big-font"; style="text-align:center;background-image: linear-gradient(to right,Cyan, Cyan);color:Black;font-size:22px;border-radius:2%;">{textogestion}</p>', unsafe_allow_html=True)
             with col1:
-                optionsbox = {
-                    "Liquidar1": "71_REVERIFICA SIN DEFECTO",
-                    "Liquidar2": "7B_SOLUCION EN LINEA",
-                    "Liquidar3": "7C_TEMA COMERCIALES",
-                    "Liquidar4": "7D_GENERA NUEVO REQ",
-                    "Liquidar5": "7F_REQ MAL GENERADO",
-                    "Liquidar6": "Requiere Visita Tecnica",
-                }
-                optionsbox = st.selectbox("selectbox 2", list(optionsbox.items()), 0 , format_func=lambda o: o[1])
-                filter_type3  = optionsbox[0]
+                #filter_type3 = st.selectbox
+                filter_type3 = st.selectbox(
+                    'How would you like to be contacted?',
+                    ('Email', 'Home phone', 'Mobile phone'))
+            filter_type3  = filter_type3
             with col1:
                 try:
                     if st.button("📞No se ubica cliente"):
