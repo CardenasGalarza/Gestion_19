@@ -8,11 +8,11 @@ import pandas as pd
 import warnings
 warnings.filterwarnings('ignore')
  
-cnxn = mysql.connector.connect( host="bdgpon.mysql.database.azure.com",
+cnxn = mysql.connector.connect( host="us-cdbr-east-06.cleardb.net",
                                 port="3306",
-                                user="cardenas19",
-                                passwd="GIAg$1011$cga$",
-                                db="dtgpon"
+                                user="b70d451b4ff985",
+                                passwd="68b102d9",
+                                db="heroku_9ca78643f8fb80d"
                                 )
 cursor = cnxn.cursor()
 
