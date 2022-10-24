@@ -757,7 +757,7 @@ if authentication_status:
                     st.experimental_rerun()
 
 
-        xs = ['Cardenas', 'LLLERENAL', 'Hinostroza', 'Argomedo']
+        xs = ['Cardenas', 'LLLERENAL', 'Hinostroza', 'Argomedo', 'VIERA']
         bs = (username in xs)
         if  genre == 'Dashboard':
             if bs == True:
