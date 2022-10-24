@@ -63,8 +63,9 @@ with file_path.open("rb") as file:
 
 authenticator = stauth.Authenticate(names, usernames, hashed_passwords,
     "sales_dashboard", "abcdef", cookie_expiry_days=30)
-#print(name)
+
 name, authentication_status, username = authenticator.login("Login", "main")
+#print(username)
 #### fondo al costado
 def sidebar_bg(side_bg):
    side_bg_ext = 'jpg'
@@ -201,7 +202,7 @@ if authentication_status == None:
 if authentication_status:
     # ---- SIDEBAR ----
     authenticator.logout("Logout", "sidebar")
-    st.sidebar.title(f"Welcome {name}")
+    st.sidebar.title(f"Bienvenid@ {name}")
 
     st.title("GESTION TICKETS PENDIENTES💻")
 
@@ -755,8 +756,12 @@ if authentication_status:
                     #st.experimental_singleton.clear()
                     st.experimental_rerun()
 
+
+        xs = ['Cardenas', 'LLLERENAL', 'Hinostroza', 'Argomedo']
+        bs = (username in xs)
         if  genre == 'Dashboard':
-            if  'Cardenas' == username:      #
+            if bs == True:
+            #if  'Cardenas' == username:      #
                 st.markdown("""
                     <iframe width="1400" height="800" src="https://app.powerbi.com/reportEmbed?reportId=36896be5-3f14-4e4a-9034-ee7bbb9fc33b&autoAuth=true&ctid=9744600e-3e04-492e-baa1-25ec245c6f10" frameborder="0" style="border:0" allowfullscreen></iframe>
 
