@@ -763,8 +763,7 @@ if authentication_status:
             if bs == True:
             #if  'Cardenas' == username:      #
                 st.markdown("""
-                    <iframe width="1400" height="800" src="https://app.powerbi.com/reportEmbed?reportId=36896be5-3f14-4e4a-9034-ee7bbb9fc33b&autoAuth=true&ctid=9744600e-3e04-492e-baa1-25ec245c6f10" frameborder="0" style="border:0" allowfullscreen></iframe>
-
+                    <iframe title="Gastion19" width="1140" height="541.25" src="https://app.powerbi.com/reportEmbed?reportId=0c6caef7-27cf-4548-849c-1970f2d9b0bf&autoAuth=true&ctid=9744600e-3e04-492e-baa1-25ec245c6f10" frameborder="0" allowFullScreen="true"></iframe>
                 """, unsafe_allow_html=True)
 
                 # st.experimental_rerun()
