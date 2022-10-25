@@ -26,9 +26,9 @@ df = df.replace({np.nan:None})
 #######
 cnxn = mysql.connector.connect( host="us-cdbr-east-06.cleardb.net",
                                 port="3306",
-                                user="b550dc65be0b71",
-                                passwd="a3fa9457",
-                                db="heroku_af31a2d889c5388"
+                                user="b70d451b4ff985",
+                                passwd="68b102d9",
+                                db="heroku_9ca78643f8fb80d"
                                 )
 cursor = cnxn.cursor()
 print("listo")
