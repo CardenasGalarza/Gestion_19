@@ -54,7 +54,7 @@ add_bg_from_url()
 #st.set_page_config(page_title="Sales Dashboard", page_icon=":bar_chart:", layout="wide")
 # --- USER AUTHENTICATION ---
 names = ['Giancarlos Cardenas', 'Genesis Medrano', 'Luis Llerena', 'DIANA BERNEDO', 'VIVIAN CERVERA', 'CAROL CHUNGA', 'LAURA VIERA', 'MERCEDES RAYMUNDO', 'MONTES CABANILLAS', 'RENZO RIMARACHIN', 'LORENA BENAVIDES', 'NANCY YEREN', 'GIULIANA BELLIDO', 'CARMEN HUAMANCHUMO', 'GABRIEL SANTA ANA', 'CARMEN POMA REYES', 'JOSE ECHEVARRIA', 'YORMAN MORI', 'ENZO PAULINO', 'GUSTAVO SALCEDO', 'KAREN MAYORCA', 'LESLIE PRUDENCIO', 'BARBARA HUAMANCHUMO', 'Jose Ricardo', 'Eber Hinostroza', 'Bot cardenas']
-usernames = ['Cardenas', 'Genesis', 'LLLERENAL', 'BERNEDO', 'CERVERA', 'CHUNGA', 'VIERA', 'RAYMUNDO', 'CABANILLAS', 'RIMARACHIN', 'BENAVIDES', 'YEREN', 'BELLIDO', 'HUAMANCHUMO', 'SANTA ANA', 'POMA REYES', 'ECHEVARRIA', 'MORI', 'PAULINO', 'SALCEDO', 'MAYORCA', 'PRUDENCIO', 'HUAMANCHUMO', 'Argomedo', 'Hinostroza', 'Bot']
+usernames = ['Cardenas', 'Genesis', 'LLLERENAL', 'BERNEDO', 'CERVERA', 'CHUNGA', 'VIERA', 'RAYMUNDO', 'CABANILLAS', 'RIMARACHIN', 'BENAVIDES', 'YEREN', 'BELLIDO', 'ANDREA', 'SANTA ANA', 'POMA REYES', 'ECHEVARRIA', 'MORI', 'PAULINO', 'SALCEDO', 'MAYORCA', 'PRUDENCIO', 'HUAMANCHUMO', 'Argomedo', 'Hinostroza', 'Bot']
 
 # load hashed passwords
 file_path = Path(__file__).parent / "hashed_pw.pkl"
@@ -63,8 +63,9 @@ with file_path.open("rb") as file:
 
 authenticator = stauth.Authenticate(names, usernames, hashed_passwords,
     "sales_dashboard", "abcdef", cookie_expiry_days=30)
-#print(name)
+
 name, authentication_status, username = authenticator.login("Login", "main")
+#print(username)
 #### fondo al costado
 def sidebar_bg(side_bg):
    side_bg_ext = 'jpg'
@@ -201,7 +202,7 @@ if authentication_status == None:
 if authentication_status:
     # ---- SIDEBAR ----
     authenticator.logout("Logout", "sidebar")
-    st.sidebar.title(f"Welcome {name}")
+    st.sidebar.title(f"Bienvenid@ {name}")
 
     st.title("GESTION TICKETS PENDIENTES💻")
 
@@ -236,9 +237,10 @@ if authentication_status:
     )
 
     sql = """
-    SELECT GESTOR, codreq, FEC_CERRAR FROM bdtickets WHERE  ESTADO="PENDIENTE" ;
+    SELECT GESTOR, codreq,tiptecnologia_x, FEC_CERRAR FROM bdtickets WHERE  ESTADO="PENDIENTE" ;
     """
     pend = pd.read_sql(sql, cnxn)
+    pend = pend[pend['tiptecnologia_x'] == page]
     pendca = str(len(pend))
     #print("listo")
     sql = """
@@ -555,7 +557,7 @@ if authentication_status:
                     #import pyautogui
                     #pyautogui.hotkey("ctrl","F5")
                     #st.experimental_singleton.clear()
-                    time.sleep(1)
+                    time.sleep(0.75)
                     st.experimental_rerun()
 
                     #
@@ -754,11 +756,14 @@ if authentication_status:
                     #st.experimental_singleton.clear()
                     st.experimental_rerun()
 
-        if  genre == 'Dashboard':
-            if  'Cardenas' == username:      #
-                st.markdown("""
-                    <iframe width="1400" height="800" src="https://app.powerbi.com/reportEmbed?reportId=36896be5-3f14-4e4a-9034-ee7bbb9fc33b&autoAuth=true&ctid=9744600e-3e04-492e-baa1-25ec245c6f10" frameborder="0" style="border:0" allowfullscreen></iframe>
 
+        xs = ['Cardenas', 'LLLERENAL', 'Hinostroza', 'Argomedo', 'VIERA']
+        bs = (username in xs)
+        if  genre == 'Dashboard':
+            if bs == True:
+            #if  'Cardenas' == username:      #
+                st.markdown("""
+                    <iframe title="Gastion19" width="1140" height="541.25" src="https://app.powerbi.com/reportEmbed?reportId=0c6caef7-27cf-4548-849c-1970f2d9b0bf&autoAuth=true&ctid=9744600e-3e04-492e-baa1-25ec245c6f10" frameborder="0" allowFullScreen="true"></iframe>
                 """, unsafe_allow_html=True)
 
                 # st.experimental_rerun()
