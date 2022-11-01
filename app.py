@@ -249,6 +249,7 @@ if authentication_status:
     df = pd.read_sql(sql, cnxn)
     dfg = df[df['GESTOR'] == name]
     canti = str(len(dfg[dfg['FEC_CERRAR'] >= '01-11-2022 01:00:00']))
+    #listoo
     #date = datetime.now()
     #tcanti = (date.strftime("%Y-%m-%d"))
 ##### cantidad de cerradas
