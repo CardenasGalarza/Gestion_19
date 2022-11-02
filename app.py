@@ -249,11 +249,14 @@ if authentication_status:
     df = pd.read_sql(sql, cnxn)
     dfg = df[df['GESTOR'] == name]
     date = datetime.now()
-    tcanti = (date.strftime("%Y-%m-%d"))
+    tcanti = (date.strftime("%Y-%d-%m"))
+    #print(tcanti)
 ##### cantidad de cerradas
     df = dfg
     df['FEC_CERRAR'] = pd.to_datetime(df['FEC_CERRAR']).dt.date
-    df['FEC_CERRAR'] = pd.to_datetime(df['FEC_CERRAR'], format='%Y-%m-%d')
+    #df['FEC_CERRAR'] = pd.to_datetime(df['FEC_CERRAR'], format='%Y-%m-%d')
+    df['FEC_CERRAR'] = pd.to_datetime(df['FEC_CERRAR'])
+    #print(df)
     canti = str(len(df[df['FEC_CERRAR'] == tcanti]))
     #print(canti)
     st.markdown(f'<p class="big-font"; style="text-align:center;color:Cyan;font-size:24px"><b>👉🏻  {canti} ✔️{pendca}</b></p>', unsafe_allow_html=True)
