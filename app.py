@@ -18,6 +18,7 @@ import time
 from datetime import datetime
 from datetime import timedelta
 
+#TODO CONECTION A MYSQL
 cnxn = mysql.connector.connect( host="us-cdbr-east-06.cleardb.net",
                                 port="3306",
                                 user="b70d451b4ff985",
