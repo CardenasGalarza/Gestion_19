@@ -797,29 +797,33 @@ if authentication_status:
             """
             df = pd.read_sql(sql, cnxn)
             dfg = df[df['GESTOR'] == name]
-            date = datetime.now()
-            tcanti = (date.strftime("%Y-%m-%d"))
+            print(dfg)
+            #date = datetime.now()
+            #tcanti = (date.strftime("%Y-%m-%d"))
         ##### cantidad de programadas
-            dfp = dfg
-            dfp['FEC_PROG'] = pd.to_datetime(dfp['FEC_PROG']).dt.date
-            dfp['FEC_PROG'] = pd.to_datetime(dfp['FEC_PROG'], format='%Y-%m-%d')
-            cantipro = str(len(dfp[dfp['FEC_PROG'] == tcanti]))
-            st.info("Toltal tickets Programado: " + " " + cantipro) 
+            #dfp = dfg
+            #dfp['FEC_PROG'] = pd.to_datetime(dfp['FEC_PROG']).dt.date
+            #dfp['FEC_PROG'] = pd.to_datetime(dfp['FEC_PROG'], format='%Y-%m-%d')
+            cantipro = str(len(dfg))
+            print(cantipro)
+            st.info("Toltal tickets programado: " + " " + cantipro) 
            ##3 tranferir
             sql = """
-            SELECT GESTOR, codreq, FEC_PROG FROM bdtickets WHERE  ACCION="Requiere Visita Tecn" ;
+            SELECT GESTOR, codreq, FEC_PROG FROM bdtickets WHERE  ACCION="7E_NO SE UBICA CLITE" ;
             """
             df = pd.read_sql(sql, cnxn)
             dfg = df[df['GESTOR'] == name]
-            date = datetime.now()
-            tcanti = (date.strftime("%Y-%m-%d"))
+            print(dfg)
+            #date = datetime.now()
+            #tcanti = (date.strftime("%Y-%m-%d"))
         ##### cantidad de tranferir
-            dfp = dfg
-            dfp['FEC_PROG'] = pd.to_datetime(dfp['FEC_PROG']).dt.date
-            dfp['FEC_PROG'] = pd.to_datetime(dfp['FEC_PROG'], format='%Y-%m-%d')
-            cantipro = str(len(dfp[dfp['FEC_PROG'] == tcanti]))
+            #dfp = dfg
+            #dfp['FEC_PROG'] = pd.to_datetime(dfp['FEC_PROG']).dt.date
+            #dfp['FEC_PROG'] = pd.to_datetime(dfp['FEC_PROG'], format='%Y-%m-%d')
+            cantipro = str(len(dfg))
+            print(cantipro)
             #print("Tranferir" + " " + cantipro)
-            st.warning("Total tickest tranferidos: " + " " + cantipro)
+            st.warning("Total tickest por llamar: " + " " + cantipro)
 
     except Error as e:
         print('디비 관련 에러 발생', e)
