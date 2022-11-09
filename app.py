@@ -472,7 +472,7 @@ if authentication_status:
                     Ten encuenta tu accion `Ticket` inf.
                     """,
                 )
-                
+
             with col1:
                 try:
                     if st.button("📞No se ubica cliente"):
@@ -841,6 +841,23 @@ if authentication_status:
             #print("Tranferir" + " " + cantipro)
             st.warning("Total tickest por llamar: " + " " + cantipro)
 
+            sql = """
+            SELECT * FROM bdtickets  WHERE ACCION = 'En espera' ;
+            """
+            df = pd.read_sql(sql, cnxn)
+            dfg = df[df['GESTOR'] == name]
+            #print(dfg)
+            #date = datetime.now()
+            #tcanti = (date.strftime("%Y-%m-%d"))
+        ##### cantidad de tranferir
+            #dfp = dfg
+            #dfp['FEC_PROG'] = pd.to_datetime(dfp['FEC_PROG']).dt.date
+            #dfp['FEC_PROG'] = pd.to_datetime(dfp['FEC_PROG'], format='%Y-%m-%d')
+            cantipro = str(len(dfg))
+            #print(cantipro)
+            #print("Tranferir" + " " + cantipro)
+            st.error("Total tickest En espera: " + " " + cantipro)
+
         if  genre == 'En espera':
 
             sql = """
@@ -853,7 +870,7 @@ if authentication_status:
             #print(espera)
 
             filtro = st.selectbox(
-                "Accion",
+                "Tickets",
                 (espera
                 ),
                 key="filter_type3",
