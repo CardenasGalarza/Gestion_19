@@ -465,12 +465,14 @@ if authentication_status:
                         #"7E_NO SE UBICA CLITE",
                         "7F_REQ MAL GENERADO",
                         "Requiere Visita Tecnica",
+                        "En espera",
                     ),
                     key="filter_type3",
                     help="""
                     Ten encuenta tu accion `Ticket` inf.
                     """,
                 )
+                
             with col1:
                 try:
                     if st.button("📞No se ubica cliente"):
