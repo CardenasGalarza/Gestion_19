@@ -251,12 +251,12 @@ if authentication_status:
     dfg = df[df['GESTOR'] == name]
     date = datetime.now()
     ##TODO SIEMPRE VER ESTO PARA CONTADOR
+    ##FIXME SOLO CAMBIAR ESTO FIRMATO DE FECHA NO LO DE ABAJO
     #tcanti = (date.strftime("%Y-%d-%m"))
     tcanti = (date.strftime("%Y-%m-%d"))
     #print(tcanti)
 ##### cantidad de cerradas
     df = dfg
-    ## TODO SIEMPRE VER ESTO PARA CONTADOR
     df['FEC_CERRAR'] = pd.to_datetime(df['FEC_CERRAR']).dt.date
     #df['FEC_CERRAR'] = pd.to_datetime(df['FEC_CERRAR'], format='%Y-%m-%d')
     df['FEC_CERRAR'] = pd.to_datetime(df['FEC_CERRAR'])
