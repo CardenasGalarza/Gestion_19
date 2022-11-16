@@ -58,10 +58,11 @@ nuevoee['ESTADO']= 'PENDIENTE'
 nuevoee['GESTOR']= ''
 nuevoee['ACTIVO']= '0'
 nuevoee['LLAMADA']= '0'
+nuevoee['MENSAJE']= '0'
 
 ## TODO CONECTION A LA BASE DE DATOS MYSQL
 #######
-sql = """INSERT INTO bdtickets (codreq,fec_regist,desnomctr,desmotv,codofcadm,desdtt,codcli,nomcli,numtelefvoip,desobsordtrab,tiptecnologia_x,codnod,Area_CRM,Categorization_Tier2,LastModifiedBy,CUSTOMERID_CRM__c,TELEFONO_REFERENCIA_1_CRM,servicioAfectado,ESTADO,GESTOR,FEC_PROG,FEC_CERRAR,ACCION,OBS,ACTIVO,LLAMADA) VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s)"""
+sql = """INSERT INTO bdtickets (codreq,fec_regist,desnomctr,desmotv,codofcadm,desdtt,codcli,nomcli,numtelefvoip,desobsordtrab,tiptecnologia_x,codnod,Area_CRM,Categorization_Tier2,LastModifiedBy,CUSTOMERID_CRM__c,TELEFONO_REFERENCIA_1_CRM,servicioAfectado,ESTADO,GESTOR,FEC_PROG,FEC_CERRAR,ACCION,OBS,ACTIVO,LLAMADA,MENSAJE) VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s)"""
 for row in nuevoee.values.tolist():
     cursor.execute(sql, tuple(row))
 cnxn.commit()
