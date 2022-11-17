@@ -1913,7 +1913,7 @@ if authentication_status:
                             if 'SMS1' == mensaje:
 
                                 xpath = driver.find_element("xpath", '//TEXTAREA[@id="txtMessage"]')
-                                xpath.send_keys(f"Hola, intentamos contactarte para solucionar la averia en tu {servi} {codcli}, estaremos contactandote nuevamente, Movistar.")
+                                xpath.send_keys(f"Hola, intentamos contactarte para solucionar la avería en tu {servi} {codcli}, estaremos contactandote nuevamente, Movistar.")
                                 time.sleep(6)
 
 
@@ -1955,7 +1955,7 @@ if authentication_status:
 
 
                                 xpath = driver.find_element("xpath", '//TEXTAREA[@id="txtMessage"]')
-                                xpath.send_keys(f"Hola, intentamos contactarte para validar que tu {servi} {codcli} CodClient, ya se encuentra operativo, porfavor realizar las validaciones, Movistar")
+                                xpath.send_keys(f"Hola, intentamos contactarte para validar que tu {servi} {codcli} , ya se encuentra operativo, por favor realizar las validaciones, Movistar")
                                 time.sleep(6)
 
 
