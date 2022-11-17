@@ -1941,13 +1941,13 @@ if authentication_status:
                             
 
                                 with col2:
-                                    st.markdown("**Numero de tickets**")
+                                    st.markdown("**Numero de codcli**")
                                     st.markdown(f'<p class="big-font"; style="text-align:center;background-image: linear-gradient(to right,LAVENDER, LAVENDER);color:BLACK;font-size:18px;border-radius:2%;">{codcli}</p>', unsafe_allow_html=True)
 
                             
 
                                 with col3:
-                                    st.markdown("**Numero de tickets**")
+                                    st.markdown("**Servi**")
                                     st.markdown(f'<p class="big-font"; style="text-align:center;background-image: linear-gradient(to right,LAVENDER, LAVENDER);color:BLACK;font-size:18px;border-radius:2%;">{servi}</p>', unsafe_allow_html=True)
 
                             
@@ -1983,13 +1983,13 @@ if authentication_status:
                             
 
                                 with col2:
-                                    st.markdown("**Numero de tickets**")
+                                    st.markdown("**Numero de codcli**")
                                     st.markdown(f'<p class="big-font"; style="text-align:center;background-image: linear-gradient(to right,LAVENDER, LAVENDER);color:BLACK;font-size:18px;border-radius:2%;">{codcli}</p>', unsafe_allow_html=True)
 
                             
 
                                 with col3:
-                                    st.markdown("**Numero de tickets**")
+                                    st.markdown("**Servi**")
                                     st.markdown(f'<p class="big-font"; style="text-align:center;background-image: linear-gradient(to right,LAVENDER, LAVENDER);color:BLACK;font-size:18px;border-radius:2%;">{servi}</p>', unsafe_allow_html=True)
 
 
