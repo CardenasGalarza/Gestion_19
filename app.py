@@ -2021,7 +2021,7 @@ if authentication_status:
                             f"""
                             <style>
                             .stApp {{
-                                background-image: url("https://cdn.pixabay.com/photo/2018/11/13/18/06/mail-3813618_960_720.jpg 1x, https://cdn.pixabay.com/photo/2018/11/13/18/06/mail-3813618_1280.jpg");
+                                background-image: url("https://cdn.pixabay.com/photo/2020/05/15/17/55/box-5174459_960_720.jpg 1x, https://cdn.pixabay.com/photo/2020/05/15/17/55/box-5174459_1280.jpg");
                                 background-attachment: fixed;
                                 background-size: cover
                             }}
@@ -2041,7 +2041,7 @@ if authentication_status:
                 f"""
                 <style>
                 .stApp {{
-                    background-image: url("https://cdn.pixabay.com/photo/2018/11/13/18/06/mail-3813618_960_720.jpg 1x, https://cdn.pixabay.com/photo/2018/11/13/18/06/mail-3813618_1280.jpg");
+                    background-image: url("https://cdn.pixabay.com/photo/2020/05/15/17/55/box-5174459_960_720.jpg 1x, https://cdn.pixabay.com/photo/2020/05/15/17/55/box-5174459_1280.jpg");
                     background-attachment: fixed;
                     background-size: cover
                 }}
