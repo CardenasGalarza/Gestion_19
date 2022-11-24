@@ -259,7 +259,7 @@ if authentication_status:
 
     if selected == "CargarDt":
         #st.title(f"You have selected {selected}")
-        st.title("GESTION TICKETS PENDIENTES💻")
+        st.title("CARGAR DATOS GESTION⌚")
 
         # Add a sidebar
         st.sidebar.subheader("Primero cargar Trouble Tickets")
