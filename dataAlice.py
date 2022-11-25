@@ -6,7 +6,7 @@ import numpy as np
 ############################################ OCULTAR INFROMACION NO IMPORTANTE
 import warnings
 
-from pyautogui import sleep
+#from pyautogui import sleep
 warnings.filterwarnings('ignore')
 #########################################3333
 gc = gspread.service_account(filename='datacargar-947843f340e2.json')
