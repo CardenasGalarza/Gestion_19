@@ -682,8 +682,8 @@ if authentication_status:
             date = datetime.now()
             ##TODO SIEMPRE VER ESTO PARA CONTADOR
             ##FIXME SOLO CAMBIAR ESTO FIRMATO DE FECHA NO LO DE ABAJO
-            #tcanti = (date.strftime("%Y-%d-%m"))
-            tcanti = (date.strftime("%Y-%m-%d"))
+            tcanti = (date.strftime("%Y-%d-%m"))   ## inicio de semana
+            #tcanti = (date.strftime("%Y-%m-%d"))  ## luego dias despues de se semana
             #print(tcanti)
         ##### cantidad de cerradas
             df = dfg
