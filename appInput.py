@@ -782,158 +782,12 @@ if authentication_status:
 
                 genre = st.radio(
                     "Establece tu preferencia de actividad",
-                    ('Programar', 'Cargar datos' ,'En espera','Finalizar', 'Analisis', 'Dashboard'))
-
-                if  genre == 'Cargar datos':
-
-                    my_bar = st.progress(0)
-                    ## fecha para programar y cerrar
-                    date = datetime.now()
-                    tiempo = (date.strftime("%d-%m-%Y %H:%M:%S"))
-                    #print(tiempo) # DD Month, YYYY HH:MM:SS
-
-                    options = (df2['codreq'].unique())
-
-
-                    add  = str('CERRAR')
-                    nom = str(name)
-                    adwe = (str(options)[2:-2])
-                    rreeee = (str(options)[2:-2])
-                    #print(rreeee)
-
-
-
-                    options = (df['codreq'].unique())
-
-                    add  = str('PROGRAMADO')
-                    nom = str(name)
-                    adwe = (str(options)[2:-2])
-                    #print(adwe)
-                    #st.info(dfu2)
-
-                    #cursor.execute("UPDATE bdtickets SET ESTADO = ?, GESTOR = ? WHERE codreq = ?", add, nom, adwe)
-                    #st.info(dfu2)
-                    ### un ejemplo para texto
-                    #st.info(desobsordtrab)
-                    #st.markdown(f'<p class="big-font"; style="text-align:center;background-image: linear-gradient(to right,Cyan, Cyan);color:BLACK;font-size:16px;border-radius:2%;">{canti}</p>', unsafe_allow_html=True)
-                    st.markdown(f'<p class="big-font"; style="text-align:center;background-image: linear-gradient(to right,Cyan, Cyan);color:BLACK;font-size:16px;border-radius:2%;">{dfunom}</p>', unsafe_allow_html=True)
-
-                    with st.form(key='my_form', clear_on_submit=True):
-                    
-                        col1, col2, col3 = st.columns(3)
-
-
-
-                        with col1:
-                            st.markdown("**Numero de tickets**")
-                            st.markdown(f'<p class="big-font"; style="text-align:center;background-image: linear-gradient(to right,LAVENDER, LAVENDER);color:BLACK;font-size:18px;border-radius:2%;">{dfu2}</p>', unsafe_allow_html=True)
-
-                            #filter_page_or_query = st.markdown("Dimension to filter #1"), st.markdown("<P style='text-align: center; color: BLUE;'>Some title</P>", unsafe_allow_html=True)
-
-                        with col2:
-                            st.markdown("**Codigo de cliente**")
-                            st.markdown(f'<p class="big-font"; style="text-align:center;background-image: linear-gradient(to right,LAVENDER, LAVENDER);color:BLACK;font-size:18px;border-radius:2%;">{codcli}</p>', unsafe_allow_html=True)
-
-                            
-
-                        with col3:
-                            st.markdown("**Fecha de Ticket**")
-                            st.markdown(f'<p class="big-font"; style="text-align:center;background-image: linear-gradient(to right,LAVENDER, LAVENDER);color:BLACK;font-size:18px;border-radius:2%;">{fec_regist}</p>', unsafe_allow_html=True)
-
-
-                        with col1:
-                            st.markdown("**Tecnologia**")
-                            st.markdown(f'<p class="big-font"; style="text-align:center;background-image: linear-gradient(to right,LAVENDER, LAVENDER);color:BLACK;font-size:18px;border-radius:2%;">{tiptecnologia_x}</p>', unsafe_allow_html=True)
-
-
-                        with col2:
-                            st.markdown("**Telefono**")
-                            st.markdown(f'<p class="big-font"; style="text-align:center;background-image: linear-gradient(to right,LAVENDER, LAVENDER);color:BLACK;font-size:18px;border-radius:2%;">_{numtelefvoip}</p>', unsafe_allow_html=True)
-
-
-                        with col3:
-                            st.markdown("**Telf Ref**")
-                            st.markdown(f'<p class="big-font"; style="text-align:center;background-image: linear-gradient(to right,LAVENDER, LAVENDER);color:BLACK;font-size:18px;border-radius:2%;">{TELEFONO_REFERENCIA_1_CRM}</p>', unsafe_allow_html=True)
-
-
-                        with col1:
-                            st.markdown("**Nodo**")
-                            st.markdown(f'<p class="big-font"; style="text-align:center;background-image: linear-gradient(to right,LAVENDER, LAVENDER);color:BLACK;font-size:18px;border-radius:2%;">{codnod}</p>', unsafe_allow_html=True)
-
-                        with col2:
-                            st.markdown("**CategTier 2**")
-                            st.markdown(f'<p class="big-font"; style="text-align:center;background-image: linear-gradient(to right,LAVENDER, LAVENDER);color:BLACK;font-size:18px;border-radius:2%;">{Categorization_Tier2}</p>', unsafe_allow_html=True)
-
-                        with col3:
-                            st.markdown("**Observacion**")
-                            st.markdown(f'<p class="big-font"; style="text-align:center;background-image: linear-gradient(to right,LAVENDER, LAVENDER);color:BLACK;font-size:18px;border-radius:2%;">{desmotv}</p>', unsafe_allow_html=True)
-
-                        with col1:
-                            st.markdown("**Cuestomerid crm**")
-                            st.markdown(f'<p class="big-font"; style="text-align:center;background-image: linear-gradient(to right,LAVENDER, LAVENDER);color:BLACK;font-size:18px;border-radius:2%;">{CUSTOMERID_CRM__c}</p>', unsafe_allow_html=True)
-
-                        with col2:
-                            lenArea_CRM = len(Area_CRM)
-                            #print(lenArea_CRM)
-                            #if lenArea_CRM
-                            if lenArea_CRM > 1:
-                                st.markdown("**Area crm**")
-                                st.markdown(f'<p class="big-font"; style="text-align:center;background-image: linear-gradient(to right,LAVENDER, LAVENDER);color:BLACK;font-size:18px;border-radius:2%;">{Area_CRM}</p>', unsafe_allow_html=True)
-                            else:
-                                Area_CRMinp = st.text_input("**Area crm**")
-
-                        with col3:
-                            #st.markdown("**Observacion 2**")
-                            suscriptortelefono = st.text_input("**Observacion 2**")
-
-
-                        col1, col2, col3 , col4, col5 = st.columns(5)
-
-                        with col1:
-                            pass
-                        with col2:
-                            pass
-                        with col4:
-                            pass
-                        with col5:
-                            pass
-                        with col3 :
-
-                            submitted = st.form_submit_button("✍🏻Enviar")
-
-                        if submitted == True:
-                            dt1 = len(Area_CRMinp)
-                            if dt1 > 0:
-                                #print('cargando')
-
-                                sql = "UPDATE bdtickets SET Area_CRM = %s WHERE codreq = %s"
-                                val = (Area_CRMinp ,rreeee)
-                                print(Area_CRMinp)
-                                print(rreeee)
-                                cursor.execute(sql, val)
-                                cnxn.commit()
-                                st.experimental_rerun()
-
-                            else:
-                                st.error('TIENES ')
-
-
-                        def local_css(file_name):
-                            with open(file_name) as f:
-                                st.markdown(f'<style>{f.read()}</style>', unsafe_allow_html=True)
-
-                        def remote_css(url):
-                            st.markdown(f'<link href="{url}" rel="stylesheet">', unsafe_allow_html=True)    
-
-                        def icon(icon_name):
-                            st.markdown(f'<i class="material-icons">{icon_name}</i>', unsafe_allow_html=True)
-
-                        local_css("style.css")
+                    ('Programar', 'En espera','Finalizar', 'Analisis', 'Dashboard'))
 
 
                 if  genre == 'Programar':
                     lencodcli = len(codcli)
-                    print(lencodcli)
+                    #print(lencodcli)
                     if lencodcli == 0:
 
                         my_bar = st.progress(0)
@@ -1031,6 +885,9 @@ if authentication_status:
                                 st.markdown(f'<p class="big-font"; style="text-align:center;background-image: linear-gradient(to right,LAVENDER, LAVENDER);color:BLACK;font-size:18px;border-radius:2%;">{CUSTOMERID_CRM__c}</p>', unsafe_allow_html=True)
 
                             with col2:
+                                #st.markdown("**Area crm**")
+                                #st.markdown(f'<p class="big-font"; style="text-align:center;background-image: linear-gradient(to right,LAVENDER, LAVENDER);color:BLACK;font-size:18px;border-radius:2%;">{Area_CRM}</p>', unsafe_allow_html=True)
+
                                 lenArea_CRM = len(Area_CRM)
                                 #print(lenArea_CRM)
                                 #if lenArea_CRM
@@ -1038,11 +895,13 @@ if authentication_status:
                                     st.markdown("**Area crm**")
                                     st.markdown(f'<p class="big-font"; style="text-align:center;background-image: linear-gradient(to right,LAVENDER, LAVENDER);color:BLACK;font-size:18px;border-radius:2%;">{Area_CRM}</p>', unsafe_allow_html=True)
                                 else:
-                                    Area_CRMinp = st.text_input("**Area crm**")
+                                    lenArea_CRMinp = st.text_input("**Area crm**")
+
 
                             with col3:
-                                #st.markdown("**Observacion 2**")
-                                suscriptortelefono = st.text_input("**Observacion 2**")
+                                st.markdown("**Observacion 2**")
+                                st.markdown(f'<p class="big-font"; style="text-align:center;background-image: linear-gradient(to right,LAVENDER, LAVENDER);color:BLACK;font-size:15px;border-radius:2%;">{desobsordtrab}</p>', unsafe_allow_html=True)
+                            
 
 
                             col1, col2, col3 , col4, col5 = st.columns(5)
@@ -1061,11 +920,15 @@ if authentication_status:
 
                             if submitted == True:
                                 dt1 = len(lenCodigoclienteinp)
-                                if dt1 > 0:
+                                dt2 = len(lenArea_CRMinp)
+
+                                #https://stackoverflow.com/questions/16522111/python-syntax-for-if-a-or-b-or-c-but-not-all-of-them
+                                if (dt1 and dt2) > 0:
+                                #if dt1, dt2  > 0:
                                     #print('cargando')
 
-                                    sql = "UPDATE bdtickets SET codcli = %s WHERE codreq = %s"
-                                    val = (lenCodigoclienteinp ,rreeee)
+                                    sql = "UPDATE bdtickets SET codcli = %s, Area_CRM = %s  WHERE codreq = %s"
+                                    val = (lenCodigoclienteinp, lenArea_CRMinp ,rreeee)
                                     print(lenCodigoclienteinp)
                                     print(rreeee)
                                     cursor.execute(sql, val)
@@ -1073,7 +936,7 @@ if authentication_status:
                                     st.experimental_rerun()
 
                                 else:
-                                    st.error('TIENES ')
+                                    st.error('TIENES QUE ESCRIBIR EN TODOS LOS INPUT')
 
 
                             def local_css(file_name):
