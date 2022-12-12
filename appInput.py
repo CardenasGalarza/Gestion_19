@@ -936,9 +936,10 @@ if authentication_status:
                                     st.experimental_rerun()
 
                                 else:
-                                    st.error('TIENES QUE ESCRIBIR EN TODOS LOS INPUT')
+                                    #st.error('👀 TIENES QUE ESCRIBIR EN TODOS LOS INPUT👀 ')
+                                    st.markdown(f'<p class="big-font"; style="text-align:center;background-image: linear-gradient(to right,MistyRose, MistyRose);color:BLACK;font-size:18px;border-radius:2%;"><b>😡👀 TIENES QUE ESCRIBIR EN TODOS LOS INPUT 👀😡</b></p>', unsafe_allow_html=True)
 
-
+                            #PONER COLOR A LOS INPUT TRABAJA CON CSS
                             def local_css(file_name):
                                 with open(file_name) as f:
                                     st.markdown(f'<style>{f.read()}</style>', unsafe_allow_html=True)
