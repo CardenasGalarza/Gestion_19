@@ -745,11 +745,11 @@ if authentication_status:
     if selected == "Projects":
         if bs == True:
 
-            cnxn = mysql.connector.connect( host="localhost",
+            cnxn = mysql.connector.connect( host="us-cdbr-east-06.cleardb.net",
                                             port="3306",
-                                            user="root",
-                                            passwd="CARDENAS47465810",
-                                            db="bdtickets"
+                                            user="b70d451b4ff985",
+                                            passwd="68b102d9",
+                                            db="heroku_9ca78643f8fb80d"
                                             )
             cursor = cnxn.cursor()
                 #st.title(f"You have selected {selected}")
@@ -2088,11 +2088,11 @@ if authentication_status:
                             date = datetime.now()
                             tiempo = (date.strftime("%d-%m-%Y %H:%M:%S"))
 
-                            cnxn = mysql.connector.connect( host="localhost",
+                            cnxn = mysql.connector.connect( host="us-cdbr-east-06.cleardb.net",
                                                             port="3306",
-                                                            user="root",
-                                                            passwd="CARDENAS47465810",
-                                                            db="bdtickets"
+                                                            user="b70d451b4ff985",
+                                                            passwd="68b102d9",
+                                                            db="heroku_9ca78643f8fb80d"
                                                             )
                             cursor = cnxn.cursor()
 
