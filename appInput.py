@@ -1072,7 +1072,7 @@ if authentication_status:
                                 if dt1 > 0 and dt2 > 0 and  dt3 > 0 and  dt4 > 0 and  dt5 > 0 and  dt6 > 0 and  dt7 > 0 and  dt8 > 0 and  dt9 > 0:
                                 #if dt1, dt2  > 0:
                                     if Tecno != page:
-                                        sql = "UPDATE bdtickets SET codcli = %s, tiptecnologia_x = %s, numtelefvoip = %s, TELEFONO_REFERENCIA_1_CRM = %s, codnod = %s, CUSTOMERID_CRM__c = %s, desobsordtrab = %s, codofcadm = %s, desdtt = %s, servicioAfectado = %s, nomcli = %s ESTADO='PENDIENTE', GESTOR='', FEC_PROG='' ,FEC_CERRAR='' ,ACCION='' ,OBS='' ,ACTIVO='0'  WHERE codreq = %s"
+                                        sql = "UPDATE bdtickets SET codcli = %s, tiptecnologia_x = %s, numtelefvoip = %s, TELEFONO_REFERENCIA_1_CRM = %s, codnod = %s, CUSTOMERID_CRM__c = %s, desobsordtrab = %s, codofcadm = %s, desdtt = %s, servicioAfectado = %s, nomcli = %s, ESTADO='PENDIENTE', GESTOR='', FEC_PROG='' ,FEC_CERRAR='' ,ACCION='' ,OBS='' ,ACTIVO='0'  WHERE codreq = %s"
                                         val = (lenCodigoclienteinp, Tecno, lenTelefono, lenTelfRef, lenNodo, lenCuestomerid, lenObservacion2, lencodofcadm, lendesdtt, lenservicioAfectado, lennomcliente, rreeee)
                                         #print(lenCodigoclienteinp)
                                         #print(rreeee)
