@@ -30,8 +30,10 @@ cnxn = mysql.connector.connect( host="us-cdbr-east-06.cleardb.net",
 cursor = cnxn.cursor()
 print("Conexion Listo a la base de datos MYSQL")
 
-sql = "DELETE FROM bdtickets  WHERE ESTADO = 'PENDIENTE' AND GESTOR =''"
+#sql = "DELETE FROM bdtickets  WHERE ESTADO = 'PENDIENTE' AND GESTOR =''"
+sql = "DELETE from bdtickets  WHERE  ESTADO = 'PENDIENTE' AND GESTOR ='' AND  codcli  <> 0"
 cursor.execute(sql)
+
 
 
 sql = """

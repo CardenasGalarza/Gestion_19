@@ -262,12 +262,11 @@ if authentication_status:
         st.title("CARGAR DATOS GESTION⌚")
 
         # Add a sidebar
-        st.sidebar.subheader("Primero cargar Trouble Tickets")
+        st.sidebar.subheader("Cargar datos de acuerdo a lo requerido")
 
-
-        # Setup file upload
+                # Setup file upload
         uploaded_file = st.sidebar.file_uploader(
-                                label="Upload your CSV or Excel file. (200MB max)",
+                                label="Solo cargar data TT y CMR. (200MB max)",
                                 type=['csv', 'xlsx', 'XLS'])
 
         global df
@@ -558,6 +557,123 @@ if authentication_status:
                                 """
                     st.markdown(hide_streamlit_style, unsafe_allow_html=True)
 
+        uploaded_Simple = st.sidebar.file_uploader(
+                                label="Solo cargar data__+Simple. (200MB max)",
+                                type=['csv'])
+#########
+##TODO CARGAR SOLO MAS SIMPLE
+##########
+        if uploaded_Simple is not None:
+            #st.sidebar.title("Solo cargar +Simple")
+            #print("hello")
+            with st.spinner('Procesando los datos...'):
+                try:
+                    #Trouble = pd.read_excel(uploaded_file, engine="openpyxl", skiprows=3)
+                    df = pd.read_csv(uploaded_Simple, sep=',')
+                    #df = pd.read_csv('base_2.csv', sep=',')
+
+                    df = df[['ID ', 'Fecha de Creación', 'Tipo de nivel 1:', 'Titulo', 'Dueńo']]
+
+                    df = df.rename(columns={'ID ':'codreq','Fecha de Creación':'fec_regist','Tipo de nivel 1:':'desnomctr','Titulo':'desmotv','Dueńo':'LastModifiedBy'})
+
+                    df['codofcadm'] = ''
+                    df['desdtt'] = ''
+                    df['codcli'] = ''
+                    df['nomcli'] = ''
+                    df['numtelefvoip'] = ''
+                    df['desobsordtrab'] = ''
+                    df['tiptecnologia_x'] = 'GPON'
+                    df['codnod'] = ''
+                    df['CUSTOMERID_CRM__c'] = ''
+                    df['TELEFONO_REFERENCIA_1_CRM'] = ''
+                    df['servicioAfectado'] = ''
+
+                    df['Area_CRM'] = df['desnomctr']
+                    df['Categorization_Tier2'] = df['desnomctr']
+
+                    df['ESTADO']= 'PENDIENTE'
+                    df['GESTOR']= ''
+                    df['ACTIVO']= '0'
+                    df['LLAMADA']= '0'
+                    df['MENSAJE']= '0'
+
+                    df['FEC_PROG']= ''
+                    df['FEC_CERRAR']= ''
+                    df['ACCION']= ''
+                    df['OBS']= ''
+
+
+                    df = df[['codreq', 'fec_regist', 'desnomctr', 'desmotv', 'codofcadm', 'desdtt',
+                        'codcli', 'nomcli', 'numtelefvoip', 'desobsordtrab', 'tiptecnologia_x',
+                        'codnod', 'Area_CRM', 'Categorization_Tier2', 'LastModifiedBy',
+                        'CUSTOMERID_CRM__c', 'TELEFONO_REFERENCIA_1_CRM', 'servicioAfectado',
+                        'ESTADO', 'GESTOR', 'FEC_PROG', 'FEC_CERRAR', 'ACCION', 'OBS', 'ACTIVO',
+                        'LLAMADA', 'MENSAJE']]
+
+                    df = pd.DataFrame(df).astype(str)
+
+                    df['fec_regist'] = pd.to_datetime(df.fec_regist, errors = 'coerce').dt.strftime("%Y/%m/%d  %H:%M:%S")
+                    df["codreq"]=df["codreq"].apply(str)
+
+                    #print(string)
+                    ############################################ OCULTAR INFROMACION NO IMPORTANTE
+                    import warnings
+                    warnings.filterwarnings('ignore')
+                    #########################################3333
+                    #######
+                    ## TODO CONECTION A LA BASE DE DATOS MYSQL
+                    #######
+                    cnxn =  mysql.connector.connect( host="localhost",
+                                                    port="3306",
+                                                    user="root",
+                                                    passwd="CARDENAS47465810",
+                                                    db="bdtickets"
+                                                    )
+                    cursor = cnxn.cursor()
+
+                    sql = """
+                    SELECT * FROM bdtickets ;
+                    """
+                    #######
+                    ## TODO BASE DE DATOS MYSQL
+                    #######
+                    df1 = pd.read_sql(sql, cnxn)
+                    df1["codreq"]=df1["codreq"].astype(str)
+                    #print(len(df1))
+                    #######
+                    ## TODO UNIR BASE DE DATOS MYSQL Y GOOGLE
+                    #######
+                    union = pd.concat([df, df1])
+                    #print(len(union))
+                    #######
+                    ## DE LA UNION BORRAR LOS DATOS DUPLICADOS Y QUEDARME SOLO CON LOS NUEVO TICKETS
+                    #######
+                    union2 = pd.concat([union, df1])
+                    nuevoee = union2.drop_duplicates(subset=['codreq'], keep=False)
+
+
+                    df1 = nuevoee.columns
+                    matriz_np = np.array(df1)
+                    matriz_np = matriz_np.tolist()
+                    string = (str(matriz_np)[1:-1])
+                    characters = "'!?"
+                    colum = ''.join( x for x in string if x not in characters)
+
+                    #TODO Cargar data
+
+                    #######
+                    sql = f"""INSERT INTO bdtickets ({colum}) VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s)"""
+                    for row in nuevoee.values.tolist():
+                        cursor.execute(sql, tuple(row))
+                    cnxn.commit()
+
+
+                    cursor.close()
+                    cnxn.close()
+                    st.success("Se cargo la cantidad de: " +  str(len(nuevoee)))
+
+                except Exception as e:
+                    st.error('DATA NO CORRESPONDE 👋🏻')
 
             ## borrar nombres de la pagina
             hide_streamlit_style = """
@@ -768,7 +884,6 @@ if authentication_status:
             Area_CRM = (Area_CRM.to_string(index=False))
             desmotv = (desmotv.to_string(index=False))
             #desobsordtrab = (desobsordtrab.to_string(index=False))
-
             ## ejemplo de texto completo
             desobsordtrab = (str(desobsordtrab)[2:-2])
             #print(desobsordtrab)
@@ -836,16 +951,17 @@ if authentication_status:
 
                             with col2:
                                 #st.markdown("**Codigo de cliente**")
+                                lenCodigoclienteinp = st.text_input("**Codigo de cliente**")
                                 #st.markdown(f'<p class="big-font"; style="text-align:center;background-image: linear-gradient(to right,LAVENDER, LAVENDER);color:BLACK;font-size:18px;border-radius:2%;">{codcli}</p>', unsafe_allow_html=True)
 
-                                lenCodigocliente = len(codcli)
+                                #lenCodigocliente = len(codcli)
                                 #print(lenArea_CRM)
                                 #if lenArea_CRM
-                                if lenCodigocliente > 1:
-                                    st.markdown("**Codigo de cliente**")
-                                    st.markdown(f'<p class="big-font"; style="text-align:center;background-image: linear-gradient(to right,LAVENDER, LAVENDER);color:BLACK;font-size:18px;border-radius:2%;">{codcli}</p>', unsafe_allow_html=True)
-                                else:
-                                    lenCodigoclienteinp = st.text_input("**Codigo de cliente**")
+                                #if lenCodigocliente > 1:
+                                #    st.markdown("**Codigo de cliente**")
+                                #    st.markdown(f'<p class="big-font"; style="text-align:center;background-image: linear-gradient(to right,LAVENDER, LAVENDER);color:BLACK;font-size:18px;border-radius:2%;">{codcli}</p>', unsafe_allow_html=True)
+                                #else:
+                                #    lenCodigoclienteinp = st.text_input("**Codigo de cliente**")
                                 
 
                             with col3:
@@ -854,23 +970,33 @@ if authentication_status:
 
 
                             with col1:
-                                st.markdown("**Tecnologia**")
-                                st.markdown(f'<p class="big-font"; style="text-align:center;background-image: linear-gradient(to right,LAVENDER, LAVENDER);color:BLACK;font-size:18px;border-radius:2%;">{tiptecnologia_x}</p>', unsafe_allow_html=True)
 
+                                    Tecno = st.selectbox(
+                                        "**Tecnologia**",
+                                        (
+                                            "GPON",
+                                            "HFC",
+                                        ),
+                                        key="filter_type3",
+                                        help="""
+                                        Ten encuenta tu accion `Ticket` inf.
+                                        """,
+                                    )
 
                             with col2:
-                                st.markdown("**Telefono**")
-                                st.markdown(f'<p class="big-font"; style="text-align:center;background-image: linear-gradient(to right,LAVENDER, LAVENDER);color:BLACK;font-size:18px;border-radius:2%;">_{numtelefvoip}</p>', unsafe_allow_html=True)
-
+                                #st.markdown("**Telefono**")
+                                #st.markdown(f'<p class="big-font"; style="text-align:center;background-image: linear-gradient(to right,LAVENDER, LAVENDER);color:BLACK;font-size:18px;border-radius:2%;">_{numtelefvoip}</p>', unsafe_allow_html=True)
+                                lenTelefono = st.text_input("**Telefono**")
 
                             with col3:
-                                st.markdown("**Telf Ref**")
-                                st.markdown(f'<p class="big-font"; style="text-align:center;background-image: linear-gradient(to right,LAVENDER, LAVENDER);color:BLACK;font-size:18px;border-radius:2%;">{TELEFONO_REFERENCIA_1_CRM}</p>', unsafe_allow_html=True)
-
+                                #st.markdown("**Telf Ref**")
+                                #st.markdown(f'<p class="big-font"; style="text-align:center;background-image: linear-gradient(to right,LAVENDER, LAVENDER);color:BLACK;font-size:18px;border-radius:2%;">{TELEFONO_REFERENCIA_1_CRM}</p>', unsafe_allow_html=True)
+                                lenTelfRef = st.text_input("**Telf Ref**")
 
                             with col1:
-                                st.markdown("**Nodo**")
-                                st.markdown(f'<p class="big-font"; style="text-align:center;background-image: linear-gradient(to right,LAVENDER, LAVENDER);color:BLACK;font-size:18px;border-radius:2%;">{codnod}</p>', unsafe_allow_html=True)
+                                #st.markdown("**Nodo**")
+                                #st.markdown(f'<p class="big-font"; style="text-align:center;background-image: linear-gradient(to right,LAVENDER, LAVENDER);color:BLACK;font-size:18px;border-radius:2%;">{codnod}</p>', unsafe_allow_html=True)
+                                lenNodo = st.text_input("**Nodo**")
 
                             with col2:
                                 st.markdown("**CategTier 2**")
@@ -881,28 +1007,41 @@ if authentication_status:
                                 st.markdown(f'<p class="big-font"; style="text-align:center;background-image: linear-gradient(to right,LAVENDER, LAVENDER);color:BLACK;font-size:18px;border-radius:2%;">{desmotv}</p>', unsafe_allow_html=True)
 
                             with col1:
-                                st.markdown("**Cuestomerid crm**")
-                                st.markdown(f'<p class="big-font"; style="text-align:center;background-image: linear-gradient(to right,LAVENDER, LAVENDER);color:BLACK;font-size:18px;border-radius:2%;">{CUSTOMERID_CRM__c}</p>', unsafe_allow_html=True)
+                                #st.markdown("**Cuestomerid crm**")
+                                #st.markdown(f'<p class="big-font"; style="text-align:center;background-image: linear-gradient(to right,LAVENDER, LAVENDER);color:BLACK;font-size:18px;border-radius:2%;">{CUSTOMERID_CRM__c}</p>', unsafe_allow_html=True)
+                                lenCuestomerid = st.text_input("**Cuestomerid crm**")
 
                             with col2:
-                                #st.markdown("**Area crm**")
-                                #st.markdown(f'<p class="big-font"; style="text-align:center;background-image: linear-gradient(to right,LAVENDER, LAVENDER);color:BLACK;font-size:18px;border-radius:2%;">{Area_CRM}</p>', unsafe_allow_html=True)
+                                st.markdown("**Area crm**")
+                                st.markdown(f'<p class="big-font"; style="text-align:center;background-image: linear-gradient(to right,LAVENDER, LAVENDER);color:BLACK;font-size:18px;border-radius:2%;">{Area_CRM}</p>', unsafe_allow_html=True)
 
-                                lenArea_CRM = len(Area_CRM)
-                                #print(lenArea_CRM)
-                                #if lenArea_CRM
-                                if lenArea_CRM > 1:
-                                    st.markdown("**Area crm**")
-                                    st.markdown(f'<p class="big-font"; style="text-align:center;background-image: linear-gradient(to right,LAVENDER, LAVENDER);color:BLACK;font-size:18px;border-radius:2%;">{Area_CRM}</p>', unsafe_allow_html=True)
-                                else:
-                                    lenArea_CRMinp = st.text_input("**Area crm**")
+                                #lenArea_CRM = len(Area_CRM)
+                                ##print(lenArea_CRM)
+                                ##if lenArea_CRM
+                                #if lenArea_CRM > 1:
+                                #    st.markdown("**Area crm**")
+                                #    st.markdown(f'<p class="big-font"; style="text-align:center;background-image: linear-gradient(to right,LAVENDER, LAVENDER);color:BLACK;font-size:18px;border-radius:2%;">{Area_CRM}</p>', unsafe_allow_html=True)
+                                #else:
+                                #    lenArea_CRMinp = st.text_input("**Area crm**")
 
+
+                            #with col3:
+                            #    #st.markdown("**Observacion 2**")
+                            #    #st.markdown(f'<p class="big-font"; style="text-align:center;background-image: linear-gradient(to right,LAVENDER, LAVENDER);color:BLACK;font-size:15px;border-radius:2%;">{desobsordtrab}</p>', unsafe_allow_html=True)
+                            #    lenObservacion2 = st.text_input("**Observacion 2**")
+
+                            with col1:
+                                lencodofcadm = st.text_input("**codofcadm**")
+
+                            with col2:
+                                lendesdtt = st.text_input("**desdtt**")
 
                             with col3:
-                                st.markdown("**Observacion 2**")
-                                st.markdown(f'<p class="big-font"; style="text-align:center;background-image: linear-gradient(to right,LAVENDER, LAVENDER);color:BLACK;font-size:15px;border-radius:2%;">{desobsordtrab}</p>', unsafe_allow_html=True)
-                            
+                                lenservicioAfectado = st.text_input("**servicioAfectado**")
 
+                            lennomcliente = st.text_input("**Nombre_Cliente**")
+
+                            lenObservacion2 = st.text_area("Observación", key="text")
 
                             col1, col2, col3 , col4, col5 = st.columns(5)
 
@@ -915,29 +1054,43 @@ if authentication_status:
                             with col5:
                                 pass
                             with col3 :
-
                                 submitted = st.form_submit_button("✍🏻Enviar")
 
                             if submitted == True:
                                 dt1 = len(lenCodigoclienteinp)
-                                dt2 = len(lenArea_CRMinp)
+                                dt2 = len(lenTelefono)
+                                dt3 = len(lenTelfRef)
+                                dt4 = len(lenNodo)
+                                dt5 = len(lenCuestomerid)
+                                dt6 = len(lenObservacion2)
+                                dt7 = len(lencodofcadm)
+                                dt8 = len(lendesdtt)
+                                dt9 = len(lenservicioAfectado)
 
                                 #https://stackoverflow.com/questions/16522111/python-syntax-for-if-a-or-b-or-c-but-not-all-of-them
-                                if (dt1 and dt2) > 0:
+                                #if (dt1 and dt2 and dto) > 0:
+                                if dt1 > 0 and dt2 > 0 and  dt3 > 0 and  dt4 > 0 and  dt5 > 0 and  dt6 > 0 and  dt7 > 0 and  dt8 > 0 and  dt9 > 0:
                                 #if dt1, dt2  > 0:
-                                    #print('cargando')
-
-                                    sql = "UPDATE bdtickets SET codcli = %s, Area_CRM = %s  WHERE codreq = %s"
-                                    val = (lenCodigoclienteinp, lenArea_CRMinp ,rreeee)
-                                    print(lenCodigoclienteinp)
-                                    print(rreeee)
-                                    cursor.execute(sql, val)
-                                    cnxn.commit()
-                                    st.experimental_rerun()
+                                    if Tecno != page:
+                                        sql = "UPDATE bdtickets SET codcli = %s, tiptecnologia_x = %s, numtelefvoip = %s, TELEFONO_REFERENCIA_1_CRM = %s, codnod = %s, CUSTOMERID_CRM__c = %s, desobsordtrab = %s, codofcadm = %s, desdtt = %s, servicioAfectado = %s, nomcli = %s ESTADO='PENDIENTE', GESTOR='', FEC_PROG='' ,FEC_CERRAR='' ,ACCION='' ,OBS='' ,ACTIVO='0'  WHERE codreq = %s"
+                                        val = (lenCodigoclienteinp, Tecno, lenTelefono, lenTelfRef, lenNodo, lenCuestomerid, lenObservacion2, lencodofcadm, lendesdtt, lenservicioAfectado, lennomcliente, rreeee)
+                                        #print(lenCodigoclienteinp)
+                                        #print(rreeee)
+                                        cursor.execute(sql, val)
+                                        cnxn.commit()
+                                        st.experimental_rerun()
+                                    else:
+                                        sql = "UPDATE bdtickets SET codcli = %s, tiptecnologia_x = %s, numtelefvoip = %s, TELEFONO_REFERENCIA_1_CRM = %s, codnod = %s, CUSTOMERID_CRM__c = %s, desobsordtrab = %s, codofcadm = %s, desdtt = %s, servicioAfectado = %s, nomcli = %s  WHERE codreq = %s"
+                                        val = (lenCodigoclienteinp, Tecno, lenTelefono, lenTelfRef, lenNodo, lenCuestomerid, lenObservacion2, lencodofcadm, lendesdtt, lenservicioAfectado, lennomcliente, rreeee)
+                                        #print(lenCodigoclienteinp)
+                                        #print(rreeee)
+                                        cursor.execute(sql, val)
+                                        cnxn.commit()
+                                        st.experimental_rerun()
 
                                 else:
                                     #st.error('👀 TIENES QUE ESCRIBIR EN TODOS LOS INPUT👀 ')
-                                    st.markdown(f'<p class="big-font"; style="text-align:center;background-image: linear-gradient(to right,MistyRose, MistyRose);color:BLACK;font-size:18px;border-radius:2%;"><b>😡👀 TIENES QUE ESCRIBIR EN TODOS LOS INPUT 👀😡</b></p>', unsafe_allow_html=True)
+                                    st.markdown(f'<p class="big-font"; style="text-align:center;background-image: linear-gradient(to right,MistyRose, MistyRose);color:BLACK;font-size:18px;border-radius:2%;"><b>😡👀 TE FALTA INGRESAR LOS DATOS REQUERIDOS 👀😡</b></p>', unsafe_allow_html=True)
 
                             #PONER COLOR A LOS INPUT TRABAJA CON CSS
                             def local_css(file_name):
@@ -951,7 +1104,7 @@ if authentication_status:
                                 st.markdown(f'<i class="material-icons">{icon_name}</i>', unsafe_allow_html=True)
 
                             local_css("style.css")
-
+                            #remote_css('https://fonts.googleapis.com/icon?family=Material+Icons')
                     else:
                         #TODO SIVERVPARA BARRA AZUL
                         my_bar = st.progress(0)
