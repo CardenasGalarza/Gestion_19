@@ -569,7 +569,8 @@ if authentication_status:
             with st.spinner('Procesando los datos...'):
                 try:
                     #Trouble = pd.read_excel(uploaded_file, engine="openpyxl", skiprows=3)
-                    df = pd.read_csv(uploaded_Simple, sep=',')
+                    df = pd.read_csv(uploaded_Simple, sep=';')
+                    #print(df)
                     #df = pd.read_csv('base_2.csv', sep=',')
 
                     df = df[['ID ', 'Fecha de Creación', 'Tipo de nivel 1:', 'Titulo', 'Dueńo']]
@@ -623,11 +624,11 @@ if authentication_status:
                     #######
                     ## TODO CONECTION A LA BASE DE DATOS MYSQL
                     #######
-                    cnxn =  mysql.connector.connect( host="localhost",
+                    cnxn = mysql.connector.connect( host="us-cdbr-east-06.cleardb.net",
                                                     port="3306",
-                                                    user="root",
-                                                    passwd="CARDENAS47465810",
-                                                    db="bdtickets"
+                                                    user="b70d451b4ff985",
+                                                    passwd="68b102d9",
+                                                    db="heroku_9ca78643f8fb80d"
                                                     )
                     cursor = cnxn.cursor()
 
