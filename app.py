@@ -1,4 +1,3 @@
-
 import streamlit as st
 from streamlit_option_menu import option_menu
 import pickle
@@ -1573,8 +1572,13 @@ if authentication_status:
                                 """,
                                 unsafe_allow_html=True
                             )
-                        add_bg_from_url() 
-                        
+                        add_bg_from_url()
+
+                    if bs == False:
+                        from PIL import Image
+                        image = Image.open('pngegg.png')
+                        st.image(image, caption='Personal autorizado')
+
                 if  genre == 'Analisis':
                     st.text("Cuadro de gestion individual!!!") 
 
@@ -2011,11 +2015,6 @@ if authentication_status:
                 )
             side_bg = 'nooa.jpg'
             sidebar_bg(side_bg)
-
-        if bs == False:
-            from PIL import Image
-            image = Image.open('pngegg.png')
-            st.image(image, caption='Personal autorizado')
 
     if selected == "+Simple":
         if bs == True:
