@@ -575,6 +575,8 @@ if authentication_status:
 
                     df = df[['ID ', 'Fecha de Creación', 'Tipo de nivel 1:', 'Titulo', 'Dueńo']]
 
+                    df["Titulo"] = df["Titulo"].replace({"VISOR": 'BO Técnico - Internet - Cambio de Ip/Act de Datos'})
+
                     df = df.rename(columns={'ID ':'codreq','Fecha de Creación':'fec_regist','Tipo de nivel 1:':'desnomctr','Titulo':'desmotv','Dueńo':'LastModifiedBy'})
 
                     df['codofcadm'] = ''
