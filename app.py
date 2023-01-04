@@ -3717,7 +3717,7 @@ if authentication_status:
 
 
                                 xpath = driver.find_element("xpath", '//TEXTAREA[@id="txtMessage"]')
-                                xpath.send_keys(f"Hola, te contactamos para indicarte que hemos generado el ticket de avería ticket. Nos pondremos en contacto en las próximas horas, Movistar")
+                                xpath.send_keys(f"Hola, te contactamos para indicarte que hemos generado el ticket de avería {servi}. Nos pondremos en contacto en las próximas horas, Movistar")
                                 time.sleep(6)
 
 
@@ -3767,7 +3767,7 @@ if authentication_status:
                                     'Hola, detectamos que la intermitencia del servicio {codcli} se debe al alcance Wifi, recomendamos comprar un repetidor. Mas info al 080011800, Movistar.',
                                     'Hola, se realizó la configuración de tu red WiFi del servicio {codcli}. Sigue pssy ssid disfrutando de tu navegación, Movistar.',
                                     'Hola, nos alegra haberte ayudado, tu servicio de {servi} con código de servicio {codcli} se encuentra operativo. Disfruta de tu navegación, Movistar.',
-                                    'Hola, te contactamos para indicarte que hemos generado el ticket de avería ticket. Nos pondremos en contacto en las próximas horas, Movistar']
+                                    'Hola, te contactamos para indicarte que hemos generado el ticket de avería {servi}. Nos pondremos en contacto en las próximas horas, Movistar']
                     st.dataframe(df)
 
                     st.sidebar.markdown('')
