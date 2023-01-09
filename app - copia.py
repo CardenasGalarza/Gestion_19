@@ -800,8 +800,8 @@ if authentication_status:
             date = datetime.now()
             ##TODO SIEMPRE VER ESTO PARA CONTADOR
             ##FIXME SOLO CAMBIAR ESTO FIRMATO DE FECHA NO LO DE ABAJO
-            #tcanti = (date.strftime("%Y-%d-%m"))   ## inicio de semana hasta el 13
-            tcanti = (date.strftime("%Y-%m-%d"))  ## luego dias despues de se semana
+            tcanti = (date.strftime("%Y-%d-%m"))   ## inicio de semana hasta el 13
+            #tcanti = (date.strftime("%Y-%m-%d"))  ## luego dias despues de se semana
             #print(tcanti)
         ##### cantidad de cerradas
             df = dfg
@@ -1572,8 +1572,13 @@ if authentication_status:
                                 """,
                                 unsafe_allow_html=True
                             )
-                        add_bg_from_url() 
-                        
+                        add_bg_from_url()
+
+                    if bs == False:
+                        from PIL import Image
+                        image = Image.open('pngegg.png')
+                        st.image(image, caption='Personal autorizado')
+
                 if  genre == 'Analisis':
                     st.text("Cuadro de gestion individual!!!") 
 
@@ -2010,11 +2015,6 @@ if authentication_status:
                 )
             side_bg = 'nooa.jpg'
             sidebar_bg(side_bg)
-
-        if bs == False:
-            from PIL import Image
-            image = Image.open('pngegg.png')
-            st.image(image, caption='Personal autorizado')
 
     if selected == "+Simple":
         if bs == True:
@@ -3717,7 +3717,7 @@ if authentication_status:
 
 
                                 xpath = driver.find_element("xpath", '//TEXTAREA[@id="txtMessage"]')
-                                xpath.send_keys(f"Hola, te contactamos para indicarte que hemos generado el ticket de avería ticket. Nos pondremos en contacto en las próximas horas, Movistar")
+                                xpath.send_keys(f"Hola, te contactamos para indicarte que hemos generado el ticket de avería {servi}. Nos pondremos en contacto en las próximas horas, Movistar")
                                 time.sleep(6)
 
 
@@ -3767,7 +3767,7 @@ if authentication_status:
                                     'Hola, detectamos que la intermitencia del servicio {codcli} se debe al alcance Wifi, recomendamos comprar un repetidor. Mas info al 080011800, Movistar.',
                                     'Hola, se realizó la configuración de tu red WiFi del servicio {codcli}. Sigue pssy ssid disfrutando de tu navegación, Movistar.',
                                     'Hola, nos alegra haberte ayudado, tu servicio de {servi} con código de servicio {codcli} se encuentra operativo. Disfruta de tu navegación, Movistar.',
-                                    'Hola, te contactamos para indicarte que hemos generado el ticket de avería ticket. Nos pondremos en contacto en las próximas horas, Movistar']
+                                    'Hola, te contactamos para indicarte que hemos generado el ticket de avería {servi}. Nos pondremos en contacto en las próximas horas, Movistar']
                     st.dataframe(df)
 
                     st.sidebar.markdown('')
@@ -3836,4 +3836,5 @@ if authentication_status:
                 </style>
                 """
     st.markdown(hide_streamlit_style, unsafe_allow_html=True)
+
 
