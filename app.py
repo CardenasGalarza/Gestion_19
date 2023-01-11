@@ -277,7 +277,7 @@ if authentication_status:
                 try:
                     Trouble = pd.read_excel(uploaded_file, engine="openpyxl", skiprows=3)
                     ######3######################
-                    Troubledt=Trouble[["Incident Number",	"Area_CRM",	"Categorization Tier 2", "Last Modified By", "CUSTOMERID_CRM__c", "TELEFONO_REFERENCIA_1_CRM","servicioAfectado"]]
+                    Troubledt=Trouble[["Incident Number",	"Area_CRM",	"Categorization Tier 2", "Last Modified By", "CUSTOMERID_CRM__c", "TELEFONO_REFERENCIA_1_CRM","servicioAfectado","ACOORD_X_TOA__c","ACOORD_Y_TOA__c"]]
                     Troubledt["servicioAfectado"] = Troubledt["servicioAfectado"].replace({'broadband':'internet', 'landline':'telef fijo'}, regex=True)
                     Troubledt.rename(columns={'Incident Number': 'codreq'}, inplace=True)
                     Troubledt = Troubledt.drop_duplicates(subset=['codreq'])
@@ -541,6 +541,26 @@ if authentication_status:
                     worksheet.resize(rows=30)
                     #cargar datos df
                     worksheet.update([union.columns.values.tolist()] + union.values.tolist())
+
+
+                    import  datetime
+                    tiempo = datetime.datetime.now()
+                    resultado = tiempo + datetime.timedelta(minutes=10)
+                    tiempo = (resultado.strftime("%d-%m-%Y %H:%M:%S"))
+                    datos = {
+                        'ARCHIVO': ['ACTUALIZACION'],
+                        'FECHA_HR' : [tiempo]
+                    }
+                    df = pd.DataFrame(datos)
+                    gc = gspread.service_account(filename='datacargar-947843f340e2.json')
+                    sh = gc.open("reloj_coordenadas")
+                    #  el 0 simbol del numero de hoja en este caso es la primera hoja = 0
+                    worksheet = sh.get_worksheet(0)
+                    #borrar datos total y dejar encabezado
+                    worksheet.resize(rows=1)
+                    worksheet.resize(rows=30)
+                    #cargar datos df
+                    worksheet.update([df.columns.values.tolist()] + df.values.tolist())
 
                     st.write("SE CARGO CON EXITO AHORA YA PUEDES ACTUALIZAR \n EL EXCEL DE LAS TABLAS DINAMICAS")
                     # para ver la cantidad de registros
