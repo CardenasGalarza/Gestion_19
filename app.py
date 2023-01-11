@@ -277,7 +277,7 @@ if authentication_status:
                 try:
                     Trouble = pd.read_excel(uploaded_file, engine="openpyxl", skiprows=3)
                     ######3######################
-                    Troubledt=Trouble[["Incident Number",	"Area_CRM",	"Categorization Tier 2", "Last Modified By", "CUSTOMERID_CRM__c", "TELEFONO_REFERENCIA_1_CRM","servicioAfectado","ACOORD_X_TOA__c","ACOORD_Y_TOA__c"]]
+                    Troubledt=Trouble[["Incident Number",	"Area_CRM",	"Categorization Tier 2", "Last Modified By", "CUSTOMERID_CRM__c", "TELEFONO_REFERENCIA_1_CRM","servicioAfectado","ACOORD_X_TOA__c","ACOORD_Y_TOA__c","BOX_DESCRIPTION_NIL__c"]]
                     Troubledt["servicioAfectado"] = Troubledt["servicioAfectado"].replace({'broadband':'internet', 'landline':'telef fijo'}, regex=True)
                     Troubledt.rename(columns={'Incident Number': 'codreq'}, inplace=True)
                     Troubledt = Troubledt.drop_duplicates(subset=['codreq'])
